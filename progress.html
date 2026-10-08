@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>Progress | Coach Bolbol</title>
+
+<style>
+:root{
+  --bg:#f5f7fb;
+  --card:#fff;
+  --text:#172033;
+  --muted:#6b7280;
+  --border:#e5e7eb;
+  --dark:#111827;
+  --green:#16a34a;
+  --green-light:#dcfce7;
+  --blue:#2563eb;
+  --shadow:0 12px 30px rgba(17,24,39,.08);
+  --radius:20px;
+}
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  padding-bottom:90px;
+}
+
+.container{
+  width:min(100%,720px);
+  margin:auto;
+  padding:18px;
+}
+
+.hero{
+  background:linear-gradient(135deg,#111827,#1d4ed8);
+  color:white;
+  padding:23px 20px;
+  border-radius:27px;
+  margin-bottom:18px;
+  box-shadow:var(--shadow);
+}
+
+.back{
+  display:inline-block;
+  color:#dbeafe;
+  text-decoration:none;
+  font-size:14px;
+  margin-bottom:17px;
+}
+
+.hero h1{
+  font-size:29px;
+  margin-bottom:7px;
+}
+
+.hero p{
+  color:#dbeafe;
+  font-size:14px;
+  line-height:1.5;
+}
+
+.card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:18px;
+  margin-bottom:16px;
+  box-shadow:var(--shadow);
+}
+
+.card h2{
+  font-size:19px;
+  margin-bottom:14px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+.field{
+  margin-bottom:12px;
+}
+
+label{
+  display:block;
+  font-size:12px;
+  font-weight:bold;
+  color:#374151;
+  margin-bottom:7px;
+}
+
+input,select{
+  width:100%;
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:12px;
+  background:white;
+  color:var(--text);
+  font-size:14px;
+  outline:none;
+}
+
+input:focus,select:focus{
+  border-color:var(--blue);
+}
+
+.btn{
+  width:100%;
+  border:0;
+  border-radius:12px;
+  padding:13px;
+  background:var(--dark);
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+}
+
+.stat{
+  background:#f8fafc;
+  border-radius:14px;
+  padding:13px 6px;
+  text-align:center;
+}
+
+.stat span{
+  display:block;
+  font-size:10px;
+  color:var(--muted);
+  margin-bottom:5px;
+}
+
+.stat strong{
+  font-size:17px;
+}
+
+.progress{
+  height:12px;
+  background:#e5e7eb;
+  border-radius:999px;
+  overflow:hidden;
+  margin:15px 0 8px;
+}
+
+.progress-bar{
+  height:100%;
+  width:0;
+  background:linear-gradient(90deg,#16a34a,#22c55e);
+  border-radius:999px;
+  transition:.5s;
+}
+
+.progress-text{
+  text-align:center;
+  color:var(--muted);
+  font-size:12px;
+}
+
+.metric{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  padding:12px 0;
+  border-bottom:1px solid var(--border);
+  font-size:13px;
+}
+
+.metric:last-child{
+  border-bottom:0;
+}
+
+.metric span{
+  color:var(--muted);
+}
+
+.metric strong{
+  text-align:right;
+}
+
+.history-item{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  padding:13px 0;
+  border-bottom:1px solid var(--border);
+}
+
+.history-item:last-child{
+  border-bottom:0;
+}
+
+.history-date{
+  font-size:11px;
+  color:var(--muted);
+  margin-top:4px;
+}
+
+.delete-btn{
+  border:0;
+  background:#fee2e2;
+  color:#b91c1c;
+  border-radius:9px;
+  padding:7px 9px;
+  cursor:pointer;
+}
+
+.empty{
+  text-align:center;
+  color:var(--muted);
+  font-size:13px;
+  padding:10px 0;
+}
+
+.note{
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.5;
+  margin-top:10px;
+}
+
+.bottom-nav{
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:0;
+  background:rgba(255,255,255,.96);
+  backdrop-filter:blur(12px);
+  border-top:1px solid var(--border);
+  z-index:20;
+}
+
+.nav-inner{
+  width:min(100%,720px);
+  margin:auto;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+}
+
+.nav-item{
+  text-decoration:none;
+  color:#6b7280;
+  text-align:center;
+  padding:10px 3px;
+  font-size:10px;
+}
+
+.nav-item span{
+  display:block;
+  font-size:20px;
+  margin-bottom:3px;
+}
+
+.nav-item.active{
+  color:#111827;
+  font-weight:bold;
+}
+
+@media(max-width:430px){
+  .stats{
+    gap:6px;
+  }
+
+  .stat{
+    padding:12px 4px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<main class="container">
+
+<section class="hero">
+
+<a href="dashboard.html" class="back">
+← Back to Dashboard
+</a>
+
+<h1>📈 Your Progress</h1>
+
+<p>
+Track your bodyweight, targets and estimated energy needs over time.
+</p>
+
+</section>
+
+
+<section class="card">
+
+<h2>⚖️ Weight Progress</h2>
+
+<div class="stats">
+
+<div class="stat">
+<span>Starting</span>
+<strong id="startWeight">—</strong>
+</div>
+
+<div class="stat">
+<span>Current</span>
+<strong id="currentWeight">—</strong>
+</div>
+
+<div class="stat">
+<span>Goal</span>
+<strong id="goalWeight">—</strong>
+</div>
+
+</div>
+
+<div class="progress">
+
+<div
+class="progress-bar"
+id="weightProgress">
+</div>
+
+</div>
+
+<div
+class="progress-text"
+id="progressText">
+Complete your profile to calculate progress.
+</div>
+
+</section>
+
+
+<section class="card">
+
+<h2>➕ Add Weight Check-in</h2>
+
+<div class="grid">
+
+<div class="field">
+
+<label>Weight (kg)</label>
+
+<input
+id="weightInput"
+type="number"
+step="0.1"
+min="1"
+placeholder="e.g. 92.5"
+>
+
+</div>
+
+<div class="field">
+
+<label>Date</label>
+
+<input
+id="weightDate"
+type="date"
+>
+
+</div>
+
+</div>
+
+<button
+class="btn"
+onclick="addWeight()">
+
+Save Check-in
+
+</button>
+
+</section>
+
+
+<section class="card">
+
+<h2>🧮 Body Metrics</h2>
+
+<div class="metric">
+<span>BMI</span>
+<strong id="bmi">—</strong>
+</div>
+
+<div class="metric">
+<span>BMI Category</span>
+<strong id="bmiCategory">—</strong>
+</div>
+
+<div class="metric">
+<span>BMR</span>
+<strong id="bmr">—</strong>
+</div>
+
+<div class="metric">
+<span>Estimated TDEE</span>
+<strong id="tdee">—</strong>
+</div>
+
+<div class="metric">
+<span>Fat Loss Target</span>
+<strong id="fatLossCalories">—</strong>
+</div>
+
+<div class="metric">
+<span>Estimated Weekly Loss</span>
+<strong id="weeklyLoss">—</strong>
+</div>
+
+<div class="metric">
+<span>Estimated Weeks to Goal</span>
+<strong id="weeksGoal">—</strong>
+</div>
+
+<p class="note">
+These are estimates based on standard equations. Actual energy needs
+and weight change can differ between individuals.
+</p>
+
+</section>
+
+
+<section class="card">
+
+<h2>🎯 Healthy Weight Range</h2>
+
+<div class="metric">
+<span>Lower estimate</span>
+<strong id="healthyLow">—</strong>
+</div>
+
+<div class="metric">
+<span>Upper estimate</span>
+<strong id="healthyHigh">—</strong>
+</div>
+
+<p class="note">
+This range is based on BMI 18.5–24.9 and should not be treated as a
+personalized body-composition target.
+</p>
+
+</section>
+
+
+<section class="card">
+
+<h2>📊 Weight History</h2>
+
+<div id="historyContainer"></div>
+
+</section>
+
+
+<section class="card">
+
+<h2>👤 Profile Data</h2>
+
+<div class="metric">
+<span>Name</span>
+<strong id="profileName">—</strong>
+</div>
+
+<div class="metric">
+<span>Age</span>
+<strong id="profileAge">—</strong>
+</div>
+
+<div class="metric">
+<span>Height</span>
+<strong id="profileHeight">—</strong>
+</div>
+
+<div class="metric">
+<span>Activity</span>
+<strong id="profileActivity">—</strong>
+</div>
+
+<p class="note">
+If these values are missing, open your Profile page first.
+</p>
+
+</section>
+
+</main>
+
+
+<nav class="bottom-nav">
+
+<div class="nav-inner">
+
+<a href="dashboard.html" class="nav-item">
+<span>🏠</span>
+Home
+</a>
+
+<a href="programs.html" class="nav-item">
+<span>🏋️</span>
+Programs
+</a>
+
+<a href="nutrition.html" class="nav-item">
+<span>🥗</span>
+Nutrition
+</a>
+
+<a href="progress.html" class="nav-item active">
+<span>📈</span>
+Progress
+</a>
+
+</div>
+
+</nav>
+
+
+<script>
+
+const profileKey =
+"coach_bolbol_profile";
+
+
+const weightHistoryKey =
+"coach_bolbol_weight_history";
+
+
+const defaultProfile = {
+  name:"",
+  age:0,
+  height:0,
+  weight:0,
+  goalWeight:0,
+  gender:"male",
+  activity:"1.375"
+};
+
+
+let profile = {};
+
+let history = [];
+
+
+function loadData(){
+
+  try{
+
+    profile =
+    JSON.parse(
+      localStorage.getItem(profileKey)
+    ) || {};
+
+  }catch(e){
+
+    profile = {};
+
+  }
+
+
+  try{
+
+    history =
+    JSON.parse(
+      localStorage.getItem(weightHistoryKey)
+    ) || [];
+
+  }catch(e){
+
+    history = [];
+
+  }
+
+}
+
+
+function getNumber(value){
+
+  const n = Number(value);
+
+  return Number.isFinite(n) ? n : 0;
+
+}
+
+
+function calculate(){
+
+  const age =
+  getNumber(profile.age);
+
+  const height =
+  getNumber(profile.height);
+
+  let weight =
+  getNumber(profile.weight);
+
+  const goal =
+  getNumber(profile.goalWeight);
+
+  const activity =
+  getNumber(profile.activity) || 1.375;
+
+
+  if(history.length > 0){
+
+    weight =
+    getNumber(history[0].weight);
+
+  }
+
+
+  if(!weight || !height){
+
+    document.getElementById("bmi").textContent = "—";
+    document.getElementById("bmr").textContent = "—";
+    document.getElementById("tdee").textContent = "—";
+    document.getElementById("fatLossCalories").textContent = "—";
+
+    return;
+
+  }
+
+
+  const heightM =
+  height / 100;
+
+
+  const bmi =
+  weight / (heightM * heightM);
+
+
+  let category = "";
+
+
+  if(bmi < 18.5){
+    category = "Underweight";
+  }else if(bmi < 25){
+    category = "Healthy range";
+  }else if(bmi < 30){
+    category = "Overweight";
+  }else{
+    category = "Obesity range";
+  }
+
+
+  let bmr;
+
+
+  const gender =
+  String(profile.gender || "male")
+  .toLowerCase();
+
+
+  if(gender === "female"){
+
+    bmr =
+    10 * weight +
+    6.25 * height -
+    5 * age -
+    161;
+
+  }else{
+
+    bmr =
+    10 * weight +
+    6.25 * height -
+    5 * age +
+    5;
+
+  }
+
+
+  const tdee =
+  bmr * activity;
+
+
+  const fatLoss =
+  Math.max(
+    1200,
+    Math.round(tdee * 0.85)
+  );
+
+
+  const weeklyLoss =
+  weight * 0.005;
+
+
+  let weeks = "—";
+
+
+  if(goal > 0 && weight > goal){
+
+    weeks =
+    Math.ceil(
+      (weight - goal) /
+      weeklyLoss
+    );
+
+  }
+
+
+  document.getElementById("bmi")
+  .textContent =
+  bmi.toFixed(1);
+
+
+  document.getElementById("bmiCategory")
+  .textContent =
+  category;
+
+
+  document.getElementById("bmr")
+  .textContent =
+  Math.round(bmr) + " kcal";
+
+
+  document.getElementById("tdee")
+  .textContent =
+  Math.round(tdee) + " kcal";
+
+
+  document.getElementById("fatLossCalories")
+  .textContent =
+  fatLoss + " kcal";
+
+
+  document.getElementById("weeklyLoss")
+  .textContent =
+  weeklyLoss.toFixed(2) + " kg/week";
+
+
+  document.getElementById("weeksGoal")
+  .textContent =
+  weeks === "—"
+  ? "—"
+  : weeks + " weeks";
+
+
+  const healthyLow =
+  18.5 * heightM * heightM;
+
+
+  const healthyHigh =
+  24.9 * heightM * heightM;
+
+
+  document.getElementById("healthyLow")
+  .textContent =
+  healthyLow.toFixed(1) + " kg";
+
+
+  document.getElementById("healthyHigh")
+  .textContent =
+  healthyHigh.toFixed(1) + " kg";
+
+
+  updateWeightProgress(weight,goal);
+
+}
+
+
+function updateWeightProgress(weight,goal){
+
+  const starting =
+  getStartingWeight();
+
+
+  document.getElementById("startWeight")
+  .textContent =
+  starting > 0
+  ? starting.toFixed(1) + " kg"
+  : "—";
+
+
+  document.getElementById("currentWeight")
+  .textContent =
+  weight > 0
+  ? weight.toFixed(1) + " kg"
+  : "—";
+
+
+  document.getElementById("goalWeight")
+  .textContent =
+  goal > 0
+  ? goal.toFixed(1) + " kg"
+  : "—";
+
+
+  if(
+    starting > 0 &&
+    weight > 0 &&
+    goal > 0 &&
+    starting !== goal
+  ){
+
+    const total =
+    Math.abs(starting - goal);
+
+    const completed =
+    Math.abs(starting - weight);
+
+    let percentage =
+    completed / total * 100;
+
+
+    percentage =
+    Math.max(
+      0,
+      Math.min(100,percentage)
+    );
+
+
+    document.getElementById("weightProgress")
+    .style.width =
+    percentage + "%";
+
+
+    document.getElementById("progressText")
+    .textContent =
+    Math.round(percentage) +
+    "% toward your weight goal";
+
+  }else{
+
+    document.getElementById("weightProgress")
+    .style.width = "0%";
+
+    document.getElementById("progressText")
+    .textContent =
+    "Add starting and goal weight to calculate progress.";
+
+  }
+
+}
+
+
+function getStartingWeight(){
+
+  if(history.length > 0){
+
+    const reversed =
+    [...history].reverse();
+
+    const first =
+    reversed.find(
+      item => getNumber(item.weight) > 0
+    );
+
+    if(first){
+      return getNumber(first.weight);
+    }
+
+  }
+
+
+  return getNumber(profile.weight);
+
+}
+
+
+function addWeight(){
+
+  const weight =
+  getNumber(
+    document.getElementById("weightInput").value
+  );
+
+
+  const date =
+  document.getElementById("weightDate").value;
+
+
+  if(weight <= 0){
+
+    alert("Enter a valid bodyweight.");
+
+    return;
+
+  }
+
+
+  const checkDate =
+  date ||
+  new Date().toISOString().slice(0,10);
+
+
+  history.unshift({
+
+    weight:weight,
+
+    date:checkDate
+
+  });
+
+
+  history =
+  history.slice(0,100);
+
+
+  localStorage.setItem(
+    weightHistoryKey,
+    JSON.stringify(history)
+  );
+
+
+  /*
+    Keep profile current weight synchronized.
+  */
+
+  profile.weight = weight;
+
+
+  localStorage.setItem(
+    profileKey,
+    JSON.stringify(profile)
+  );
+
+
+  document.getElementById("weightInput")
+  .value = "";
+
+
+  renderHistory();
+
+  calculate();
+
+
+  alert("✅ Weight check-in saved!");
+
+}
+
+
+function renderHistory(){
+
+  const container =
+  document.getElementById("historyContainer");
+
+
+  if(history.length === 0){
+
+    container.innerHTML =
+    `<div class="empty">
+      No weight check-ins yet.
+    </div>`;
+
+    return;
+
+  }
+
+
+  container.innerHTML =
+  history.slice(0,20).map((item,index)=>{
+
+    const date =
+    new Date(item.date + "T12:00:00");
+
+
+    return `
+
+      <div class="history-item">
+
+        <div>
+
+          <strong>
+            ${Number(item.weight).toFixed(1)} kg
+          </strong>
+
+          <div class="history-date">
+            ${date.toLocaleDateString()}
+          </div>
+
+        </div>
+
+        <button
+          class="delete-btn"
+          onclick="deleteWeight(${index})">
+
+          Delete
+
+        </button>
+
+      </div>
+
+    `;
+
+  }).join("");
+
+}
+
+
+function deleteWeight(index){
+
+  if(
+    !confirm(
+      "Delete this weight check-in?"
+    )
+  ){
+
+    return;
+
+  }
+
+
+  history.splice(index,1);
+
+
+  localStorage.setItem(
+    weightHistoryKey,
+    JSON.stringify(history)
+  );
+
+
+  renderHistory();
+
+  calculate();
+
+}
+
+
+function renderProfile(){
+
+  document.getElementById("profileName")
+  .textContent =
+  profile.name || "—";
+
+
+  document.getElementById("profileAge")
+  .textContent =
+  profile.age
+  ? profile.age + " years"
+  : "—";
+
+
+  document.getElementById("profileHeight")
+  .textContent =
+  profile.height
+  ? profile.height + " cm"
+  : "—";
+
+
+  const activityNames = {
+
+    "1.2":"Sedentary",
+
+    "1.375":"Lightly Active",
+
+    "1.55":"Moderately Active",
+
+    "1.725":"Very Active",
+
+    "1.9":"Extremely Active"
+
+  };
+
+
+  document.getElementById("profileActivity")
+  .textContent =
+  activityNames[String(profile.activity)]
+  || "—";
+
+}
+
+
+document
+.getElementById("weightDate")
+.value =
+new Date()
+.toISOString()
+.slice(0,10);
+
+
+loadData();
+
+profile = {
+  ...defaultProfile,
+  ...profile
+};
+
+renderProfile();
+
+renderHistory();
+
+calculate();
+
+</script>
+
+</body>
+  </html>
