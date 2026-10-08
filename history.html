@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Coach Bolbol | History</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f7fb;
+      color: #172033;
+      min-height: 100vh;
+    }
+
+    .topbar {
+      background: #fff;
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      border-bottom: 1px solid #e8ebf2;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .back {
+      width: 42px;
+      height: 42px;
+      border: none;
+      border-radius: 13px;
+      background: #eef2f7;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    .topbar h1 {
+      font-size: 21px;
+    }
+
+    .container {
+      max-width: 680px;
+      margin: auto;
+      padding: 20px 16px 40px;
+    }
+
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .summary-card {
+      background: #fff;
+      border-radius: 18px;
+      padding: 17px 8px;
+      text-align: center;
+      box-shadow: 0 7px 25px rgba(20, 30, 50, 0.05);
+    }
+
+    .summary-card strong {
+      display: block;
+      font-size: 21px;
+      margin-bottom: 5px;
+    }
+
+    .summary-card span {
+      font-size: 11px;
+      color: #7b8495;
+    }
+
+    .section {
+      background: #fff;
+      border-radius: 22px;
+      padding: 20px;
+      margin-bottom: 18px;
+      box-shadow: 0 7px 25px rgba(20, 30, 50, 0.05);
+    }
+
+    .section h2 {
+      font-size: 18px;
+      margin-bottom: 15px;
+    }
+
+    .empty {
+      text-align: center;
+      color: #7b8495;
+      padding: 25px 10px;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .history-item {
+      border: 1px solid #e9edf3;
+      border-radius: 17px;
+      padding: 15px;
+      margin-bottom: 11px;
+      background: #fafbfd;
+    }
+
+    .history-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .item-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    .item-title {
+      font-weight: 800;
+      font-size: 15px;
+    }
+
+    .date {
+      font-size: 11px;
+      color: #8a93a3;
+      white-space: nowrap;
+    }
+
+    .item-info {
+      margin-top: 9px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+
+    .tag {
+      background: #eef2f7;
+      color: #566174;
+      border-radius: 9px;
+      padding: 6px 9px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .weight-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 13px 0;
+      border-bottom: 1px solid #edf0f4;
+    }
+
+    .weight-item:last-child {
+      border-bottom: none;
+    }
+
+    .weight-date {
+      font-size: 12px;
+      color: #7b8495;
+    }
+
+    .weight-value {
+      font-size: 17px;
+      font-weight: 800;
+    }
+
+    .delete-btn {
+      border: none;
+      background: #fff0f0;
+      color: #b42318;
+      padding: 7px 10px;
+      border-radius: 9px;
+      font-size: 11px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .clear-btn {
+      width: 100%;
+      padding: 14px;
+      border-radius: 14px;
+      border: 1px solid #efb7b7;
+      background: #fff7f7;
+      color: #b42318;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    @media (max-width: 430px) {
+      .summary-card strong {
+        font-size: 18px;
+      }
+
+      .summary-card span {
+        font-size: 10px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="topbar">
+    <button class="back" onclick="goBack()">←</button>
+    <h1>My History</h1>
+  </header>
+
+  <main class="container">
+
+    <div class="summary">
+
+      <div class="summary-card">
+        <strong id="workoutCount">0</strong>
+        <span>WORKOUTS</span>
+      </div>
+
+      <div class="summary-card">
+        <strong id="weightCount">0</strong>
+        <span>CHECK-INS</span>
+      </div>
+
+      <div class="summary-card">
+        <strong id="waterCount">0</strong>
+        <span>WATER LOGS</span>
+      </div>
+
+    </div>
+
+    <section class="section">
+
+      <h2>🏋️ Workout History</h2>
+
+      <div id="workoutHistory"></div>
+
+    </section>
+
+    <section class="section">
+
+      <h2>⚖️ Weight History</h2>
+
+      <div id="weightHistory"></div>
+
+    </section>
+
+    <section class="section">
+
+      <h2>💧 Water History</h2>
+
+      <div id="waterHistory"></div>
+
+    </section>
+
+    <section class="section">
+
+      <h2>Reset History</h2>
+
+      <button
+        class="clear-btn"
+        onclick="clearHistory()"
+      >
+        Clear History
+      </button>
+
+    </section>
+
+  </main>
+
+  <script>
+
+    function readJSON(key, fallback) {
+
+      try {
+
+        const data =
+          localStorage.getItem(key);
+
+        return data
+          ? JSON.parse(data)
+          : fallback;
+
+      } catch {
+
+        return fallback;
+
+      }
+
+    }
+
+    function getWorkoutHistory() {
+
+      return readJSON(
+        "coach_bolbol_workouts",
+        []
+      );
+
+    }
+
+    function getWeightHistory() {
+
+      return readJSON(
+        "coach_bolbol_weight_history",
+        []
+      );
+
+    }
+
+    function getWaterHistory() {
+
+      return readJSON(
+        "coach_bolbol_water_history",
+        []
+      );
+
+    }
+
+    function formatDate(value) {
+
+      if (!value) {
+        return "Unknown date";
+      }
+
+      const date =
+        new Date(value);
+
+      if (isNaN(date.getTime())) {
+        return value;
+      }
+
+      return date.toLocaleDateString(
+        undefined,
+        {
+          day: "2-digit",
+          month: "short",
+          year: "numeric"
+        }
+      );
+
+    }
+
+    function renderWorkouts() {
+
+      const container =
+        document.getElementById(
+          "workoutHistory"
+        );
+
+      const workouts =
+        getWorkoutHistory();
+
+      document.getElementById(
+        "workoutCount"
+      ).textContent =
+        workouts.length;
+
+      if (!workouts.length) {
+
+        container.innerHTML = `
+          <div class="empty">
+            No workouts recorded yet.<br>
+            Complete your first workout to see it here.
+          </div>
+        `;
+
+        return;
+      }
+
+      container.innerHTML =
+        workouts
+          .slice()
+          .reverse()
+          .map((workout, index) => {
+
+            const name =
+              workout.name ||
+              workout.title ||
+              workout.program ||
+              "Workout";
+
+            const date =
+              workout.date ||
+              workout.completedAt ||
+              workout.createdAt;
+
+            const duration =
+              workout.duration ||
+              workout.minutes;
+
+            const volume =
+              workout.volume ||
+              workout.totalVolume;
+
+            return `
+              <div class="history-item">
+
+                <div class="item-top">
+
+                  <div class="item-title">
+                    ${escapeHTML(name)}
+                  </div>
+
+                  <div class="date">
+                    ${formatDate(date)}
+                  </div>
+
+                </div>
+
+                <div class="item-info">
+
+                  ${
+                    duration
+                    ? `
+                      <span class="tag">
+                        ⏱ ${escapeHTML(String(duration))} min
+                      </span>
+                    `
+                    : ""
+                  }
+
+                  ${
+                    volume
+                    ? `
+                      <span class="tag">
+                        Volume: ${escapeHTML(String(volume))}
+                      </span>
+                    `
+                    : ""
+                  }
+
+                  ${
+                    workout.exercises
+                    ? `
+                      <span class="tag">
+                        ${Array.isArray(workout.exercises)
+                          ? workout.exercises.length
+                          : workout.exercises}
+                        exercises
+                      </span>
+                    `
+                    : ""
+                  }
+
+                </div>
+
+              </div>
+            `;
+
+          })
+          .join("");
+
+    }
+
+    function renderWeights() {
+
+      const container =
+        document.getElementById(
+          "weightHistory"
+        );
+
+      const weights =
+        getWeightHistory();
+
+      document.getElementById(
+        "weightCount"
+      ).textContent =
+        weights.length;
+
+      if (!weights.length) {
+
+        container.innerHTML = `
+          <div class="empty">
+            No weight check-ins yet.
+          </div>
+        `;
+
+        return;
+      }
+
+      container.innerHTML =
+        weights
+          .slice()
+          .reverse()
+          .map((entry, index) => {
+
+            const weight =
+              entry.weight ??
+              entry.value ??
+              entry.currentWeight;
+
+            const date =
+              entry.date ||
+              entry.createdAt ||
+              entry.updatedAt;
+
+            return `
+              <div class="weight-item">
+
+                <div>
+                  <div class="weight-value">
+                    ${escapeHTML(String(weight || "--"))} kg
+                  </div>
+
+                  <div class="weight-date">
+                    ${formatDate(date)}
+                  </div>
+                </div>
+
+                <button
+                  class="delete-btn"
+                  onclick="deleteWeight(${weights.length - 1 - index})"
+                >
+                  Delete
+                </button>
+
+              </div>
+            `;
+
+          })
+          .join("");
+
+    }
+
+    function renderWater() {
+
+      const container =
+        document.getElementById(
+          "waterHistory"
+        );
+
+      const water =
+        getWaterHistory();
+
+      document.getElementById(
+        "waterCount"
+      ).textContent =
+        water.length;
+
+      if (!water.length) {
+
+        container.innerHTML = `
+          <div class="empty">
+            No water logs yet.
+          </div>
+        `;
+
+        return;
+      }
+
+      container.innerHTML =
+        water
+          .slice()
+          .reverse()
+          .map(entry => {
+
+            const amount =
+              entry.amount ??
+              entry.water ??
+              entry.ml;
+
+            const date =
+              entry.date ||
+              entry.createdAt;
+
+            return `
+              <div class="weight-item">
+
+                <div>
+                  <div class="weight-value">
+                    💧 ${escapeHTML(String(amount || "--"))} ml
+                  </div>
+
+                  <div class="weight-date">
+                    ${formatDate(date)}
+                  </div>
+                </div>
+
+              </div>
+            `;
+
+          })
+          .join("");
+
+    }
+
+    function deleteWeight(index) {
+
+      const weights =
+        getWeightHistory();
+
+      weights.splice(index, 1);
+
+      localStorage.setItem(
+        "coach_bolbol_weight_history",
+        JSON.stringify(weights)
+      );
+
+      renderWeights();
+
+    }
+
+    function clearHistory() {
+
+      const confirmed =
+        confirm(
+          "Are you sure you want to delete all history?"
+        );
+
+      if (!confirmed) {
+        return;
+      }
+
+      localStorage.removeItem(
+        "coach_bolbol_workouts"
+      );
+
+      localStorage.removeItem(
+        "coach_bolbol_weight_history"
+      );
+
+      localStorage.removeItem(
+        "coach_bolbol_water_history"
+      );
+
+      renderWorkouts();
+      renderWeights();
+      renderWater();
+
+    }
+
+    function escapeHTML(value) {
+
+      return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+    }
+
+    function goBack() {
+
+      if (history.length > 1) {
+
+        history.back();
+
+      } else {
+
+        window.location.href =
+          "dashboard.html";
+
+      }
+
+    }
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      () => {
+
+        renderWorkouts();
+        renderWeights();
+        renderWater();
+
+      }
+    );
+
+  </script>
+
+</body>
+          </html>
