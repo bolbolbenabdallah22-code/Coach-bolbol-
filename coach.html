@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Coach Bolbol | Coach Dashboard</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f7fb;
+      color: #172033;
+      min-height: 100vh;
+    }
+
+    .topbar {
+      background: #ffffff;
+      padding: 16px;
+      border-bottom: 1px solid #e8ebf2;
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+
+    .back {
+      width: 42px;
+      height: 42px;
+      border: none;
+      border-radius: 13px;
+      background: #eef2f7;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    .topbar h1 {
+      font-size: 21px;
+    }
+
+    .container {
+      max-width: 750px;
+      margin: auto;
+      padding: 20px 16px 40px;
+    }
+
+    .hero {
+      background: #111827;
+      color: #ffffff;
+      border-radius: 25px;
+      padding: 23px 20px;
+      margin-bottom: 18px;
+      box-shadow: 0 10px 30px rgba(17, 24, 39, 0.15);
+    }
+
+    .hero small {
+      opacity: 0.65;
+      font-size: 11px;
+    }
+
+    .hero h2 {
+      font-size: 25px;
+      margin: 8px 0;
+    }
+
+    .hero p {
+      font-size: 13px;
+      line-height: 1.5;
+      opacity: 0.78;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .stat {
+      background: #ffffff;
+      border-radius: 18px;
+      padding: 17px 8px;
+      text-align: center;
+      box-shadow: 0 7px 25px rgba(20, 30, 50, 0.05);
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 22px;
+      margin-bottom: 5px;
+    }
+
+    .stat span {
+      color: #7b8495;
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .section {
+      background: #ffffff;
+      border-radius: 22px;
+      padding: 20px;
+      margin-bottom: 18px;
+      box-shadow: 0 7px 25px rgba(20, 30, 50, 0.05);
+    }
+
+    .section h3 {
+      font-size: 18px;
+      margin-bottom: 14px;
+    }
+
+    .client {
+      border: 1px solid #e9edf3;
+      background: #fafbfd;
+      border-radius: 17px;
+      padding: 15px;
+      margin-bottom: 10px;
+    }
+
+    .client:last-child {
+      margin-bottom: 0;
+    }
+
+    .client-top {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .client-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: #111827;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      flex-shrink: 0;
+    }
+
+    .client-info {
+      flex: 1;
+    }
+
+    .client-info strong {
+      display: block;
+      font-size: 15px;
+      margin-bottom: 4px;
+    }
+
+    .client-info span {
+      color: #7b8495;
+      font-size: 11px;
+    }
+
+    .status {
+      font-size: 10px;
+      font-weight: 800;
+      color: #16803c;
+    }
+
+    .client-details {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 7px;
+      margin-top: 13px;
+    }
+
+    .detail {
+      background: #ffffff;
+      border-radius: 11px;
+      padding: 9px 5px;
+      text-align: center;
+    }
+
+    .detail strong {
+      display: block;
+      font-size: 13px;
+      margin-bottom: 3px;
+    }
+
+    .detail span {
+      font-size: 9px;
+      color: #8a93a3;
+    }
+
+    .empty {
+      text-align: center;
+      color: #7b8495;
+      font-size: 13px;
+      line-height: 1.5;
+      padding: 25px 10px;
+    }
+
+    .actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .action {
+      border: none;
+      background: #f0f3f7;
+      border-radius: 15px;
+      padding: 16px 10px;
+      color: #172033;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .action:active {
+      transform: scale(0.98);
+    }
+
+    .report {
+      border: 1px solid #e9edf3;
+      border-radius: 16px;
+      padding: 14px;
+      margin-bottom: 10px;
+      background: #fafbfd;
+    }
+
+    .report:last-child {
+      margin-bottom: 0;
+    }
+
+    .report strong {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 6px;
+    }
+
+    .report p {
+      color: #687285;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .report-date {
+      margin-top: 8px;
+      color: #9aa2b0;
+      font-size: 10px;
+    }
+
+    .cloud-box {
+      background: #f7f8fb;
+      border-radius: 15px;
+      padding: 14px;
+      font-size: 12px;
+      line-height: 1.5;
+      color: #687285;
+    }
+
+    .cloud-box strong {
+      color: #172033;
+    }
+
+    @media (max-width: 430px) {
+
+      .stats {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .stat strong {
+        font-size: 18px;
+      }
+
+      .actions {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="topbar">
+
+    <button
+      class="back"
+      onclick="goBack()"
+    >
+      ←
+    </button>
+
+    <h1>Coach Dashboard</h1>
+
+  </header>
+
+  <main class="container">
+
+    <section class="hero">
+
+      <small>COACH BOLBOL</small>
+
+      <h2>Coach Dashboard 💪</h2>
+
+      <p>
+        Manage your clients, review progress,
+        receive reports and communicate with your athletes.
+      </p>
+
+    </section>
+
+    <section class="stats">
+
+      <div class="stat">
+        <strong id="clientCount">0</strong>
+        <span>CLIENTS</span>
+      </div>
+
+      <div class="stat">
+        <strong id="reportCount">0</strong>
+        <span>REPORTS</span>
+      </div>
+
+      <div class="stat">
+        <strong id="messageCount">0</strong>
+        <span>MESSAGES</span>
+      </div>
+
+    </section>
+
+    <section class="section">
+
+      <h3>⚡ Quick Actions</h3>
+
+      <div class="actions">
+
+        <button
+          class="action"
+          onclick="openPage('programs.html')"
+        >
+          🏋️ Programs
+        </button>
+
+        <button
+          class="action"
+          onclick="openPage('calculator.html')"
+        >
+          🧮 Calculator
+        </button>
+
+        <button
+          class="action"
+          onclick="openPage('nutrition.html')"
+        >
+          🥗 Nutrition
+        </button>
+
+        <button
+          class="action"
+          onclick="openPage('messages.html')"
+        >
+          💬 Messages
+        </button>
+
+      </div>
+
+    </section>
+
+    <section class="section">
+
+      <h3>👥 Clients</h3>
+
+      <div id="clients"></div>
+
+    </section>
+
+    <section class="section">
+
+      <h3>📋 Recent Reports</h3>
+
+      <div id="reports"></div>
+
+    </section>
+
+    <section class="section">
+
+      <h3>☁️ Cloud Connection</h3>
+
+      <div class="cloud-box">
+
+        <strong>Current status:</strong>
+        Local mode
+
+        <br><br>
+
+        Your Coach Dashboard is prepared for the
+        secure cloud system.
+
+        <br><br>
+
+        In the backend stage, client accounts,
+        progress reports and messages will be
+        synchronized through Supabase.
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <script>
+
+    function readJSON(key, fallback) {
+
+      try {
+
+        const data =
+          localStorage.getItem(key);
+
+        return data
+          ? JSON.parse(data)
+          : fallback;
+
+      } catch {
+
+        return fallback;
+
+      }
+
+    }
+
+    function getInitials(name) {
+
+      if (!name) {
+        return "CL";
+      }
+
+      return name
+        .split(" ")
+        .filter(Boolean)
+        .slice(0, 2)
+        .map(word => word[0])
+        .join("")
+        .toUpperCase();
+
+    }
+
+    function formatDate(value) {
+
+      if (!value) {
+        return "";
+      }
+
+      const date =
+        new Date(value);
+
+      if (isNaN(date.getTime())) {
+        return "";
+      }
+
+      return date.toLocaleDateString(
+        undefined,
+        {
+          day: "2-digit",
+          month: "short",
+          year: "numeric"
+        }
+      );
+
+    }
+
+    function escapeHTML(value) {
+
+      return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+    }
+
+    function loadDashboard() {
+
+      const profile =
+        readJSON(
+          "coach_bolbol_profile",
+          {}
+        );
+
+      const messages =
+        readJSON(
+          "coach_bolbol_messages",
+          []
+        );
+
+      const workouts =
+        readJSON(
+          "coach_bolbol_workouts",
+          []
+        );
+
+      const weights =
+        readJSON(
+          "coach_bolbol_weight_history",
+          []
+        );
+
+      /*
+        Local demo client.
+
+        Later this section will be replaced
+        by real Supabase client data.
+      */
+
+      const clients = [];
+
+      if (profile.name) {
+
+        clients.push({
+          name: profile.name,
+          weight: profile.weight || "--",
+          goalWeight: profile.goalWeight || "--",
+          workouts: workouts.length
+        });
+
+      }
+
+      document.getElementById(
+        "clientCount"
+      ).textContent =
+        clients.length;
+
+      document.getElementById(
+        "messageCount"
+      ).textContent =
+        messages.length;
+
+      document.getElementById(
+        "reportCount"
+      ).textContent =
+        weights.length;
+
+      renderClients(clients);
+
+      renderReports(
+        profile,
+        weights
+      );
+
+    }
+
+    function renderClients(clients) {
+
+      const container =
+        document.getElementById(
+          "clients"
+        );
+
+      if (!clients.length) {
+
+        container.innerHTML = `
+          <div class="empty">
+            No client account is connected yet.<br><br>
+            Client accounts will appear here
+            after cloud authentication is enabled.
+          </div>
+        `;
+
+        return;
+
+      }
+
+      container.innerHTML =
+        clients
+          .map(client => {
+
+            return `
+              <div class="client">
+
+                <div class="client-top">
+
+                  <div class="client-avatar">
+                    ${getInitials(client.name)}
+                  </div>
+
+                  <div class="client-info">
+
+                    <strong>
+                      ${escapeHTML(client.name)}
+                    </strong>
+
+                    <span>
+                      Coach Bolbol Client
+                    </span>
+
+                  </div>
+
+                  <div class="status">
+                    ACTIVE
+                  </div>
+
+                </div>
+
+                <div class="client-details">
+
+                  <div class="detail">
+                    <strong>
+                      ${escapeHTML(String(client.weight))}
+                    </strong>
+                    <span>Current kg</span>
+                  </div>
+
+                  <div class="detail">
+                    <strong>
+                      ${escapeHTML(String(client.goalWeight))}
+                    </strong>
+                    <span>Goal kg</span>
+                  </div>
+
+                  <div class="detail">
+                    <strong>
+                      ${escapeHTML(String(client.workouts))}
+                    </strong>
+                    <span>Workouts</span>
+                  </div>
+
+                </div>
+
+              </div>
+            `;
+
+          })
+          .join("");
+
+    }
+
+    function renderReports(
+      profile,
+      weights
+    ) {
+
+      const container =
+        document.getElementById(
+          "reports"
+        );
+
+      if (
+        !profile.name &&
+        !weights.length
+      ) {
+
+        container.innerHTML = `
+          <div class="empty">
+            No progress reports yet.
+          </div>
+        `;
+
+        return;
+
+      }
+
+      const latestWeight =
+        weights.length
+          ? weights[weights.length - 1]
+          : null;
+
+      const weight =
+        latestWeight
+          ? (
+              latestWeight.weight ??
+              latestWeight.value ??
+              latestWeight.currentWeight
+            )
+          : profile.weight;
+
+      container.innerHTML = `
+
+        <div class="report">
+
+          <strong>
+            ${escapeHTML(
+              profile.name || "Client"
+            )} — Progress Update
+          </strong>
+
+          <p>
+            Current weight:
+            <strong>
+              ${escapeHTML(
+                String(weight || "--")
+              )} kg
+            </strong>
+            <br>
+
+            Goal weight:
+            ${escapeHTML(
+              String(profile.goalWeight || "--")
+            )} kg
+
+            <br>
+
+            Total recorded check-ins:
+            ${weights.length}
+          </p>
+
+          <div class="report-date">
+            ${formatDate(
+              latestWeight &&
+              (
+                latestWeight.date ||
+                latestWeight.createdAt
+              )
+            )}
+          </div>
+
+        </div>
+
+      `;
+
+    }
+
+    function openPage(page) {
+
+      window.location.href =
+        page;
+
+    }
+
+    function goBack() {
+
+      if (history.length > 1) {
+
+        history.back();
+
+      } else {
+
+        window.location.href =
+          "dashboard.html";
+
+      }
+
+    }
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      () => {
+
+        loadDashboard();
+
+      }
+    );
+
+  </script>
+
+</body>
+  </html>
