@@ -8,562 +8,517 @@
 
   <link rel="stylesheet" href="css/style.css">
 
-  <meta name="theme-color" content="#ffffff">
+  <style>
+    .program-hero {
+      background: linear-gradient(135deg, #111827, #374151);
+      color: #fff;
+      border-radius: 24px;
+      padding: 28px 20px;
+      margin-bottom: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .program-hero::after {
+      content: "";
+      position: absolute;
+      width: 190px;
+      height: 190px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.07);
+      right: -60px;
+      top: -65px;
+    }
+
+    .program-hero h1 {
+      margin: 0 0 8px;
+      font-size: 28px;
+    }
+
+    .program-hero p {
+      margin: 0;
+      opacity: .8;
+      line-height: 1.5;
+    }
+
+    .program-selector {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .level-btn {
+      border: 1px solid #d1d5db;
+      background: #fff;
+      border-radius: 15px;
+      padding: 14px 10px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .level-btn.active {
+      background: #111827;
+      color: #fff;
+      border-color: #111827;
+    }
+
+    .program-info {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 22px;
+      padding: 20px;
+      margin-bottom: 18px;
+      box-shadow: 0 8px 25px rgba(15,23,42,.05);
+    }
+
+    .program-info h2 {
+      margin: 0 0 8px;
+    }
+
+    .program-info p {
+      color: #6b7280;
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    .day-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .day-card {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 6px 20px rgba(15,23,42,.04);
+    }
+
+    .day-header {
+      padding: 17px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+    }
+
+    .day-header h3 {
+      margin: 0;
+      font-size: 17px;
+    }
+
+    .day-header span {
+      color: #6b7280;
+      font-size: 13px;
+    }
+
+    .day-arrow {
+      font-size: 18px;
+      transition: transform .25s ease;
+    }
+
+    .day-card.open .day-arrow {
+      transform: rotate(180deg);
+    }
+
+    .exercise-list {
+      display: none;
+      border-top: 1px solid #e5e7eb;
+      padding: 12px;
+    }
+
+    .day-card.open .exercise-list {
+      display: grid;
+      gap: 9px;
+    }
+
+    .exercise-row {
+      padding: 13px;
+      background: #f8fafc;
+      border-radius: 14px;
+      border: 1px solid #e5e7eb;
+    }
+
+    .exercise-name {
+      font-weight: 750;
+      color: #111827;
+      margin-bottom: 5px;
+    }
+
+    .exercise-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      font-size: 12px;
+      color: #6b7280;
+    }
+
+    .meta-pill {
+      background: #eef2f7;
+      border-radius: 999px;
+      padding: 5px 8px;
+    }
+
+    .training-note {
+      margin-top: 18px;
+      padding: 15px;
+      border-radius: 16px;
+      background: #f3f4f6;
+      color: #374151;
+      font-size: 13px;
+      line-height: 1.55;
+    }
+  </style>
 </head>
 
 <body>
 
-  <!-- HEADER -->
-  <header class="app-header">
-    <div class="header-inner">
-
-      <button class="icon-button" onclick="goBack()" aria-label="Go back">
-        ←
-      </button>
-
-      <div>
-        <span class="eyebrow">COACH BOLBOL</span>
-        <h1>Strength Training</h1>
-      </div>
-
-      <a href="dashboard.html" class="header-logo">
-        CB
-      </a>
-
-    </div>
-  </header>
-
-
-  <main class="page-container">
-
-    <!-- HERO -->
-    <section class="hero-card">
-
-      <div class="hero-content">
-
-        <span class="badge badge-primary">
-          💪 STRENGTH
-        </span>
-
-        <h2>Build Strength.<br>Build Muscle.</h2>
-
-        <p>
-          A structured progressive strength program designed
-          to build muscle, improve performance and track your progress.
-        </p>
-
-      </div>
-
-    </section>
-
-
-    <!-- PROGRAM SELECTOR -->
-    <section class="page-section">
-
-      <div class="section-heading">
-
-        <div>
-          <span class="eyebrow">PROGRAM LEVEL</span>
-          <h2>Choose your level</h2>
-        </div>
-
-      </div>
-
-
-      <div class="level-grid">
-
-        <button
-          class="level-card active"
-          data-level="beginner"
-          onclick="selectStrengthLevel('beginner')"
-        >
-
-          <div class="level-icon">
-            🌱
-          </div>
-
-          <div class="level-info">
-            <h3>Beginner</h3>
-
-            <p>
-              Build technique, consistency and basic strength.
-            </p>
-
-            <span>
-              5 training days
-            </span>
-          </div>
-
-          <div class="level-check">
-            ✓
-          </div>
-
-        </button>
-
-
-        <button
-          class="level-card"
-          data-level="intermediate"
-          onclick="selectStrengthLevel('intermediate')"
-        >
-
-          <div class="level-icon">
-            ⚡
-          </div>
-
-          <div class="level-info">
-            <h3>Intermediate</h3>
-
-            <p>
-              Higher training volume with progressive overload.
-            </p>
-
-            <span>
-              5 training days
-            </span>
-          </div>
-
-          <div class="level-check">
-            ✓
-          </div>
-
-        </button>
-
-      </div>
-
-    </section>
-
-
-    <!-- PROGRAM INFO -->
-    <section class="program-info-card">
-
-      <div class="program-info-header">
-
-        <div>
-          <span class="eyebrow">CURRENT PROGRAM</span>
-          <h2 id="programTitle">
-            Strength — Beginner
-          </h2>
-        </div>
-
-        <div class="program-icon">
-          🏋️
-        </div>
-
-      </div>
-
-
-      <div class="program-stats">
-
-        <div class="program-stat">
-          <strong id="programDays">5</strong>
-          <span>Days</span>
-        </div>
-
-        <div class="program-stat">
-          <strong>60</strong>
-          <span>Min / Session</span>
-        </div>
-
-        <div class="program-stat">
-          <strong>RIR</strong>
-          <span>Progressive</span>
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- WEEK -->
-    <section class="page-section">
-
-      <div class="section-heading">
-
-        <div>
-          <span class="eyebrow">WEEK STRUCTURE</span>
-          <h2>Training days</h2>
-        </div>
-
-      </div>
-
-
-      <div id="strengthDays" class="program-days-list">
-        <!-- Generated by JavaScript -->
-      </div>
-
-    </section>
-
-
-    <!-- PRINCIPLES -->
-    <section class="page-section">
-
-      <div class="section-heading">
-
-        <div>
-          <span class="eyebrow">METHOD</span>
-          <h2>How you progress</h2>
-        </div>
-
-      </div>
-
-
-      <div class="principles-grid">
-
-        <article class="info-card">
-
-          <div class="info-card-icon">
-            📈
-          </div>
-
-          <h3>Progressive Overload</h3>
-
-          <p>
-            Increase repetitions, load or training quality
-            gradually instead of forcing progress every session.
-          </p>
-
-        </article>
-
-
-        <article class="info-card">
-
-          <div class="info-card-icon">
-            🎯
-          </div>
-
-          <h3>RIR Based Training</h3>
-
-          <p>
-            Most working sets finish with controlled repetitions
-            in reserve instead of constant failure training.
-          </p>
-
-        </article>
-
-
-        <article class="info-card">
-
-          <div class="info-card-icon">
-            ⏱️
-          </div>
-
-          <h3>Controlled Rest</h3>
-
-          <p>
-            Rest periods are adapted to the exercise and target
-            performance of the next set.
-          </p>
-
-        </article>
-
-
-        <article class="info-card">
-
-          <div class="info-card-icon">
-            🔄
-          </div>
-
-          <h3>Deload</h3>
-
-          <p>
-            Reduce training stress when accumulated fatigue
-            starts affecting performance and recovery.
-          </p>
-
-        </article>
-
-      </div>
-
-    </section>
-
-
-    <!-- SAFETY -->
-    <section class="notice-card">
-
-      <div class="notice-icon">
-        ⚠️
-      </div>
-
-      <div>
-
-        <h3>Train with control</h3>
-
-        <p>
-          Good technique comes before heavier weight.
-          Stop an exercise if you experience sharp or unusual pain.
-        </p>
-
-      </div>
-
-    </section>
-
-
-    <!-- CTA -->
-    <section class="cta-card">
-
-      <span class="eyebrow">READY?</span>
-
-      <h2>Start your strength session.</h2>
-
-      <p>
-        Choose your level and begin today's workout.
-      </p>
-
-      <button
-        id="startStrengthBtn"
-        class="btn btn-primary btn-large"
-        onclick="startStrengthProgram()"
-      >
-        Start Workout →
-      </button>
-
-    </section>
-
-  </main>
-
-
-  <!-- FOOTER -->
-  <footer class="app-footer">
-
-    <div class="footer-inner">
-
-      <strong>COACH BOLBOL</strong>
-
-      <span>
-        Strength • Nutrition • Performance
-      </span>
-
+<header class="app-header">
+  <div class="header-inner">
+
+    <button
+      class="icon-button"
+      onclick="goBack()"
+      aria-label="Go back">
+      ←
+    </button>
+
+    <div class="header-title">
+      <strong>Strength Training</strong>
     </div>
 
-  </footer>
+    <a href="dashboard.html" class="header-action">
+      Home
+    </a>
 
+  </div>
+</header>
 
-  <!-- SCRIPTS -->
-  <script src="app.js"></script>
-  <script src="storage.js"></script>
-  <script src="programs.js"></script>
+<main class="page-container">
 
-  <script>
+  <section class="program-hero">
 
-    let selectedLevel = "beginner";
+    <h1>Strength Program</h1>
 
+    <p>
+      Build strength and muscle with progressive,
+      structured resistance training.
+    </p>
 
-    function selectStrengthLevel(level) {
+  </section>
 
-      selectedLevel = level;
+  <section class="program-selector">
 
-      document
-        .querySelectorAll(".level-card")
-        .forEach(card => {
+    <button
+      class="level-btn active"
+      data-level="beginner"
+      onclick="selectLevel('beginner')">
+      Beginner
+    </button>
 
-          card.classList.toggle(
-            "active",
-            card.dataset.level === level
-          );
+    <button
+      class="level-btn"
+      data-level="intermediate"
+      onclick="selectLevel('intermediate')">
+      Intermediate
+    </button>
 
-        });
+  </section>
 
-      renderStrengthProgram();
-    }
+  <section class="program-info">
 
+    <h2 id="programTitle">
+      Beginner Strength
+    </h2>
 
-    function getStrengthProgram() {
+    <p id="programDescription">
+      Build technique, consistency and foundational strength.
+    </p>
 
-      if (
-        window.CoachBolbolPrograms &&
-        typeof window.CoachBolbolPrograms.getProgram === "function"
-      ) {
+  </section>
 
-        return window.CoachBolbolPrograms.getProgram(
-          "strength",
-          selectedLevel
-        );
+  <section id="dayList" class="day-list"></section>
 
-      }
+  <div class="training-note">
 
+    <strong>Coach Bolbol principle:</strong><br>
+
+    Focus on controlled technique, progressive overload
+    and recovery. Most working sets should finish with
+    approximately 1–3 reps in reserve (RIR).
+
+  </div>
+
+</main>
+
+<nav class="bottom-nav">
+
+  <a href="dashboard.html" data-page="dashboard">
+    <span>⌂</span>
+    <small>Home</small>
+  </a>
+
+  <a href="programs.html" data-page="programs">
+    <span>▣</span>
+    <small>Programs</small>
+  </a>
+
+  <a href="nutrition.html" data-page="nutrition">
+    <span>◉</span>
+    <small>Nutrition</small>
+  </a>
+
+  <a href="progress.html" data-page="progress">
+    <span>↗</span>
+    <small>Progress</small>
+  </a>
+
+  <a href="profile.html" data-page="profile">
+    <span>●</span>
+    <small>Profile</small>
+  </a>
+
+</nav>
+
+<script src="app.js"></script>
+<script src="programs.js"></script>
+<script src="exercises.js"></script>
+<script src="ui.js"></script>
+
+<script>
+
+  let selectedLevel = "beginner";
+
+  function selectLevel(level) {
+
+    selectedLevel = level;
+
+    document.querySelectorAll(".level-btn").forEach(button => {
+
+      button.classList.toggle(
+        "active",
+        button.dataset.level === level
+      );
+
+    });
+
+    renderProgram();
+  }
+
+  function getStrengthProgram() {
+
+    if (
+      !window.CoachBolbolPrograms ||
+      typeof CoachBolbolPrograms.getProgram !== "function"
+    ) {
       return null;
     }
 
+    return CoachBolbolPrograms.getProgram(
+      "strength",
+      selectedLevel
+    );
+  }
 
-    function renderStrengthProgram() {
+  function renderProgram() {
 
-      const program = getStrengthProgram();
+    const program = getStrengthProgram();
 
-      const title = document.getElementById("programTitle");
-      const daysContainer = document.getElementById("strengthDays");
-      const daysNumber = document.getElementById("programDays");
+    if (!program) {
 
-      if (!program) {
+      document.getElementById("dayList").innerHTML = `
+        <div class="program-info">
+          <h2>Program unavailable</h2>
+          <p>
+            The strength program data could not be loaded.
+          </p>
+        </div>
+      `;
 
-        title.textContent =
-          `Strength — ${
-            selectedLevel.charAt(0).toUpperCase() +
-            selectedLevel.slice(1)
-          }`;
+      return;
+    }
 
-        return;
-      }
+    document.getElementById("programTitle").textContent =
+      program.name ||
+      `${selectedLevel} Strength`;
 
+    document.getElementById("programDescription").textContent =
+      program.description ||
+      "Structured strength training program.";
 
-      title.textContent =
-        program.name ||
-        `Strength — ${
-          selectedLevel.charAt(0).toUpperCase() +
-          selectedLevel.slice(1)
-        }`;
+    const days =
+      Array.isArray(program.days)
+        ? program.days
+        : [];
 
+    const container =
+      document.getElementById("dayList");
 
-      const days =
-        Array.isArray(program.days)
-          ? program.days
-          : [];
+    if (!days.length) {
 
+      container.innerHTML = `
+        <div class="program-info">
+          <h2>No training days</h2>
+          <p>
+            No sessions are available for this level.
+          </p>
+        </div>
+      `;
 
-      daysNumber.textContent = days.length || 5;
+      return;
+    }
 
-
-      daysContainer.innerHTML = "";
-
-
-      days.forEach((day, index) => {
+    container.innerHTML =
+      days.map((day, index) => {
 
         const exercises =
           Array.isArray(day.exercises)
             ? day.exercises
             : [];
 
+        const exerciseHTML =
+          exercises.map(exercise => {
 
-        const exercisePreview =
-          exercises
-            .slice(0, 3)
-            .map(exercise => {
+            const name =
+              exercise.name ||
+              exercise.exercise ||
+              exercise.id ||
+              "Exercise";
 
-              if (typeof exercise === "string") {
-                return exercise;
-              }
+            const sets =
+              exercise.sets ??
+              "—";
 
-              return (
-                exercise.name ||
-                exercise.exercise ||
-                exercise.id ||
-                "Exercise"
-              );
+            const reps =
+              exercise.reps ??
+              "—";
 
-            })
-            .join(" • ");
+            const rest =
+              exercise.rest ??
+              "—";
 
+            const rir =
+              exercise.rir ??
+              "—";
 
-        const card =
-          document.createElement("article");
+            return `
+              <div class="exercise-row">
 
-        card.className = "program-day-card";
+                <div class="exercise-name">
+                  ${escapeHTML(name)}
+                </div>
 
+                <div class="exercise-meta">
 
-        card.innerHTML = `
+                  <span class="meta-pill">
+                    ${sets} sets
+                  </span>
 
-          <div class="program-day-number">
-            ${String(index + 1).padStart(2, "0")}
-          </div>
+                  <span class="meta-pill">
+                    ${reps} reps
+                  </span>
 
-          <div class="program-day-content">
+                  <span class="meta-pill">
+                    Rest ${rest}
+                  </span>
 
-            <div class="program-day-top">
+                  <span class="meta-pill">
+                    RIR ${rir}
+                  </span>
+
+                </div>
+
+              </div>
+            `;
+
+          }).join("");
+
+        return `
+          <article
+            class="day-card ${index === 0 ? "open" : ""}">
+
+            <div
+              class="day-header"
+              onclick="toggleDay(this)">
 
               <div>
 
-                <span class="eyebrow">
-                  DAY ${index + 1}
-                </span>
-
                 <h3>
-                  ${escapeText(
+                  ${escapeHTML(
                     day.name ||
                     day.title ||
-                    `Training Day ${index + 1}`
+                    `Day ${index + 1}`
                   )}
                 </h3>
 
+                <span>
+                  ${exercises.length}
+                  ${exercises.length === 1
+                    ? "exercise"
+                    : "exercises"}
+                </span>
+
               </div>
 
-              <span class="day-arrow">
-                →
-              </span>
+              <div class="day-arrow">
+                ↓
+              </div>
 
             </div>
 
-            <p>
-              ${escapeText(
-                exercisePreview ||
-                "Structured strength training session"
-              )}
-            </p>
+            <div class="exercise-list">
+              ${exerciseHTML}
+            </div>
 
-          </div>
-
+          </article>
         `;
 
+      }).join("");
+  }
 
-        card.addEventListener("click", () => {
+  function toggleDay(header) {
 
-          startStrengthDay(index + 1);
+    const card =
+      header.closest(".day-card");
 
-        });
+    if (card) {
+      card.classList.toggle("open");
+    }
+  }
 
+  function escapeHTML(value) {
 
-        daysContainer.appendChild(card);
-
-      });
-
+    if (typeof value !== "string") {
+      return String(value ?? "");
     }
 
+    return value
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+  }
 
-    function startStrengthProgram() {
+  document.addEventListener(
+    "DOMContentLoaded",
+    function () {
 
-      const url =
-        `workout.html?program=strength&level=${encodeURIComponent(
-          selectedLevel
-        )}`;
-
-      window.location.href = url;
-
-    }
-
-
-    function startStrengthDay(day) {
-
-      const url =
-        `workout.html?program=strength&level=${encodeURIComponent(
-          selectedLevel
-        )}&day=${day}`;
-
-      window.location.href = url;
-
-    }
-
-
-    function escapeText(value) {
-
-      return String(value ?? "")
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-
-    }
-
-
-    document.addEventListener(
-      "DOMContentLoaded",
-      () => {
-
-        renderStrengthProgram();
-
+      if (
+        window.CoachBolbolUI &&
+        typeof CoachBolbolUI.setActiveNav === "function"
+      ) {
+        CoachBolbolUI.setActiveNav("programs");
       }
-    );
 
-  </script>
+      renderProgram();
+
+    }
+  );
+
+</script>
 
 </body>
-        </html>
+      </html>
