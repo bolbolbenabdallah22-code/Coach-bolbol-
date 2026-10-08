@@ -260,4 +260,425 @@
 
         <article class="info-card">
 
-          <div class="info
+          <div class="info-card-icon">
+            ⚡
+          </div>
+
+          <h3>Speed</h3>
+
+          <p>
+            Improve reaction, combination speed and
+            efficient movement without sacrificing technique.
+          </p>
+
+        </article>
+
+
+        <article class="info-card">
+
+          <div class="info-card-icon">
+            🔥
+          </div>
+
+          <h3>Conditioning</h3>
+
+          <p>
+            Build the ability to maintain technical quality
+            while fatigue gradually increases.
+          </p>
+
+        </article>
+
+      </div>
+
+    </section>
+
+
+    <!-- TRAINING PRINCIPLES -->
+    <section class="page-section">
+
+      <div class="section-heading">
+
+        <div>
+          <span class="eyebrow">SESSION PRINCIPLES</span>
+          <h2>Train smarter</h2>
+        </div>
+
+      </div>
+
+
+      <div class="principles-list">
+
+        <div class="principle-row">
+
+          <div class="principle-number">
+            01
+          </div>
+
+          <div>
+            <h3>Warm up first</h3>
+            <p>
+              Raise body temperature and prepare joints,
+              shoulders, hips and ankles before impact work.
+            </p>
+          </div>
+
+        </div>
+
+
+        <div class="principle-row">
+
+          <div class="principle-number">
+            02
+          </div>
+
+          <div>
+            <h3>Technique before speed</h3>
+            <p>
+              Build accurate movement first, then gradually
+              increase speed and intensity.
+            </p>
+          </div>
+
+        </div>
+
+
+        <div class="principle-row">
+
+          <div class="principle-number">
+            03
+          </div>
+
+          <div>
+            <h3>Control the intensity</h3>
+            <p>
+              Not every round needs maximum effort.
+              Use controlled intensity to maintain quality.
+            </p>
+          </div>
+
+        </div>
+
+
+        <div class="principle-row">
+
+          <div class="principle-number">
+            04
+          </div>
+
+          <div>
+            <h3>Recover between sessions</h3>
+            <p>
+              Sleep, hydration and recovery are part of
+              your training program.
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- SAFETY -->
+    <section class="notice-card">
+
+      <div class="notice-icon">
+        ⚠️
+      </div>
+
+      <div>
+
+        <h3>Train with control</h3>
+
+        <p>
+          Use appropriate equipment and controlled technique.
+          Stop if you experience sharp, unusual or worsening pain.
+        </p>
+
+      </div>
+
+    </section>
+
+
+    <!-- CTA -->
+    <section class="cta-card">
+
+      <span class="eyebrow">
+        READY?
+      </span>
+
+      <h2>
+        Start your kickboxing session.
+      </h2>
+
+      <p>
+        Choose your level and begin today's training.
+      </p>
+
+      <button
+        id="startKickboxingBtn"
+        class="btn btn-primary btn-large"
+        onclick="startKickboxingProgram()"
+      >
+        Start Session →
+      </button>
+
+    </section>
+
+  </main>
+
+
+  <!-- FOOTER -->
+  <footer class="app-footer">
+
+    <div class="footer-inner">
+
+      <strong>
+        COACH BOLBOL
+      </strong>
+
+      <span>
+        Strength • Nutrition • Kickboxing
+      </span>
+
+    </div>
+
+  </footer>
+
+
+  <!-- SCRIPTS -->
+  <script src="app.js"></script>
+  <script src="storage.js"></script>
+  <script src="programs.js"></script>
+
+
+  <script>
+
+    let selectedLevel = "beginner";
+
+
+    function selectKickboxingLevel(level) {
+
+      selectedLevel = level;
+
+      document
+        .querySelectorAll(".level-card")
+        .forEach(card => {
+
+          card.classList.toggle(
+            "active",
+            card.dataset.level === level
+          );
+
+        });
+
+      renderKickboxingProgram();
+    }
+
+
+    function getKickboxingProgram() {
+
+      if (
+        window.CoachBolbolPrograms &&
+        typeof window.CoachBolbolPrograms.getProgram === "function"
+      ) {
+
+        return window.CoachBolbolPrograms.getProgram(
+          "kickboxing",
+          selectedLevel
+        );
+
+      }
+
+      return null;
+    }
+
+
+    function renderKickboxingProgram() {
+
+      const program = getKickboxingProgram();
+
+      const title =
+        document.getElementById("programTitle");
+
+      const container =
+        document.getElementById("kickboxingDays");
+
+      const daysNumber =
+        document.getElementById("programDays");
+
+
+      title.textContent =
+        `Kickboxing — ${
+          selectedLevel.charAt(0).toUpperCase() +
+          selectedLevel.slice(1)
+        }`;
+
+
+      if (!program) {
+
+        container.innerHTML = `
+          <div class="empty-state">
+            <h3>Program unavailable</h3>
+            <p>
+              Please refresh the page and try again.
+            </p>
+          </div>
+        `;
+
+        return;
+      }
+
+
+      const days =
+        Array.isArray(program.days)
+          ? program.days
+          : [];
+
+
+      daysNumber.textContent =
+        days.length || 3;
+
+
+      container.innerHTML = "";
+
+
+      days.forEach((day, index) => {
+
+        const exercises =
+          Array.isArray(day.exercises)
+            ? day.exercises
+            : [];
+
+
+        const preview =
+          exercises
+            .slice(0, 3)
+            .map(exercise => {
+
+              if (typeof exercise === "string") {
+                return exercise;
+              }
+
+              return (
+                exercise.name ||
+                exercise.exercise ||
+                exercise.id ||
+                "Training"
+              );
+
+            })
+            .join(" • ");
+
+
+        const card =
+          document.createElement("article");
+
+        card.className =
+          "program-day-card";
+
+
+        card.innerHTML = `
+
+          <div class="program-day-number">
+            ${String(index + 1).padStart(2, "0")}
+          </div>
+
+          <div class="program-day-content">
+
+            <div class="program-day-top">
+
+              <div>
+
+                <span class="eyebrow">
+                  SESSION ${index + 1}
+                </span>
+
+                <h3>
+                  ${escapeText(
+                    day.name ||
+                    day.title ||
+                    `Kickboxing Session ${index + 1}`
+                  )}
+                </h3>
+
+              </div>
+
+              <span class="day-arrow">
+                →
+              </span>
+
+            </div>
+
+            <p>
+              ${escapeText(
+                preview ||
+                "Technique, combinations and conditioning"
+              )}
+            </p>
+
+          </div>
+
+        `;
+
+
+        card.addEventListener(
+          "click",
+          () => startKickboxingDay(index + 1)
+        );
+
+
+        container.appendChild(card);
+
+      });
+
+    }
+
+
+    function startKickboxingProgram() {
+
+      window.location.href =
+        `workout.html?program=kickboxing&level=${encodeURIComponent(
+          selectedLevel
+        )}`;
+
+    }
+
+
+    function startKickboxingDay(day) {
+
+      window.location.href =
+        `workout.html?program=kickboxing&level=${encodeURIComponent(
+          selectedLevel
+        )}&day=${day}`;
+
+    }
+
+
+    function escapeText(value) {
+
+      return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+    }
+
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      () => {
+
+        renderKickboxingProgram();
+
+      }
+    );
+
+  </script>
+
+</body>
+            </html>
