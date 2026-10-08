@@ -1,1045 +1,1225 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
-<title>Workout Tracker | Coach Bolbol</title>
+  <title>Workout | Coach Bolbol</title>
 
-<style>
-:root{
-  --bg:#f5f7fb;
-  --card:#fff;
-  --text:#172033;
-  --muted:#6b7280;
-  --border:#e5e7eb;
-  --dark:#111827;
-  --green:#16a34a;
-  --green-light:#dcfce7;
-  --red:#ef4444;
-  --shadow:0 12px 30px rgba(17,24,39,.08);
-  --radius:20px;
-}
+  <link rel="stylesheet" href="css/style.css">
 
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-}
-
-body{
-  font-family:Arial,Helvetica,sans-serif;
-  background:var(--bg);
-  color:var(--text);
-  padding-bottom:90px;
-}
-
-.container{
-  width:min(100%,720px);
-  margin:auto;
-  padding:18px;
-}
-
-.hero{
-  background:linear-gradient(135deg,#111827,#064e3b);
-  color:#fff;
-  padding:23px 20px;
-  border-radius:27px;
-  margin-bottom:18px;
-  box-shadow:var(--shadow);
-}
-
-.back{
-  color:#d1fae5;
-  text-decoration:none;
-  font-size:14px;
-  display:inline-block;
-  margin-bottom:17px;
-}
-
-.hero h1{
-  font-size:29px;
-  margin-bottom:7px;
-}
-
-.hero p{
-  color:#d1fae5;
-  font-size:14px;
-  line-height:1.5;
-}
-
-.card{
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:var(--radius);
-  padding:18px;
-  margin-bottom:16px;
-  box-shadow:var(--shadow);
-}
-
-.card h2{
-  font-size:19px;
-  margin-bottom:13px;
-}
-
-label{
-  display:block;
-  font-size:12px;
-  font-weight:bold;
-  margin-bottom:7px;
-  color:#374151;
-}
-
-select,
-input{
-  width:100%;
-  border:1px solid var(--border);
-  border-radius:12px;
-  padding:12px;
-  font-size:14px;
-  background:#fff;
-  color:var(--text);
-  outline:none;
-}
-
-select:focus,
-input:focus{
-  border-color:var(--green);
-}
-
-.grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:9px;
-}
-
-.field{
-  margin-bottom:13px;
-}
-
-.exercise-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:10px;
-}
-
-.exercise-header h2{
-  margin-bottom:0;
-}
-
-.category{
-  font-size:10px;
-  font-weight:bold;
-  background:var(--green-light);
-  color:#166534;
-  padding:6px 8px;
-  border-radius:9px;
-}
-
-.set-row{
-  display:grid;
-  grid-template-columns:35px 1fr 1fr 1fr 42px;
-  gap:7px;
-  align-items:center;
-  margin-bottom:8px;
-}
-
-.set-number{
-  font-size:12px;
-  font-weight:bold;
-  color:var(--muted);
-  text-align:center;
-}
-
-.set-row input{
-  padding:10px 7px;
-  font-size:13px;
-}
-
-.set-check{
-  width:38px;
-  height:38px;
-  border:0;
-  border-radius:10px;
-  background:#f3f4f6;
-  cursor:pointer;
-  font-size:16px;
-}
-
-.set-check.done{
-  background:var(--green-light);
-  color:#15803d;
-}
-
-.add-set,
-.save-btn,
-.timer-btn{
-  border:0;
-  cursor:pointer;
-  font-weight:bold;
-  border-radius:12px;
-  padding:12px;
-}
-
-.add-set{
-  width:100%;
-  background:#f3f4f6;
-  color:var(--text);
-  margin-top:5px;
-}
-
-.save-btn{
-  width:100%;
-  background:var(--dark);
-  color:#fff;
-  margin-top:10px;
-}
-
-.timer{
-  text-align:center;
-}
-
-.timer-display{
-  font-size:46px;
-  font-weight:800;
-  letter-spacing:1px;
-  margin:5px 0 13px;
-}
-
-.timer-controls{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:8px;
-}
-
-.timer-btn{
-  background:#111827;
-  color:#fff;
-}
-
-.timer-btn.light{
-  background:#f3f4f6;
-  color:#111827;
-}
-
-.stats{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:8px;
-}
-
-.stat{
-  background:#f8fafc;
-  border-radius:13px;
-  padding:12px 7px;
-  text-align:center;
-}
-
-.stat span{
-  display:block;
-  color:var(--muted);
-  font-size:10px;
-  margin-bottom:5px;
-}
-
-.stat strong{
-  font-size:16px;
-}
-
-.history-item{
-  display:flex;
-  justify-content:space-between;
-  gap:10px;
-  padding:12px 0;
-  border-bottom:1px solid var(--border);
-  font-size:13px;
-}
-
-.history-item:last-child{
-  border-bottom:0;
-}
-
-.history-date{
-  color:var(--muted);
-  font-size:11px;
-  margin-top:3px;
-}
-
-.empty{
-  color:var(--muted);
-  font-size:13px;
-  text-align:center;
-  padding:12px 0;
-}
-
-.bottom-nav{
-  position:fixed;
-  left:0;
-  right:0;
-  bottom:0;
-  background:rgba(255,255,255,.96);
-  backdrop-filter:blur(12px);
-  border-top:1px solid var(--border);
-  z-index:20;
-}
-
-.nav-inner{
-  width:min(100%,720px);
-  margin:auto;
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-}
-
-.nav-item{
-  text-decoration:none;
-  color:#6b7280;
-  text-align:center;
-  padding:10px 3px;
-  font-size:10px;
-}
-
-.nav-item span{
-  display:block;
-  font-size:20px;
-  margin-bottom:3px;
-}
-
-.nav-item.active{
-  color:#111827;
-  font-weight:bold;
-}
-
-@media(max-width:430px){
-  .set-row{
-    grid-template-columns:27px 1fr 1fr 1fr 38px;
-    gap:5px;
-  }
-
-  .set-row input{
-    padding:9px 5px;
-  }
-}
-</style>
+  <meta name="theme-color" content="#ffffff">
 </head>
 
 <body>
 
-<main class="container">
+  <!-- HEADER -->
+  <header class="app-header">
 
-<section class="hero">
-
-<a href="dashboard.html" class="back">← Back to Dashboard</a>
-
-<h1>🏋️ Workout Tracker</h1>
-
-<p>
-Track every set, weight, repetition and RIR.
-Your training history is saved automatically.
-</p>
-
-</section>
-
-
-<section class="card">
-
-<h2>Today's Workout</h2>
-
-<div class="field">
-
-<label>Workout type</label>
-
-<select id="workoutType" onchange="changeWorkout()">
-
-<option value="strength">Strength</option>
-<option value="fatloss">Fat Loss</option>
-<option value="kickboxing">Kickboxing</option>
-
-</select>
-
-</div>
-
-
-<div class="field">
-
-<label>Exercise</label>
-
-<select id="exerciseSelect" onchange="loadExercise()"></select>
-
-</div>
-
-</section>
-
-
-<section class="card">
-
-<div class="exercise-header">
-
-<h2 id="exerciseName">Exercise</h2>
-
-<span class="category" id="exerciseCategory">
-Strength
-</span>
-
-</div>
-
-<div style="height:12px"></div>
-
-<div class="grid">
-
-<div>
-<label>Target Sets</label>
-<input id="targetSets" type="number" value="3" min="1">
-</div>
-
-<div>
-<label>Target Reps</label>
-<input id="targetReps" type="text" value="8–12">
-</div>
-
-<div>
-<label>Rest</label>
-<input id="targetRest" type="text" value="90s">
-</div>
-
-</div>
-
-</section>
-
-
-<section class="card">
-
-<h2>Sets</h2>
-
-<div id="setsContainer"></div>
-
-<button class="add-set" onclick="addSet()">
-＋ Add Set
-</button>
-
-<button class="save-btn" onclick="saveWorkout()">
-💾 Save Workout
-</button>
-
-</section>
-
-
-<section class="card">
-
-<h2>Session Stats</h2>
-
-<div class="stats">
-
-<div class="stat">
-<span>Sets</span>
-<strong id="totalSets">0</strong>
-</div>
-
-<div class="stat">
-<span>Volume</span>
-<strong id="totalVolume">0 kg</strong>
-</div>
-
-<div class="stat">
-<span>Best 1RM</span>
-<strong id="best1RM">0 kg</strong>
-</div>
-
-</div>
-
-</section>
-
-
-<section class="card timer">
-
-<h2>⏱️ Rest Timer</h2>
-
-<div class="timer-display" id="timerDisplay">
-01:30
-</div>
-
-<div class="timer-controls">
-
-<button class="timer-btn" onclick="startTimer()">
-Start
-</button>
-
-<button class="timer-btn light" onclick="pauseTimer()">
-Pause
-</button>
-
-<button class="timer-btn light" onclick="resetTimer()">
-Reset
-</button>
-
-</div>
-
-</section>
-
-
-<section class="card">
-
-<h2>📊 Recent History</h2>
-
-<div id="historyContainer"></div>
-
-</section>
-
-</main>
-
-
-<nav class="bottom-nav">
-
-<div class="nav-inner">
-
-<a href="dashboard.html" class="nav-item">
-<span>🏠</span>
-Home
-</a>
-
-<a href="programs.html" class="nav-item">
-<span>🏋️</span>
-Programs
-</a>
-
-<a href="nutrition.html" class="nav-item">
-<span>🥗</span>
-Nutrition
-</a>
-
-<a href="progress.html" class="nav-item">
-<span>📈</span>
-Progress
-</a>
-
-</div>
-
-</nav>
-
-
-<script>
-
-const exercises = {
-
-strength:[
-  ["Bench Press","Chest"],
-  ["Incline Dumbbell Press","Chest"],
-  ["Lat Pulldown","Back"],
-  ["Seated Cable Row","Back"],
-  ["Squat","Legs"],
-  ["Romanian Deadlift","Legs"],
-  ["Leg Press","Legs"],
-  ["Shoulder Press","Shoulders"],
-  ["Lateral Raise","Shoulders"],
-  ["Biceps Curl","Biceps"],
-  ["Triceps Pushdown","Triceps"]
-],
-
-fatloss:[
-  ["Goblet Squat","Full Body"],
-  ["Dumbbell Romanian Deadlift","Full Body"],
-  ["Walking Lunges","Legs"],
-  ["Push-Up","Chest"],
-  ["Dumbbell Row","Back"],
-  ["Shoulder Press","Shoulders"],
-  ["Bike Intervals","Conditioning"],
-  ["Incline Walk","Cardio"]
-],
-
-kickboxing:[
-  ["Shadow Boxing","Technique"],
-  ["Heavy Bag","Striking"],
-  ["Jab–Cross","Combination"],
-  ["Hooks","Striking"],
-  ["Kicks","Striking"],
-  ["Footwork","Movement"],
-  ["Reaction Drill","Reaction"],
-  ["Conditioning","Conditioning"]
-]
-
-};
-
-
-let sets = [];
-
-let timerSeconds = 90;
-let timerInterval = null;
-
-
-function changeWorkout(){
-
-  const type =
-    document.getElementById("workoutType").value;
-
-  const select =
-    document.getElementById("exerciseSelect");
-
-  select.innerHTML = "";
-
-  exercises[type].forEach((exercise,index)=>{
-
-    const option =
-      document.createElement("option");
-
-    option.value = index;
-
-    option.textContent = exercise[0];
-
-    select.appendChild(option);
-
-  });
-
-  loadExercise();
-
-}
-
-
-function loadExercise(){
-
-  const type =
-    document.getElementById("workoutType").value;
-
-  const index =
-    Number(document.getElementById("exerciseSelect").value);
-
-  const exercise =
-    exercises[type][index];
-
-  document.getElementById("exerciseName")
-    .textContent = exercise[0];
-
-  document.getElementById("exerciseCategory")
-    .textContent = exercise[1];
-
-  sets = [];
-
-  const target =
-    Number(document.getElementById("targetSets").value) || 3;
-
-  for(let i=0;i<target;i++){
-    sets.push({
-      weight:"",
-      reps:"",
-      rir:"",
-      done:false
-    });
-  }
-
-  renderSets();
-
-}
-
-
-function renderSets(){
-
-  const container =
-    document.getElementById("setsContainer");
-
-  container.innerHTML = "";
-
-  sets.forEach((set,index)=>{
-
-    const row =
-      document.createElement("div");
-
-    row.className = "set-row";
-
-    row.innerHTML = `
-
-      <div class="set-number">
-        ${index + 1}
-      </div>
-
-      <input
-        type="number"
-        min="0"
-        step="0.5"
-        placeholder="kg"
-        value="${set.weight}"
-        onchange="updateSet(${index},'weight',this.value)"
-      >
-
-      <input
-        type="number"
-        min="0"
-        placeholder="reps"
-        value="${set.reps}"
-        onchange="updateSet(${index},'reps',this.value)"
-      >
-
-      <input
-        type="number"
-        min="0"
-        max="10"
-        placeholder="RIR"
-        value="${set.rir}"
-        onchange="updateSet(${index},'rir',this.value)"
-      >
+    <div class="header-inner">
 
       <button
-        class="set-check ${set.done ? "done" : ""}"
-        onclick="toggleSet(${index})">
-
-        ${set.done ? "✓" : "○"}
-
+        class="icon-button"
+        onclick="goBack()"
+        aria-label="Go back"
+      >
+        ←
       </button>
 
-    `;
+      <div>
 
-    container.appendChild(row);
+        <span class="eyebrow">
+          COACH BOLBOL
+        </span>
 
-  });
+        <h1 id="workoutHeaderTitle">
+          Workout
+        </h1>
 
-  updateStats();
+      </div>
 
-}
+      <a
+        href="dashboard.html"
+        class="header-logo"
+      >
+        CB
+      </a>
 
+    </div>
 
-function updateSet(index,key,value){
+  </header>
 
-  sets[index][key] = value;
 
-  updateStats();
+  <main class="page-container">
 
-}
+    <!-- SESSION HERO -->
+    <section class="workout-session-card">
 
+      <div class="workout-session-top">
 
-function toggleSet(index){
+        <div>
 
-  sets[index].done =
-    !sets[index].done;
+          <span
+            class="badge badge-primary"
+            id="programBadge"
+          >
+            WORKOUT
+          </span>
 
-  renderSets();
+          <h2 id="sessionTitle">
+            Today's Training
+          </h2>
 
-}
+          <p id="sessionSubtitle">
+            Complete your session with quality and control.
+          </p>
 
+        </div>
 
-function addSet(){
+        <div class="workout-session-icon">
+          💪
+        </div>
 
-  sets.push({
-    weight:"",
-    reps:"",
-    rir:"",
-    done:false
-  });
+      </div>
 
-  renderSets();
 
-}
+      <div class="workout-session-stats">
 
+        <div class="workout-stat">
 
-function updateStats(){
+          <strong id="sessionDay">
+            01
+          </strong>
 
-  let volume = 0;
-  let best1RM = 0;
-  let completed = 0;
+          <span>
+            Day
+          </span>
 
-  sets.forEach(set=>{
+        </div>
 
-    const weight =
-      Number(set.weight) || 0;
 
-    const reps =
-      Number(set.reps) || 0;
+        <div class="workout-stat">
 
-    if(set.done){
-      completed++;
-    }
+          <strong id="exerciseCount">
+            0
+          </strong>
 
-    volume += weight * reps;
+          <span>
+            Exercises
+          </span>
 
-    if(weight > 0 && reps > 0){
+        </div>
 
-      const oneRM =
-        weight * (1 + reps / 30);
 
-      if(oneRM > best1RM){
-        best1RM = oneRM;
-      }
+        <div class="workout-stat">
 
-    }
+          <strong id="sessionDuration">
+            00:00
+          </strong>
 
-  });
+          <span>
+            Duration
+          </span>
 
-  document.getElementById("totalSets")
-    .textContent = completed + "/" + sets.length;
+        </div>
 
-  document.getElementById("totalVolume")
-    .textContent =
-    Math.round(volume) + " kg";
+      </div>
 
-  document.getElementById("best1RM")
-    .textContent =
-    Math.round(best1RM) + " kg";
+    </section>
 
-}
 
+    <!-- TIMER -->
+    <section class="timer-card">
 
-function saveWorkout(){
+      <div class="timer-info">
 
-  const type =
-    document.getElementById("workoutType").value;
+        <span class="eyebrow">
+          SESSION TIMER
+        </span>
 
-  const exerciseIndex =
-    Number(document.getElementById("exerciseSelect").value);
+        <strong id="mainTimer">
+          00:00
+        </strong>
 
-  const exercise =
-    exercises[type][exerciseIndex];
+      </div>
 
-  const validSets =
-    sets.filter(set =>
-      Number(set.weight) > 0 &&
-      Number(set.reps) > 0
-    );
 
-  if(validSets.length === 0){
+      <div class="timer-actions">
 
-    alert("Add at least one completed set with weight and reps.");
+        <button
+          id="timerButton"
+          class="btn btn-primary"
+          onclick="toggleWorkoutTimer()"
+        >
+          Start
+        </button>
 
-    return;
+        <button
+          class="btn btn-secondary"
+          onclick="resetWorkoutTimer()"
+        >
+          Reset
+        </button>
 
-  }
+      </div>
 
+    </section>
 
-  const volume =
-    validSets.reduce(
-      (sum,set)=>
-        sum +
-        Number(set.weight) *
-        Number(set.reps),
-      0
-    );
 
+    <!-- REST TIMER -->
+    <section
+      id="restTimerCard"
+      class="rest-timer-card"
+      style="display:none;"
+    >
 
-  const historyKey =
-    "coach_bolbol_workout_history";
+      <div>
 
-  let history = [];
+        <span class="eyebrow">
+          REST
+        </span>
 
-  try{
+        <strong id="restTimer">
+          01:30
+        </strong>
 
-    history =
-      JSON.parse(
-        localStorage.getItem(historyKey)
-      ) || [];
+      </div>
 
-  }catch(e){
 
-    history = [];
+      <button
+        class="btn btn-secondary"
+        onclick="stopRestTimer()"
+      >
+        Skip
+      </button>
 
-  }
+    </section>
 
 
-  history.unshift({
+    <!-- WORKOUT CONTROLS -->
+    <section class="workout-controls">
 
-    program:type,
+      <button
+        class="btn btn-secondary"
+        onclick="addExerciseToWorkout()"
+      >
+        + Add Exercise
+      </button>
 
-    exercise:exercise[0],
 
-    category:exercise[1],
+      <button
+        class="btn btn-secondary"
+        onclick="showWorkoutSummary()"
+      >
+        Summary
+      </button>
 
-    sets:validSets,
+    </section>
 
-    volume:Math.round(volume),
 
-    date:new Date().toISOString()
+    <!-- EXERCISES -->
+    <section class="page-section">
 
-  });
+      <div class="section-heading">
 
+        <div>
 
-  history =
-    history.slice(0,50);
+          <span class="eyebrow">
+            TRAINING
+          </span>
 
+          <h2>
+            Exercises
+          </h2>
 
-  localStorage.setItem(
-    historyKey,
-    JSON.stringify(history)
-  );
+        </div>
 
+        <span
+          class="section-count"
+          id="exerciseCountLabel"
+        >
+          0 exercises
+        </span>
 
-  alert("✅ Workout saved successfully!");
+      </div>
 
-  renderHistory();
 
-}
+      <div
+        id="exerciseList"
+        class="workout-exercise-list"
+      >
+        <!-- Generated -->
+      </div>
 
+    </section>
 
-function renderHistory(){
 
-  const container =
-    document.getElementById("historyContainer");
+    <!-- LIVE SUMMARY -->
+    <section class="workout-summary-card">
 
-  let history = [];
+      <div class="section-heading">
 
-  try{
+        <div>
 
-    history =
-      JSON.parse(
-        localStorage.getItem(
-          "coach_bolbol_workout_history"
-        )
-      ) || [];
+          <span class="eyebrow">
+            LIVE SUMMARY
+          </span>
 
-  }catch(e){
+          <h2>
+            Performance
+          </h2>
 
-    history = [];
+        </div>
 
-  }
+      </div>
 
 
-  if(history.length === 0){
+      <div class="summary-grid">
 
-    container.innerHTML =
-      `<div class="empty">
-        No workouts saved yet.
-      </div>`;
+        <div class="summary-stat">
 
-    return;
+          <span>
+            Total Volume
+          </span>
 
-  }
-
-
-  container.innerHTML =
-    history.slice(0,8).map(item=>{
-
-      const date =
-        new Date(item.date);
-
-      return `
-
-        <div class="history-item">
-
-          <div>
-
-            <strong>
-              ${item.exercise}
-            </strong>
-
-            <div class="history-date">
-              ${date.toLocaleDateString()}
-              • ${item.program}
-            </div>
-
-          </div>
-
-          <strong>
-            ${item.volume} kg
+          <strong id="totalVolume">
+            0 kg
           </strong>
 
         </div>
 
-      `;
 
-    }).join("");
+        <div class="summary-stat">
 
-}
+          <span>
+            Sets
+          </span>
 
+          <strong id="totalSets">
+            0
+          </strong>
 
-/* TIMER */
-
-function updateTimer(){
-
-  const minutes =
-    Math.floor(timerSeconds / 60)
-      .toString()
-      .padStart(2,"0");
-
-  const seconds =
-    (timerSeconds % 60)
-      .toString()
-      .padStart(2,"0");
-
-  document.getElementById("timerDisplay")
-    .textContent =
-    `${minutes}:${seconds}`;
-
-}
+        </div>
 
 
-function startTimer(){
+        <div class="summary-stat">
 
-  if(timerInterval) return;
+          <span>
+            Completed
+          </span>
 
-  timerInterval =
-    setInterval(()=>{
+          <strong id="completedExercises">
+            0 / 0
+          </strong>
 
-      if(timerSeconds <= 0){
+        </div>
 
-        clearInterval(timerInterval);
 
-        timerInterval = null;
+        <div class="summary-stat">
 
-        alert("⏱️ Rest complete!");
+          <span>
+            Best 1RM
+          </span>
+
+          <strong id="bestOneRM">
+            —
+          </strong>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- COACH NOTE -->
+    <section class="notice-card">
+
+      <div class="notice-icon">
+        🎯
+      </div>
+
+      <div>
+
+        <h3>
+          Quality over ego
+        </h3>
+
+        <p>
+          Use controlled technique and choose a load that allows
+          you to complete the prescribed repetitions with the
+          planned RIR.
+        </p>
+
+      </div>
+
+    </section>
+
+
+    <!-- FINISH -->
+    <section class="cta-card">
+
+      <span class="eyebrow">
+        SESSION COMPLETE?
+      </span>
+
+      <h2>
+        Finish your workout.
+      </h2>
+
+      <p>
+        Your sets, volume, duration and performance will be saved
+        to your workout history.
+      </p>
+
+
+      <button
+        class="btn btn-primary btn-large"
+        onclick="finishCurrentWorkout()"
+      >
+        Finish Workout ✓
+      </button>
+
+    </section>
+
+  </main>
+
+
+  <!-- FOOTER -->
+  <footer class="app-footer">
+
+    <div class="footer-inner">
+
+      <strong>
+        COACH BOLBOL
+      </strong>
+
+      <span>
+        Train • Track • Progress
+      </span>
+
+    </div>
+
+  </footer>
+
+
+  <!-- SCRIPTS -->
+  <script src="app.js"></script>
+  <script src="storage.js"></script>
+  <script src="programs.js"></script>
+  <script src="exercises.js"></script>
+  <script src="workout.js"></script>
+
+
+  <script>
+
+    /* =========================================================
+       WORKOUT STATE
+    ========================================================= */
+
+    const params =
+      new URLSearchParams(window.location.search);
+
+    const programType =
+      params.get("program") || "strength";
+
+    const selectedLevel =
+      params.get("level") || "beginner";
+
+    const selectedDay =
+      parseInt(params.get("day") || "1", 10);
+
+
+    let workoutStarted = false;
+
+    let workoutStartTime = null;
+
+    let timerInterval = null;
+
+    let restInterval = null;
+
+    let elapsedSeconds = 0;
+
+    let restSeconds = 0;
+
+    let currentExercises = [];
+
+    let customExercises = [];
+
+
+    /* =========================================================
+       PROGRAM HELPERS
+    ========================================================= */
+
+    function getProgram() {
+
+      if (
+        !window.CoachBolbolPrograms ||
+        typeof window.CoachBolbolPrograms.getProgram !== "function"
+      ) {
+        return null;
+      }
+
+      return window.CoachBolbolPrograms.getProgram(
+        programType,
+        selectedLevel
+      );
+
+    }
+
+
+    function getCurrentDay() {
+
+      const program = getProgram();
+
+      if (!program) {
+        return null;
+      }
+
+      const days =
+        Array.isArray(program.days)
+          ? program.days
+          : [];
+
+      return days[selectedDay - 1] || days[0] || null;
+
+    }
+
+
+    function getExerciseData(exercise) {
+
+      if (typeof exercise === "string") {
+
+        if (
+          window.CoachBolbolExercises &&
+          typeof window.CoachBolbolExercises.getExercise === "function"
+        ) {
+
+          return (
+            window.CoachBolbolExercises.getExercise(
+              exercise
+            ) || {
+              id: exercise,
+              name: exercise
+            }
+          );
+
+        }
+
+        return {
+          id: exercise,
+          name: exercise
+        };
+
+      }
+
+
+      const id =
+        exercise?.id ||
+        exercise?.exercise ||
+        exercise?.name;
+
+
+      if (
+        window.CoachBolbolExercises &&
+        typeof window.CoachBolbolExercises.getExercise === "function"
+      ) {
+
+        return (
+          window.CoachBolbolExercises.getExercise(id) ||
+          exercise
+        );
+
+      }
+
+
+      return exercise;
+
+    }
+
+
+    function buildExerciseList() {
+
+      const day =
+        getCurrentDay();
+
+
+      if (!day) {
+
+        currentExercises = [];
 
         return;
 
       }
 
-      timerSeconds--;
 
-      updateTimer();
-
-    },1000);
-
-}
+      const exercises =
+        Array.isArray(day.exercises)
+          ? day.exercises
+          : [];
 
 
-function pauseTimer(){
+      currentExercises =
+        exercises.map(
+          (exercise, index) => {
 
-  clearInterval(timerInterval);
-
-  timerInterval = null;
-
-}
-
-
-function resetTimer(){
-
-  pauseTimer();
-
-  timerSeconds = 90;
-
-  updateTimer();
-
-}
+            const data =
+              getExerciseData(exercise);
 
 
-document
-  .getElementById("targetSets")
-  .addEventListener("change",()=>{
+            return {
 
-    const target =
-      Number(
-        document.getElementById("targetSets").value
-      ) || 3;
+              ...data,
 
-    while(sets.length < target){
+              uid:
+                `exercise-${index}-${Date.now()}`,
 
-      sets.push({
-        weight:"",
-        reps:"",
-        rir:"",
-        done:false
-      });
+              plannedSets:
+                Number(
+                  exercise?.sets ||
+                  data?.sets ||
+                  3
+                ),
+
+              plannedReps:
+                exercise?.reps ||
+                data?.reps ||
+                "8–12",
+
+              rest:
+                Number(
+                  exercise?.rest ||
+                  data?.rest ||
+                  90
+                ),
+
+              rir:
+                exercise?.rir ??
+                data?.rir ??
+                2,
+
+              sets: [],
+
+              completed: false
+
+            };
+
+          }
+        );
+
+
+      customExercises.forEach(
+        exercise => {
+
+          currentExercises.push(exercise);
+
+        }
+      );
 
     }
 
-    while(sets.length > target){
-      sets.pop();
+
+    /* =========================================================
+       PAGE SETUP
+    ========================================================= */
+
+    function setupWorkoutPage() {
+
+      const program =
+        getProgram();
+
+      const day =
+        getCurrentDay();
+
+
+      const programNames = {
+
+        strength:
+          "Strength",
+
+        kickboxing:
+          "Kickboxing",
+
+        fatloss:
+          "Fat Loss"
+
+      };
+
+
+      const programName =
+        programNames[programType] ||
+        "Workout";
+
+
+      document
+        .getElementById("programBadge")
+        .textContent =
+        programName.toUpperCase();
+
+
+      document
+        .getElementById("workoutHeaderTitle")
+        .textContent =
+        programName;
+
+
+      document
+        .getElementById("sessionDay")
+        .textContent =
+        String(selectedDay)
+          .padStart(2, "0");
+
+
+      document
+        .getElementById("sessionTitle")
+        .textContent =
+        day?.name ||
+        day?.title ||
+        `${programName} Session ${selectedDay}`;
+
+
+      document
+        .getElementById("sessionSubtitle")
+        .textContent =
+        day?.description ||
+        getDefaultDescription(programType);
+
+
+      buildExerciseList();
+
+      renderExercises();
+
+      updateSummary();
+
     }
 
-    renderSets();
 
-  });
+    function getDefaultDescription(type) {
+
+      if (type === "strength") {
+
+        return "Build strength and muscle with progressive overload.";
+
+      }
 
 
-changeWorkout();
+      if (type === "kickboxing") {
 
-updateTimer();
+        return "Develop technique, combinations, speed and conditioning.";
 
-renderHistory();
+      }
 
-</script>
 
-</body>
-  </html>
+      if (type === "fatloss") {
+
+        return "Combine resistance training and conditioning for sustainable fat loss.";
+
+      }
+
+
+      return "Complete your session with quality and control.";
+
+    }
+
+
+    /* =========================================================
+       EXERCISE RENDERING
+    ========================================================= */
+
+    function renderExercises() {
+
+      const container =
+        document.getElementById("exerciseList");
+
+
+      document
+        .getElementById("exerciseCount")
+        .textContent =
+        currentExercises.length;
+
+
+      document
+        .getElementById("exerciseCountLabel")
+        .textContent =
+        `${currentExercises.length} exercise${
+          currentExercises.length === 1 ? "" : "s"
+        }`;
+
+
+      if (!currentExercises.length) {
+
+        container.innerHTML = `
+
+          <div class="empty-state">
+
+            <div class="empty-state-icon">
+              🏋️
+            </div>
+
+            <h3>
+              No exercises found
+            </h3>
+
+            <p>
+              Add an exercise to start your session.
+            </p>
+
+          </div>
+
+        `;
+
+        return;
+
+      }
+
+
+      container.innerHTML = "";
+
+
+      currentExercises.forEach(
+        (exercise, exerciseIndex) => {
+
+          const card =
+            document.createElement("article");
+
+
+          card.className =
+            "workout-exercise-card";
+
+
+          card.dataset.index =
+            exerciseIndex;
+
+
+          card.innerHTML =
+            createExerciseHTML(
+              exercise,
+              exerciseIndex
+            );
+
+
+          container.appendChild(card);
+
+
+          renderExerciseSets(
+            exerciseIndex
+          );
+
+        }
+      );
+
+
+      updateSummary();
+
+    }
+
+
+    function createExerciseHTML(
+      exercise,
+      index
+    ) {
+
+      const name =
+        escapeHTML(
+          exercise.name ||
+          exercise.title ||
+          exercise.id ||
+          `Exercise ${index + 1}`
+        );
+
+
+      const category =
+        escapeHTML(
+          exercise.category ||
+          "Strength"
+        );
+
+
+      const muscle =
+        escapeHTML(
+          exercise.muscle ||
+          exercise.primaryMuscle ||
+          ""
+        );
+
+
+      const instructions =
+        escapeHTML(
+          exercise.instructions ||
+          exercise.description ||
+          "Perform the movement with controlled technique."
+        );
+
+
+      return `
+
+        <div class="exercise-card-header">
+
+          <div class="exercise-number">
+            ${String(index + 1).padStart(2, "0")}
+          </div>
+
+
+          <div class="exercise-heading">
+
+            <span class="eyebrow">
+              ${category}
+            </span>
+
+            <h3>
+              ${name}
+            </h3>
+
+            ${
+              muscle
+                ? `<span class="exercise-muscle">${muscle}</span>`
+                : ""
+            }
+
+          </div>
+
+
+          <button
+            class="icon-button exercise-remove"
+            onclick="removeExercise(${index})"
+            aria-label="Remove exercise"
+          >
+            ×
+          </button>
+
+        </div>
+
+
+        <div class="exercise-prescription">
+
+          <div>
+            <span>
+              Sets
+            </span>
+
+            <strong>
+              ${exercise.plannedSets}
+            </strong>
+          </div>
+
+
+          <div>
+            <span>
+              Reps
+            </span>
+
+            <strong>
+              ${escapeHTML(
+                String(exercise.plannedReps)
+              )}
+            </strong>
+          </div>
+
+
+          <div>
+            <span>
+              Rest
+            </span>
+
+            <strong>
+              ${exercise.rest}s
+            </strong>
+          </div>
+
+
+          <div>
+            <span>
+              RIR
+            </span>
+
+            <strong>
+              ${exercise.rir}
+            </strong>
+          </div>
+
+        </div>
+
+
+        <div class="exercise-instructions">
+
+          <p>
+            ${instructions}
+          </p>
+
+        </div>
+
+
+        <div
+          class="exercise-sets"
+          id="sets-${index}"
+        >
+        </div>
+
+
+        <div class="exercise-actions">
+
+          <button
+            class="btn btn-secondary"
+            onclick="addSet(${index})"
+          >
+            + Add Set
+          </button>
+
+
+          <button
+            class="btn btn-secondary"
+            onclick="startRest(${exercise.rest})"
+          >
+            Rest ${exercise.rest}s
+          </button>
+
+
+          <button
+            class="btn btn-secondary"
+            onclick="calculateExercise1RM(${index})"
+          >
+            1RM
+          </button>
+
+        </div>
+
+      `;
+
+    }
+
+
+    /* =========================================================
+       SETS
+    ========================================================= */
+
+    function renderExerciseSets(
+      exerciseIndex
+    ) {
+
+      const exercise =
+        currentExercises[
+          exerciseIndex
+        ];
+
+
+      const container =
+        document.getElementById(
+          `sets-${exerciseIndex}`
+        );
+
+
+      if (!container) {
+        return;
+      }
+
+
+      container.innerHTML = "";
+
+
+      const setCount =
+        Math.max(
+          exercise.plannedSets,
+          exercise.sets.length
+        );
+
+
+      for (
+        let setIndex = 0;
+        setIndex < setCount;
+        setIndex++
+      ) {
+
+        const set =
+          exercise.sets[setIndex] || {};
+
+
+        const row =
+          document.createElement("div");
+
+
+        row.className =
+          "workout-set-row";
+
+
+        row.innerHTML = `
+
+          <div class="set-number">
+            ${setIndex + 1}
+          </div>
+
+
+          <div class="set-input-group">
+
+            <label>
+              Weight
+            </label>
+
+            <div class="input-with-unit">
+
+              <input
+                type="number"
+                min="0"
+                step="0.5"
+                inputmode="decimal"
+                value="${set.weight ?? ""}"
+                placeholder="0"
+                onchange="updateSet(
+                  ${exerciseIndex},
+                  ${setIndex},
+                  'weight',
+                  this.value
+                )"
+              >
+
+              <span>
+                kg
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <div class="set-input-group">
+
+            <label>
+              Reps
+            </label>
+
+            <input
+              type="number"
+              min="0"
+              step="1"
+              inputmode="numeric"
+              value="${set.reps ?? ""}"
+              placeholder="${escapeHTML(
+                String(exercise.plannedReps)
+              )}"
+              onchange="updateSet(
+                ${exerciseIndex},
+                ${setIndex},
+                'reps',
+                this.value
+              )"
+            >
+
+          </div>
+
+
+          <label class="set-complete">
+
+            <input
+              type="checkbox"
+              ${
+                set.completed
+                  ? "checked"
+                  : ""
+              }
+              onchange="toggleSetComplete(
+                ${exerciseIndex},
+                ${setIndex},
+                this.checked
+              )"
+            >
+
+            <span>
+              ✓
+            </span>
+
+          </label>
+
+        `;
+
+
+        container.appendChild(row);
+
+      }
+
+    }
+
+
+    function ensureSet(
+      exerciseIndex,
+      setIndex
+    ) {
+
+      const exercise =
+        currentExercises[
+          exerciseIndex
+        ];
+
+
+      if (!exercise) {
+        return null;
+      }
+
+
+      while (
+        exercise.sets.length <= setIndex
+      ) {
+
+        exercise.sets.push({
+
+          weight: "",
+
+          reps: "",
+
+          completed: false
+
+        });
+
+      }
+
+
+      return exercise.sets[setIndex];
+
+    }
+
+
+    function updateSet(
+      exerciseIndex,
+      setIndex,
+      field,
+      value
+    ) {
+
+      const set =
+        ensureSet(
+          exerciseIndex,
+          setIndex
+        );
+
+
+      if (!set) {
+        return;
+      }
+
+
+      if (
+        field === "weight" ||
+        field === "reps"
+      ) {
+
+        set[field] =
+          value === ""
+            ? ""
+            : Number(value);
+
+      } else {
+
+        set[field] =
+          value;
+
+      }
+
+
+      if (
+        Number(set.weight) > 0 &&
+        Number(set.reps) > 0
+      ) {
+
+        set.completed =
+   
