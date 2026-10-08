@@ -19,7 +19,7 @@
 
   <link
     rel="stylesheet"
-    href="style.css"
+    href="css/style.css"
   >
 
   <style>
@@ -44,6 +44,7 @@
     }
 
     @keyframes authEnter {
+
       from {
         opacity: 0;
         transform: translateY(20px);
@@ -53,6 +54,7 @@
         opacity: 1;
         transform: translateY(0);
       }
+
     }
 
     .auth-brand {
@@ -95,10 +97,15 @@
       font-size: 14px;
     }
 
+    .password-wrap {
+      position: relative;
+    }
+
     .auth-field input {
       width: 100%;
       box-sizing: border-box;
       padding: 14px;
+      padding-right: 70px;
       border: 1px solid #dfe3ea;
       border-radius: 14px;
       font-size: 16px;
@@ -110,10 +117,46 @@
       border-color: #111827;
     }
 
+    .auth-field input.valid {
+      border-color: #16a34a;
+    }
+
+    .auth-field input.invalid {
+      border-color: #dc2626;
+    }
+
+    .show-password {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      border: none;
+      background: transparent;
+      color: #6b7280;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      padding: 6px;
+    }
+
     .password-hint {
       margin-top: 6px;
       color: #6b7280;
       font-size: 12px;
+    }
+
+    .password-status {
+      margin-top: 6px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .password-status.match {
+      color: #16a34a;
+    }
+
+    .password-status.no-match {
+      color: #dc2626;
     }
 
     .auth-button {
@@ -141,6 +184,7 @@
       border-radius: 12px;
       text-align: center;
       font-size: 14px;
+      line-height: 1.5;
     }
 
     .auth-message.show {
@@ -186,7 +230,9 @@
           CB
         </div>
 
-        <h1>Coach Bolbol</h1>
+        <h1>
+          Coach Bolbol
+        </h1>
 
         <p>
           Create your fitness account.
@@ -195,8 +241,12 @@
       </div>
 
 
-      <form id="registerForm">
+      <form
+        id="registerForm"
+        novalidate
+      >
 
+        <!-- FULL NAME -->
 
         <div class="auth-field">
 
@@ -215,6 +265,8 @@
         </div>
 
 
+        <!-- EMAIL -->
+
         <div class="auth-field">
 
           <label for="email">
@@ -232,20 +284,34 @@
         </div>
 
 
+        <!-- PASSWORD -->
+
         <div class="auth-field">
 
           <label for="password">
             Password
           </label>
 
-          <input
-            id="password"
-            type="password"
-            placeholder="Create a password"
-            autocomplete="new-password"
-            minlength="6"
-            required
-          >
+          <div class="password-wrap">
+
+            <input
+              id="password"
+              type="password"
+              placeholder="Create a password"
+              autocomplete="new-password"
+              minlength="6"
+              required
+            >
+
+            <button
+              type="button"
+              class="show-password"
+              onclick="togglePassword('password', this)"
+            >
+              Show
+            </button>
+
+          </div>
 
           <div class="password-hint">
             Minimum 6 characters.
@@ -254,23 +320,44 @@
         </div>
 
 
+        <!-- CONFIRM PASSWORD -->
+
         <div class="auth-field">
 
           <label for="confirmPassword">
             Confirm password
           </label>
 
-          <input
-            id="confirmPassword"
-            type="password"
-            placeholder="Repeat your password"
-            autocomplete="new-password"
-            minlength="6"
-            required
-          >
+          <div class="password-wrap">
+
+            <input
+              id="confirmPassword"
+              type="password"
+              placeholder="Repeat your password"
+              autocomplete="new-password"
+              minlength="6"
+              required
+            >
+
+            <button
+              type="button"
+              class="show-password"
+              onclick="togglePassword('confirmPassword', this)"
+            >
+              Show
+            </button>
+
+          </div>
+
+          <div
+            id="passwordStatus"
+            class="password-status"
+          ></div>
 
         </div>
 
+
+        <!-- SUBMIT -->
 
         <button
           type="submit"
@@ -280,15 +367,18 @@
           Create Account
         </button>
 
-
       </form>
 
+
+      <!-- MESSAGE -->
 
       <div
         id="authMessage"
         class="auth-message"
       ></div>
 
+
+      <!-- LOGIN -->
 
       <div class="auth-links">
 
@@ -300,7 +390,6 @@
 
       </div>
 
-
     </section>
 
   </main>
@@ -308,9 +397,7 @@
 
   <!-- SUPABASE -->
 
-  <script
-    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
-  ></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 
   <!-- COACH BOLBOL -->
@@ -339,12 +426,19 @@
     const confirmInput =
       document.getElementById("confirmPassword");
 
+    const passwordStatus =
+      document.getElementById("passwordStatus");
+
     const button =
       document.getElementById("registerButton");
 
     const message =
       document.getElementById("authMessage");
 
+
+    /* =========================
+       MESSAGE
+    ========================= */
 
     function showMessage(text, type) {
 
@@ -356,9 +450,122 @@
     }
 
 
+    /* =========================
+       PASSWORD VISIBILITY
+    ========================= */
+
+    function togglePassword(id, buttonElement) {
+
+      const input =
+        document.getElementById(id);
+
+      if (input.type === "password") {
+
+        input.type = "text";
+
+        buttonElement.textContent =
+          "Hide";
+
+      } else {
+
+        input.type = "password";
+
+        buttonElement.textContent =
+          "Show";
+
+      }
+
+    }
+
+
+    /* =========================
+       PASSWORD MATCH
+    ========================= */
+
+    function checkPasswords() {
+
+      const password =
+        passwordInput.value;
+
+      const confirmPassword =
+        confirmInput.value;
+
+
+      if (!confirmPassword) {
+
+        passwordStatus.textContent = "";
+
+        passwordStatus.className =
+          "password-status";
+
+        confirmInput.classList.remove(
+          "valid",
+          "invalid"
+        );
+
+        return false;
+
+      }
+
+
+      if (password === confirmPassword) {
+
+        passwordStatus.textContent =
+          "✓ Passwords match";
+
+        passwordStatus.className =
+          "password-status match";
+
+        confirmInput.classList.remove(
+          "invalid"
+        );
+
+        confirmInput.classList.add(
+          "valid"
+        );
+
+        return true;
+
+      }
+
+
+      passwordStatus.textContent =
+        "✕ Passwords do not match";
+
+      passwordStatus.className =
+        "password-status no-match";
+
+      confirmInput.classList.remove(
+        "valid"
+      );
+
+      confirmInput.classList.add(
+        "invalid"
+      );
+
+      return false;
+
+    }
+
+
+    passwordInput.addEventListener(
+      "input",
+      checkPasswords
+    );
+
+    confirmInput.addEventListener(
+      "input",
+      checkPasswords
+    );
+
+
+    /* =========================
+       REGISTER
+    ========================= */
+
     form.addEventListener(
       "submit",
-      async function (event) {
+      async function(event) {
 
         event.preventDefault();
 
@@ -369,6 +576,13 @@
         const email =
           emailInput.value.trim();
 
+        /*
+         * IMPORTANT:
+         * Do NOT trim passwords.
+         * Spaces can technically be part
+         * of a password.
+         */
+
         const password =
           passwordInput.value;
 
@@ -376,17 +590,23 @@
           confirmInput.value;
 
 
+        /* NAME */
+
         if (!fullName) {
 
           showMessage(
-            "Please enter your name.",
+            "Please enter your full name.",
             "error"
           );
+
+          nameInput.focus();
 
           return;
 
         }
 
+
+        /* EMAIL */
 
         if (!email) {
 
@@ -395,10 +615,14 @@
             "error"
           );
 
+          emailInput.focus();
+
           return;
 
         }
 
+
+        /* PASSWORD LENGTH */
 
         if (password.length < 6) {
 
@@ -407,15 +631,40 @@
             "error"
           );
 
+          passwordInput.focus();
+
           return;
 
         }
 
 
+        /* PASSWORD MATCH */
+
         if (password !== confirmPassword) {
 
+          checkPasswords();
+
           showMessage(
-            "Passwords do not match.",
+            "Please enter the same password in both fields.",
+            "error"
+          );
+
+          confirmInput.focus();
+
+          return;
+
+        }
+
+
+        /* SUPABASE CHECK */
+
+        if (
+          !window.CoachBolbolAuth ||
+          typeof window.CoachBolbolAuth.signUp !== "function"
+        ) {
+
+          showMessage(
+            "Authentication is not configured yet.",
             "error"
           );
 
@@ -423,6 +672,8 @@
 
         }
 
+
+        /* LOADING */
 
         button.disabled = true;
 
@@ -430,64 +681,111 @@
           "Creating account...";
 
 
-        const result =
-          await window.CoachBolbolAuth.signUp(
-            email,
-            password,
-            fullName
+        try {
+
+          const result =
+            await window.CoachBolbolAuth.signUp(
+              email,
+              password,
+              fullName
+            );
+
+
+          /* ERROR */
+
+          if (
+            !result ||
+            !result.success
+          ) {
+
+            showMessage(
+              result?.error ||
+              "Account creation failed. Please try again.",
+              "error"
+            );
+
+            button.disabled = false;
+
+            button.textContent =
+              "Create Account";
+
+            return;
+
+          }
+
+
+          /* SUCCESS */
+
+          showMessage(
+            "Account created successfully.",
+            "success"
           );
 
 
-        if (!result.success) {
+          /*
+           * If Supabase returned a session,
+           * the user can enter the app immediately.
+           */
+
+          if (result.session) {
+
+            button.textContent =
+              "Opening Coach Bolbol...";
+
+
+            setTimeout(
+              function() {
+
+                window.location.replace(
+                  "dashboard.html"
+                );
+
+              },
+              700
+            );
+
+            return;
+
+          }
+
+
+          /*
+           * Email confirmation is enabled.
+           * Supabase will not create an active
+           * session until the email is confirmed.
+           */
+
+          button.disabled = false;
+
+          button.textContent =
+            "Create Account";
+
 
           showMessage(
-            result.error ||
-            "Account creation failed.",
+            "Account created. Check your email and confirm your account before logging in.",
+            "success"
+          );
+
+
+        } catch (error) {
+
+          console.error(
+            "Registration error:",
+            error
+          );
+
+
+          showMessage(
+            error?.message ||
+            "Something went wrong while creating your account.",
             "error"
           );
 
-          button.disabled = false;
-
-          button.textContent =
-            "Create Account";
-
-          return;
-
-        }
-
-
-        showMessage(
-          "Account created successfully.",
-          "success"
-        );
-
-
-        /*
-         * Supabase may require email confirmation.
-         * If a session exists, open dashboard.
-         * Otherwise ask the user to check email.
-         */
-
-        if (result.session) {
-
-          setTimeout(function () {
-
-            window.location.href =
-              "dashboard.html";
-
-          }, 800);
-
-        } else {
 
           button.disabled = false;
 
           button.textContent =
             "Create Account";
-
-          showMessage(
-            "Account created. Please check your email to confirm your account.",
-            "success"
-          );
 
         }
 
@@ -498,4 +796,4 @@
 
 </body>
 
-  </html>
+            </html>
