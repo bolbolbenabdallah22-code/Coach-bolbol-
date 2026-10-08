@@ -1,0 +1,1151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Nutrition | Coach Bolbol</title>
+
+<style>
+:root{
+  --bg:#f5f7fb;
+  --card:#fff;
+  --text:#172033;
+  --muted:#6b7280;
+  --border:#e5e7eb;
+  --dark:#111827;
+  --green:#16a34a;
+  --green-light:#dcfce7;
+  --orange:#f97316;
+  --shadow:0 12px 30px rgba(17,24,39,.08);
+  --radius:20px;
+}
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  padding-bottom:90px;
+}
+
+.container{
+  width:min(100%,720px);
+  margin:auto;
+  padding:18px;
+}
+
+.hero{
+  background:linear-gradient(135deg,#111827,#166534);
+  color:white;
+  padding:23px 20px;
+  border-radius:27px;
+  margin-bottom:18px;
+  box-shadow:var(--shadow);
+}
+
+.back{
+  display:inline-block;
+  color:#d1fae5;
+  text-decoration:none;
+  font-size:14px;
+  margin-bottom:17px;
+}
+
+.hero h1{
+  font-size:29px;
+  margin-bottom:7px;
+}
+
+.hero p{
+  color:#d1fae5;
+  font-size:14px;
+  line-height:1.5;
+}
+
+.card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:18px;
+  margin-bottom:16px;
+  box-shadow:var(--shadow);
+}
+
+.card h2{
+  font-size:19px;
+  margin-bottom:14px;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+}
+
+.stat{
+  background:#f8fafc;
+  border-radius:14px;
+  padding:13px 6px;
+  text-align:center;
+}
+
+.stat span{
+  display:block;
+  font-size:10px;
+  color:var(--muted);
+  margin-bottom:5px;
+}
+
+.stat strong{
+  font-size:17px;
+}
+
+.progress{
+  height:9px;
+  background:#e5e7eb;
+  border-radius:999px;
+  overflow:hidden;
+  margin-top:13px;
+}
+
+.progress-bar{
+  height:100%;
+  width:0%;
+  background:#16a34a;
+  border-radius:999px;
+  transition:.4s;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+.field{
+  margin-bottom:12px;
+}
+
+label{
+  display:block;
+  font-size:12px;
+  font-weight:bold;
+  margin-bottom:7px;
+  color:#374151;
+}
+
+input,select{
+  width:100%;
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:12px;
+  background:white;
+  color:var(--text);
+  font-size:14px;
+  outline:none;
+}
+
+input:focus,select:focus{
+  border-color:var(--green);
+}
+
+.btn{
+  width:100%;
+  border:0;
+  border-radius:12px;
+  padding:13px;
+  background:var(--dark);
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+  margin-top:5px;
+}
+
+.food-row{
+  display:grid;
+  grid-template-columns:1fr 80px;
+  gap:8px;
+  margin-bottom:9px;
+}
+
+.add-btn{
+  border:0;
+  background:var(--green-light);
+  color:#166534;
+  border-radius:11px;
+  padding:11px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.meal{
+  border:1px solid var(--border);
+  border-radius:15px;
+  padding:13px;
+  margin-bottom:10px;
+}
+
+.meal-head{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  align-items:center;
+  margin-bottom:8px;
+}
+
+.meal-head strong{
+  font-size:14px;
+}
+
+.remove{
+  border:0;
+  background:#fee2e2;
+  color:#b91c1c;
+  width:30px;
+  height:30px;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+.meal-food{
+  display:flex;
+  justify-content:space-between;
+  font-size:12px;
+  color:var(--muted);
+  padding:4px 0;
+}
+
+.water{
+  display:grid;
+  grid-template-columns:repeat(8,1fr);
+  gap:5px;
+  margin-top:10px;
+}
+
+.glass{
+  height:38px;
+  border:1px solid #bfdbfe;
+  background:#eff6ff;
+  border-radius:9px;
+  cursor:pointer;
+  font-size:16px;
+}
+
+.glass.active{
+  background:#bfdbfe;
+}
+
+.note{
+  font-size:12px;
+  color:var(--muted);
+  line-height:1.5;
+  margin-top:10px;
+}
+
+.bottom-nav{
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:0;
+  background:rgba(255,255,255,.96);
+  backdrop-filter:blur(12px);
+  border-top:1px solid var(--border);
+  z-index:20;
+}
+
+.nav-inner{
+  width:min(100%,720px);
+  margin:auto;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+}
+
+.nav-item{
+  text-decoration:none;
+  color:#6b7280;
+  text-align:center;
+  padding:10px 3px;
+  font-size:10px;
+}
+
+.nav-item span{
+  display:block;
+  font-size:20px;
+  margin-bottom:3px;
+}
+
+.nav-item.active{
+  color:#111827;
+  font-weight:bold;
+}
+
+@media(max-width:430px){
+  .water{
+    gap:4px;
+  }
+
+  .glass{
+    height:35px;
+    font-size:14px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<main class="container">
+
+<section class="hero">
+
+<a href="dashboard.html" class="back">
+← Back to Dashboard
+</a>
+
+<h1>🥗 Nutrition</h1>
+
+<p>
+Track calories, protein, carbohydrates, fats, meals and hydration.
+</p>
+
+</section>
+
+
+<section class="card">
+
+<h2>🎯 Daily Target</h2>
+
+<div class="stats">
+
+<div class="stat">
+<span>Calories</span>
+<strong id="targetCalories">2000</strong>
+</div>
+
+<div class="stat">
+<span>Protein</span>
+<strong id="targetProtein">150g</strong>
+</div>
+
+<div class="stat">
+<span>Carbs</span>
+<strong id="targetCarbs">200g</strong>
+</div>
+
+</div>
+
+<div style="height:10px"></div>
+
+<div class="stats">
+
+<div class="stat">
+<span>Fat</span>
+<strong id="targetFat">65g</strong>
+</div>
+
+<div class="stat">
+<span>Consumed</span>
+<strong id="consumedCalories">0</strong>
+</div>
+
+<div class="stat">
+<span>Remaining</span>
+<strong id="remainingCalories">2000</strong>
+</div>
+
+</div>
+
+<div class="progress">
+<div class="progress-bar" id="calorieProgress"></div>
+</div>
+
+</section>
+
+
+<section class="card">
+
+<h2>➕ Add Food</h2>
+
+<div class="field">
+
+<label>Meal</label>
+
+<select id="mealSelect">
+
+<option value="Breakfast">Breakfast</option>
+<option value="Lunch">Lunch</option>
+<option value="Snack">Snack</option>
+<option value="Dinner">Dinner</option>
+
+</select>
+
+</div>
+
+
+<div class="field">
+
+<label>Food</label>
+
+<select id="foodSelect"></select>
+
+</div>
+
+
+<div class="grid">
+
+<div class="field">
+
+<label>Weight (g)</label>
+
+<input
+id="foodGrams"
+type="number"
+value="100"
+min="1"
+>
+
+</div>
+
+<div class="field">
+
+<label>Calories</label>
+
+<input
+id="foodCalories"
+type="number"
+readonly
+>
+
+</div>
+
+</div>
+
+
+<button class="btn" onclick="addFood()">
+＋ Add Food
+</button>
+
+</section>
+
+
+<section class="card">
+
+<h2>📋 Today's Meals</h2>
+
+<div id="mealsContainer"></div>
+
+</section>
+
+
+<section class="card">
+
+<h2>📊 Macro Summary</h2>
+
+<div class="stats">
+
+<div class="stat">
+<span>Protein</span>
+<strong id="totalProtein">0g</strong>
+</div>
+
+<div class="stat">
+<span>Carbs</span>
+<strong id="totalCarbs">0g</strong>
+</div>
+
+<div class="stat">
+<span>Fat</span>
+<strong id="totalFat">0g</strong>
+</div>
+
+</div>
+
+<p class="note">
+Nutrition values are estimates. For packaged foods, use the nutrition label
+when available.
+</p>
+
+</section>
+
+
+<section class="card">
+
+<h2>💧 Water</h2>
+
+<p class="note">
+Tap each glass as you drink. Target: 8 glasses.
+</p>
+
+<div class="water" id="waterContainer"></div>
+
+</section>
+
+
+<section class="card">
+
+<h2>⚙️ Nutrition Target</h2>
+
+<div class="grid">
+
+<div class="field">
+<label>Calories</label>
+<input id="customCalories" type="number" placeholder="e.g. 2000">
+</div>
+
+<div class="field">
+<label>Protein (g)</label>
+<input id="customProtein" type="number" placeholder="e.g. 150">
+</div>
+
+<div class="field">
+<label>Carbs (g)</label>
+<input id="customCarbs" type="number" placeholder="e.g. 200">
+</div>
+
+<div class="field">
+<label>Fat (g)</label>
+<input id="customFat" type="number" placeholder="e.g. 65">
+</div>
+
+</div>
+
+<button class="btn" onclick="saveTargets()">
+💾 Save Nutrition Target
+</button>
+
+</section>
+
+</main>
+
+
+<nav class="bottom-nav">
+
+<div class="nav-inner">
+
+<a href="dashboard.html" class="nav-item">
+<span>🏠</span>
+Home
+</a>
+
+<a href="programs.html" class="nav-item">
+<span>🏋️</span>
+Programs
+</a>
+
+<a href="nutrition.html" class="nav-item active">
+<span>🥗</span>
+Nutrition
+</a>
+
+<a href="progress.html" class="nav-item">
+<span>📈</span>
+Progress
+</a>
+
+</div>
+
+</nav>
+
+
+<script>
+
+const foods = {
+
+"Chicken Breast":{
+  calories:165,
+  protein:31,
+  carbs:0,
+  fat:3.6
+},
+
+"Tuna":{
+  calories:132,
+  protein:29,
+  carbs:0,
+  fat:1
+},
+
+"Lean Beef":{
+  calories:170,
+  protein:26,
+  carbs:0,
+  fat:7
+},
+
+"Salmon":{
+  calories:208,
+  protein:20,
+  carbs:0,
+  fat:13
+},
+
+"Eggs":{
+  calories:143,
+  protein:13,
+  carbs:1.1,
+  fat:9.5
+},
+
+"Rice (raw)":{
+  calories:365,
+  protein:7.1,
+  carbs:80,
+  fat:.7
+},
+
+"Oats":{
+  calories:389,
+  protein:16.9,
+  carbs:66.3,
+  fat:6.9
+},
+
+"Potato":{
+  calories:77,
+  protein:2,
+  carbs:17,
+  fat:.1
+},
+
+"Sweet Potato":{
+  calories:86,
+  protein:1.6,
+  carbs:20,
+  fat:.1
+},
+
+"Whole Wheat Bread":{
+  calories:247,
+  protein:13,
+  carbs:41,
+  fat:4.2
+},
+
+"Banana":{
+  calories:89,
+  protein:1.1,
+  carbs:22.8,
+  fat:.3
+},
+
+"Apple":{
+  calories:52,
+  protein:.3,
+  carbs:13.8,
+  fat:.2
+},
+
+"Orange":{
+  calories:47,
+  protein:.9,
+  carbs:11.8,
+  fat:.1
+},
+
+"Greek Yogurt":{
+  calories:59,
+  protein:10,
+  carbs:3.6,
+  fat:.4
+},
+
+"Milk":{
+  calories:61,
+  protein:3.2,
+  carbs:4.8,
+  fat:3.3
+},
+
+"Almonds":{
+  calories:579,
+  protein:21.2,
+  carbs:21.6,
+  fat:49.9
+},
+
+"Avocado":{
+  calories:160,
+  protein:2,
+  carbs:8.5,
+  fat:14.7
+},
+
+"Olive Oil":{
+  calories:884,
+  protein:0,
+  carbs:0,
+  fat:100
+},
+
+"Broccoli":{
+  calories:34,
+  protein:2.8,
+  carbs:6.6,
+  fat:.4
+},
+
+"Tomato":{
+  calories:18,
+  protein:.9,
+  carbs:3.9,
+  fat:.2
+},
+
+"Cucumber":{
+  calories:15,
+  protein:.7,
+  carbs:3.6,
+  fat:.1
+}
+
+};
+
+
+let meals =
+JSON.parse(
+localStorage.getItem("coach_bolbol_nutrition_meals") || "[]"
+);
+
+
+let targets = {
+  calories:2000,
+  protein:150,
+  carbs:200,
+  fat:65
+};
+
+
+let savedTargets =
+JSON.parse(
+localStorage.getItem("coach_bolbol_nutrition_targets") || "null"
+);
+
+
+if(savedTargets){
+  targets = savedTargets;
+}
+
+
+function populateFoods(){
+
+  const select =
+  document.getElementById("foodSelect");
+
+  select.innerHTML = "";
+
+  Object.keys(foods).forEach(food=>{
+
+    const option =
+    document.createElement("option");
+
+    option.value = food;
+    option.textContent = food;
+
+    select.appendChild(option);
+
+  });
+
+  updateFoodCalories();
+
+}
+
+
+function updateFoodCalories(){
+
+  const food =
+  document.getElementById("foodSelect").value;
+
+  const grams =
+  Number(document.getElementById("foodGrams").value) || 0;
+
+  const data =
+  foods[food];
+
+  const calories =
+  data.calories * grams / 100;
+
+  document.getElementById("foodCalories")
+  .value = Math.round(calories);
+
+}
+
+
+function addFood(){
+
+  const meal =
+  document.getElementById("mealSelect").value;
+
+  const food =
+  document.getElementById("foodSelect").value;
+
+  const grams =
+  Number(document.getElementById("foodGrams").value);
+
+  if(!grams || grams <= 0){
+    alert("Enter a valid food weight.");
+    return;
+  }
+
+
+  const data = foods[food];
+
+  const factor = grams / 100;
+
+
+  meals.push({
+
+    meal:meal,
+    food:food,
+    grams:grams,
+
+    calories:Math.round(data.calories * factor),
+
+    protein:+(data.protein * factor).toFixed(1),
+
+    carbs:+(data.carbs * factor).toFixed(1),
+
+    fat:+(data.fat * factor).toFixed(1)
+
+  });
+
+
+  saveMeals();
+
+  renderMeals();
+
+}
+
+
+function removeFood(index){
+
+  meals.splice(index,1);
+
+  saveMeals();
+
+  renderMeals();
+
+}
+
+
+function saveMeals(){
+
+  localStorage.setItem(
+    "coach_bolbol_nutrition_meals",
+    JSON.stringify(meals)
+  );
+
+}
+
+
+function renderMeals(){
+
+  const container =
+  document.getElementById("mealsContainer");
+
+  if(meals.length === 0){
+
+    container.innerHTML =
+    `<p class="note">
+      No food added today yet.
+    </p>`;
+
+    updateSummary();
+
+    return;
+
+  }
+
+
+  container.innerHTML =
+  meals.map((item,index)=>`
+
+    <div class="meal">
+
+      <div class="meal-head">
+
+        <strong>
+          ${item.meal}
+        </strong>
+
+        <button
+          class="remove"
+          onclick="removeFood(${index})">
+
+          ×
+
+        </button>
+
+      </div>
+
+      <div class="meal-food">
+        <span>${item.food}</span>
+        <span>${item.grams} g</span>
+      </div>
+
+      <div class="meal-food">
+        <span>Calories</span>
+        <strong>${item.calories} kcal</strong>
+      </div>
+
+      <div class="meal-food">
+        <span>Protein</span>
+        <span>${item.protein} g</span>
+      </div>
+
+      <div class="meal-food">
+        <span>Carbs</span>
+        <span>${item.carbs} g</span>
+      </div>
+
+      <div class="meal-food">
+        <span>Fat</span>
+        <span>${item.fat} g</span>
+      </div>
+
+    </div>
+
+  `).join("");
+
+
+  updateSummary();
+
+}
+
+
+function updateSummary(){
+
+  let calories = 0;
+  let protein = 0;
+  let carbs = 0;
+  let fat = 0;
+
+
+  meals.forEach(item=>{
+
+    calories += item.calories;
+    protein += item.protein;
+    carbs += item.carbs;
+    fat += item.fat;
+
+  });
+
+
+  document.getElementById("consumedCalories")
+  .textContent = Math.round(calories);
+
+
+  document.getElementById("remainingCalories")
+  .textContent =
+  Math.max(
+    0,
+    Math.round(targets.calories - calories)
+  );
+
+
+  document.getElementById("totalProtein")
+  .textContent =
+  protein.toFixed(1) + "g";
+
+
+  document.getElementById("totalCarbs")
+  .textContent =
+  carbs.toFixed(1) + "g";
+
+
+  document.getElementById("totalFat")
+  .textContent =
+  fat.toFixed(1) + "g";
+
+
+  const percentage =
+  Math.min(
+    100,
+    calories / targets.calories * 100
+  );
+
+
+  document.getElementById("calorieProgress")
+  .style.width =
+  percentage + "%";
+
+}
+
+
+function renderTargets(){
+
+  document.getElementById("targetCalories")
+  .textContent = targets.calories;
+
+  document.getElementById("targetProtein")
+  .textContent = targets.protein + "g";
+
+  document.getElementById("targetCarbs")
+  .textContent = targets.carbs + "g";
+
+  document.getElementById("targetFat")
+  .textContent = targets.fat + "g";
+
+
+  document.getElementById("customCalories")
+  .value = targets.calories;
+
+  document.getElementById("customProtein")
+  .value = targets.protein;
+
+  document.getElementById("customCarbs")
+  .value = targets.carbs;
+
+  document.getElementById("customFat")
+  .value = targets.fat;
+
+}
+
+
+function saveTargets(){
+
+  const calories =
+  Number(
+    document.getElementById("customCalories").value
+  );
+
+  const protein =
+  Number(
+    document.getElementById("customProtein").value
+  );
+
+  const carbs =
+  Number(
+    document.getElementById("customCarbs").value
+  );
+
+  const fat =
+  Number(
+    document.getElementById("customFat").value
+  );
+
+
+  if(
+    calories <= 0 ||
+    protein < 0 ||
+    carbs < 0 ||
+    fat < 0
+  ){
+
+    alert("Enter valid nutrition targets.");
+
+    return;
+
+  }
+
+
+  targets = {
+    calories:calories,
+    protein:protein,
+    carbs:carbs,
+    fat:fat
+  };
+
+
+  localStorage.setItem(
+    "coach_bolbol_nutrition_targets",
+    JSON.stringify(targets)
+  );
+
+
+  renderTargets();
+
+  updateSummary();
+
+
+  alert("✅ Nutrition target saved!");
+
+}
+
+
+function renderWater(){
+
+  const container =
+  document.getElementById("waterContainer");
+
+  let water =
+  Number(
+    localStorage.getItem("coach_bolbol_water")
+  ) || 0;
+
+
+  container.innerHTML = "";
+
+
+  for(let i=1;i<=8;i++){
+
+    const button =
+    document.createElement("button");
+
+    button.className =
+    "glass" + (i <= water ? " active" : "");
+
+    button.textContent = "💧";
+
+    button.onclick = ()=>{
+
+      let current =
+      Number(
+        localStorage.getItem("coach_bolbol_water")
+      ) || 0;
+
+      if(i <= current){
+        current = i - 1;
+      }else{
+        current = i;
+      }
+
+      localStorage.setItem(
+        "coach_bolbol_water",
+        current
+      );
+
+      renderWater();
+
+    };
+
+
+    container.appendChild(button);
+
+  }
+
+}
+
+
+document
+.getElementById("foodSelect")
+.addEventListener(
+"change",
+updateFoodCalories
+);
+
+
+document
+.getElementById("foodGrams")
+.addEventListener(
+"input",
+updateFoodCalories
+);
+
+
+populateFoods();
+
+renderTargets();
+
+renderMeals();
+
+renderWater();
+
+</script>
+
+</body>
+  </html>
