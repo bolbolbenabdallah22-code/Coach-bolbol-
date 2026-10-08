@@ -8,703 +8,643 @@
 
   <link rel="stylesheet" href="css/style.css">
 
-  <meta name="theme-color" content="#ffffff">
+  <style>
+    .program-hero {
+      background: linear-gradient(135deg, #111827, #4b5563);
+      color: #fff;
+      border-radius: 24px;
+      padding: 28px 20px;
+      margin-bottom: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .program-hero::after {
+      content: "";
+      position: absolute;
+      width: 190px;
+      height: 190px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.07);
+      right: -60px;
+      top: -65px;
+    }
+
+    .program-hero h1 {
+      margin: 0 0 8px;
+      font-size: 28px;
+    }
+
+    .program-hero p {
+      margin: 0;
+      opacity: .82;
+      line-height: 1.5;
+    }
+
+    .level-selector {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .level-btn {
+      border: 1px solid #d1d5db;
+      background: #fff;
+      color: #111827;
+      border-radius: 15px;
+      padding: 14px 10px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .level-btn.active {
+      background: #111827;
+      color: #fff;
+      border-color: #111827;
+    }
+
+    .program-info {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 22px;
+      padding: 20px;
+      margin-bottom: 18px;
+      box-shadow: 0 8px 25px rgba(15,23,42,.05);
+    }
+
+    .program-info h2 {
+      margin: 0 0 8px;
+    }
+
+    .program-info p {
+      margin: 0;
+      color: #6b7280;
+      line-height: 1.55;
+    }
+
+    .session-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .session-card {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 6px 20px rgba(15,23,42,.04);
+    }
+
+    .session-header {
+      padding: 17px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      cursor: pointer;
+    }
+
+    .session-title {
+      margin: 0 0 5px;
+      font-size: 17px;
+    }
+
+    .session-subtitle {
+      margin: 0;
+      color: #6b7280;
+      font-size: 13px;
+    }
+
+    .session-arrow {
+      font-size: 18px;
+      transition: transform .25s ease;
+    }
+
+    .session-card.open .session-arrow {
+      transform: rotate(180deg);
+    }
+
+    .session-content {
+      display: none;
+      padding: 12px;
+      border-top: 1px solid #e5e7eb;
+    }
+
+    .session-card.open .session-content {
+      display: grid;
+      gap: 9px;
+    }
+
+    .exercise-row {
+      padding: 14px;
+      background: #f8fafc;
+      border: 1px solid #e5e7eb;
+      border-radius: 15px;
+    }
+
+    .exercise-name {
+      font-weight: 800;
+      margin-bottom: 7px;
+    }
+
+    .exercise-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+
+    .meta-pill {
+      padding: 5px 8px;
+      border-radius: 999px;
+      background: #eef2f7;
+      color: #4b5563;
+      font-size: 12px;
+    }
+
+    .conditioning-box,
+    .safety-note {
+      margin-top: 18px;
+      padding: 16px;
+      border-radius: 17px;
+      background: #f3f4f6;
+      color: #374151;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .start-button-wrap {
+      margin-top: 20px;
+    }
+  </style>
 </head>
 
 <body>
 
-  <!-- HEADER -->
-  <header class="app-header">
-    <div class="header-inner">
-
-      <button
-        class="icon-button"
-        onclick="goBack()"
-        aria-label="Go back"
-      >
-        ←
-      </button>
-
-      <div>
-        <span class="eyebrow">COACH BOLBOL</span>
-        <h1>Fat Loss</h1>
-      </div>
-
-      <a href="dashboard.html" class="header-logo">
-        CB
-      </a>
-
-    </div>
-  </header>
-
-
-  <main class="page-container">
-
-    <!-- HERO -->
-    <section class="hero-card fatloss-hero">
-
-      <div class="hero-content">
-
-        <span class="badge badge-primary">
-          🔥 FAT LOSS
-        </span>
-
-        <h2>
-          Lose Fat.<br>
-          Keep Muscle.
-        </h2>
-
-        <p>
-          A structured training system combining resistance training,
-          conditioning and cardio to support sustainable fat loss.
-        </p>
-
-      </div>
-
-    </section>
-
-
-    <!-- LEVEL -->
-    <section class="page-section">
-
-      <div class="section-heading">
-
-        <div>
-          <span class="eyebrow">PROGRAM LEVEL</span>
-          <h2>Choose your level</h2>
-        </div>
-
-      </div>
-
-
-      <div class="level-grid">
-
-        <button
-          class="level-card active"
-          data-level="beginner"
-          onclick="selectFatLossLevel('beginner')"
-        >
-
-          <div class="level-icon">
-            🌱
-          </div>
-
-          <div class="level-info">
-
-            <h3>Beginner</h3>
-
-            <p>
-              Build consistency with full-body training,
-              moderate conditioning and cardio.
-            </p>
-
-            <span>
-              3 sessions / week
-            </span>
-
-          </div>
-
-          <div class="level-check">
-            ✓
-          </div>
-
-        </button>
-
-
-        <button
-          class="level-card"
-          data-level="intermediate"
-          onclick="selectFatLossLevel('intermediate')"
-        >
-
-          <div class="level-icon">
-            ⚡
-          </div>
-
-          <div class="level-info">
-
-            <h3>Intermediate</h3>
-
-            <p>
-              Higher training density with resistance work
-              and structured conditioning.
-            </p>
-
-            <span>
-              3 sessions / week
-            </span>
-
-          </div>
-
-          <div class="level-check">
-            ✓
-          </div>
-
-        </button>
-
-      </div>
-
-    </section>
-
-
-    <!-- PROGRAM SUMMARY -->
-    <section class="program-info-card">
-
-      <div class="program-info-header">
-
-        <div>
-
-          <span class="eyebrow">
-            CURRENT PROGRAM
-          </span>
-
-          <h2 id="programTitle">
-            Fat Loss — Beginner
-          </h2>
-
-        </div>
-
-        <div class="program-icon">
-          🔥
-        </div>
-
-      </div>
-
-
-      <div class="program-stats">
-
-        <div class="program-stat">
-          <strong id="programDays">3</strong>
-          <span>Sessions</span>
-        </div>
-
-        <div class="program-stat">
-          <strong>45–60</strong>
-          <span>Min / Session</span>
-        </div>
-
-        <div class="program-stat">
-          <strong>3</strong>
-          <span>Focus Areas</span>
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- WEEK -->
-    <section class="page-section">
-
-      <div class="section-heading">
-
-        <div>
-          <span class="eyebrow">WEEK STRUCTURE</span>
-          <h2>Training sessions</h2>
-        </div>
-
-      </div>
-
-
-      <div id="fatLossDays" class="program-days-list">
-        <!-- Generated by JavaScript -->
-      </div>
-
-    </section>
-
-
-    <!-- STRATEGY -->
-    <section class="page-section">
-
-      <div class="section-heading">
-
-        <div>
-          <span class="eyebrow">FAT LOSS STRATEGY</span>
-          <h2>What matters most</h2>
-        </div>
-
-      </div>
-
-
-      <div class="principles-grid">
-
-        <article class="info-card">
-
-          <div class="info-card-icon">
-            🥗
-          </div>
-
-          <h3>Calorie Control</h3>
-
-          <p>
-            Fat loss primarily depends on maintaining an appropriate
-            calorie deficit over time.
-          </p>
-
-        </article>
-
-
-        <article class="info-card">
-
-          <div class="info-card-icon">
-            💪
-          </div>
-
-          <h3>Resistance Training</h3>
-
-          <p>
-            Strength training helps maintain muscle and performance
-            while body weight decreases.
-          </p>
-
-        </article>
-
-
-        <article class="info-card">
-
-          <div class="info-card-icon">
-            🚶
-          </div>
-
-          <h3>Daily Activity</h3>
-
-          <p>
-            Walking and general daily movement can increase energy
-            expenditure without excessive training fatigue.
-          </p>
-
-        </article>
-
-
-        <article class="info-card">
-
-          <div class="info-card-icon">
-            😴
-          </div>
-
-          <h3>Recovery</h3>
-
-          <p>
-            Sleep and recovery support training quality,
-            appetite control and long-term consistency.
-          </p>
-
-        </article>
-
-      </div>
-
-    </section>
-
-
-    <!-- PROGRESSION -->
-    <section class="page-section">
-
-      <div class="section-heading">
-
-        <div>
-          <span class="eyebrow">PROGRESSION</span>
-          <h2>How to approach fat loss</h2>
-        </div>
-
-      </div>
-
-
-      <div class="principles-list">
-
-        <div class="principle-row">
-
-          <div class="principle-number">
-            01
-          </div>
-
-          <div>
-
-            <h3>Start with a manageable deficit</h3>
-
-            <p>
-              Avoid unnecessarily aggressive calorie restriction.
-              A sustainable deficit is easier to maintain.
-            </p>
-
-          </div>
-
-        </div>
-
-
-        <div class="principle-row">
-
-          <div class="principle-number">
-            02
-          </div>
-
-          <div>
-
-            <h3>Keep strength work consistent</h3>
-
-            <p>
-              Continue challenging the major muscle groups while
-              adjusting volume according to recovery.
-            </p>
-
-          </div>
-
-        </div>
-
-
-        <div class="principle-row">
-
-          <div class="principle-number">
-            03
-          </div>
-
-          <div>
-
-            <h3>Use cardio strategically</h3>
-
-            <p>
-              Cardio supports energy expenditure, but more is not
-              automatically better.
-            </p>
-
-          </div>
-
-        </div>
-
-
-        <div class="principle-row">
-
-          <div class="principle-number">
-            04
-          </div>
-
-          <div>
-
-            <h3>Track the trend</h3>
-
-            <p>
-              Use repeated weigh-ins and progress measurements instead
-              of judging results from a single day's body weight.
-            </p>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- WARNING -->
-    <section class="notice-card">
-
-      <div class="notice-icon">
-        ⚠️
-      </div>
-
-      <div>
-
-        <h3>Don't chase exhaustion</h3>
-
-        <p>
-          Fat loss does not require destroying yourself with endless
-          cardio or extreme training. Quality, recovery and consistency
-          come first.
-        </p>
-
-      </div>
-
-    </section>
-
-
-    <!-- CTA -->
-    <section class="cta-card">
-
-      <span class="eyebrow">
-        READY?
-      </span>
-
-      <h2>
-        Start your fat-loss session.
-      </h2>
-
-      <p>
-        Choose your level and begin today's workout.
-      </p>
-
-      <button
-        id="startFatLossBtn"
-        class="btn btn-primary btn-large"
-        onclick="startFatLossProgram()"
-      >
-        Start Session →
-      </button>
-
-    </section>
-
-  </main>
-
-
-  <!-- FOOTER -->
-  <footer class="app-footer">
-
-    <div class="footer-inner">
-
-      <strong>
-        COACH BOLBOL
-      </strong>
-
-      <span>
-        Strength • Nutrition • Fat Loss
-      </span>
-
+<header class="app-header">
+
+  <div class="header-inner">
+
+    <button
+      class="icon-button"
+      onclick="goBack()"
+      aria-label="Go back">
+      ←
+    </button>
+
+    <div class="header-title">
+      <strong>Fat Loss</strong>
     </div>
 
-  </footer>
+    <a
+      href="dashboard.html"
+      class="header-action">
+      Home
+    </a>
 
+  </div>
 
-  <!-- SCRIPTS -->
-  <script src="app.js"></script>
-  <script src="storage.js"></script>
-  <script src="programs.js"></script>
+</header>
 
+<main class="page-container">
 
-  <script>
+  <section class="program-hero">
 
-    let selectedLevel = "beginner";
+    <h1>Fat Loss Program</h1>
 
+    <p>
+      Combine resistance training, conditioning and
+      progressive activity to support sustainable fat loss.
+    </p>
 
-    function selectFatLossLevel(level) {
+  </section>
 
-      selectedLevel = level;
+  <section class="level-selector">
 
-      document
-        .querySelectorAll(".level-card")
-        .forEach(card => {
+    <button
+      class="level-btn active"
+      data-level="beginner"
+      onclick="selectLevel('beginner')">
+      Beginner
+    </button>
 
-          card.classList.toggle(
-            "active",
-            card.dataset.level === level
-          );
+    <button
+      class="level-btn"
+      data-level="intermediate"
+      onclick="selectLevel('intermediate')">
+      Intermediate
+    </button>
 
-        });
+  </section>
 
-      renderFatLossProgram();
+  <section class="program-info">
 
-    }
+    <h2 id="programTitle">
+      Beginner Fat Loss
+    </h2>
 
+    <p id="programDescription">
+      Build consistency while combining strength and conditioning.
+    </p>
 
-    function getFatLossProgram() {
+  </section>
 
-      if (
-        window.CoachBolbolPrograms &&
-        typeof window.CoachBolbolPrograms.getProgram === "function"
-      ) {
+  <section
+    id="sessionList"
+    class="session-list">
+  </section>
 
-        return window.CoachBolbolPrograms.getProgram(
-          "fatloss",
-          selectedLevel
+  <div class="conditioning-box">
+
+    <strong>Fat-loss principle:</strong><br>
+
+    Fat loss is primarily driven by sustained energy
+    balance. Training helps preserve muscle, improve
+    fitness and increase energy expenditure. Progress
+    should be judged over weeks, not from a single day.
+
+  </div>
+
+  <div class="safety-note">
+
+    <strong>Coach note:</strong><br>
+
+    Start at an intensity you can recover from.
+    Increase volume or intensity progressively rather
+    than trying to maximize calorie burn every session.
+
+  </div>
+
+  <div class="start-button-wrap">
+
+    <button
+      class="btn btn-primary btn-block"
+      onclick="startFatLossWorkout()">
+      Start Today's Workout
+    </button>
+
+  </div>
+
+</main>
+
+<nav class="bottom-nav">
+
+  <a
+    href="dashboard.html"
+    data-page="dashboard">
+    <span>⌂</span>
+    <small>Home</small>
+  </a>
+
+  <a
+    href="programs.html"
+    data-page="programs">
+    <span>▣</span>
+    <small>Programs</small>
+  </a>
+
+  <a
+    href="nutrition.html"
+    data-page="nutrition">
+    <span>◉</span>
+    <small>Nutrition</small>
+  </a>
+
+  <a
+    href="progress.html"
+    data-page="progress">
+    <span>↗</span>
+    <small>Progress</small>
+  </a>
+
+  <a
+    href="profile.html"
+    data-page="profile">
+    <span>●</span>
+    <small>Profile</small>
+  </a>
+
+</nav>
+
+<script src="app.js"></script>
+<script src="programs.js"></script>
+<script src="exercises.js"></script>
+<script src="workout.js"></script>
+<script src="ui.js"></script>
+
+<script>
+
+  let selectedLevel = "beginner";
+
+  function selectLevel(level) {
+
+    selectedLevel = level;
+
+    document.querySelectorAll(".level-btn")
+      .forEach(button => {
+
+        button.classList.toggle(
+          "active",
+          button.dataset.level === level
         );
 
-      }
+      });
 
+    renderProgram();
+  }
+
+  function getProgram() {
+
+    if (
+      !window.CoachBolbolPrograms ||
+      typeof CoachBolbolPrograms.getProgram !==
+      "function"
+    ) {
       return null;
-
     }
 
+    return CoachBolbolPrograms.getProgram(
+      "fatloss",
+      selectedLevel
+    );
+  }
 
-    function renderFatLossProgram() {
+  function renderProgram() {
 
-      const program = getFatLossProgram();
+    const program = getProgram();
 
-      const title =
-        document.getElementById("programTitle");
+    const container =
+      document.getElementById("sessionList");
 
-      const container =
-        document.getElementById("fatLossDays");
+    if (!program) {
 
-      const daysNumber =
-        document.getElementById("programDays");
+      container.innerHTML = `
+        <div class="program-info">
+          <h2>Program unavailable</h2>
+          <p>
+            The fat-loss program data could not be loaded.
+          </p>
+        </div>
+      `;
 
+      return;
+    }
 
-      title.textContent =
-        `Fat Loss — ${
-          selectedLevel.charAt(0).toUpperCase() +
-          selectedLevel.slice(1)
-        }`;
+    document.getElementById(
+      "programTitle"
+    ).textContent =
+      program.name ||
+      `${selectedLevel} Fat Loss`;
 
+    document.getElementById(
+      "programDescription"
+    ).textContent =
+      program.description ||
+      "Structured fat-loss training program.";
 
-      if (!program) {
+    const days =
+      Array.isArray(program.days)
+        ? program.days
+        : [];
 
-        container.innerHTML = `
-          <div class="empty-state">
+    if (!days.length) {
 
-            <h3>
-              Program unavailable
-            </h3>
+      container.innerHTML = `
+        <div class="program-info">
+          <h2>No sessions available</h2>
+          <p>
+            No sessions are currently available
+            for this level.
+          </p>
+        </div>
+      `;
 
-            <p>
-              Please refresh the page and try again.
-            </p>
+      return;
+    }
 
-          </div>
-        `;
-
-        return;
-
-      }
-
-
-      const days =
-        Array.isArray(program.days)
-          ? program.days
-          : [];
-
-
-      daysNumber.textContent =
-        days.length || 3;
-
-
-      container.innerHTML = "";
-
-
-      days.forEach((day, index) => {
+    container.innerHTML =
+      days.map((day, index) => {
 
         const exercises =
           Array.isArray(day.exercises)
             ? day.exercises
             : [];
 
+        const exerciseHTML =
+          exercises.map(exercise => {
 
-        const preview =
-          exercises
-            .slice(0, 3)
-            .map(exercise => {
+            const name =
+              exercise.name ||
+              exercise.exercise ||
+              exercise.id ||
+              "Training";
 
-              if (typeof exercise === "string") {
-                return exercise;
-              }
+            const sets =
+              exercise.sets ??
+              exercise.rounds ??
+              "—";
 
-              return (
-                exercise.name ||
-                exercise.exercise ||
-                exercise.id ||
-                "Training"
-              );
+            const reps =
+              exercise.reps ??
+              "—";
 
-            })
-            .join(" • ");
+            const rest =
+              exercise.rest ??
+              "—";
 
+            const duration =
+              exercise.duration ??
+              exercise.time ??
+              "—";
 
-        const card =
-          document.createElement("article");
+            const rir =
+              exercise.rir ??
+              "—";
 
+            return `
+              <div class="exercise-row">
 
-        card.className =
-          "program-day-card";
+                <div class="exercise-name">
+                  ${escapeHTML(name)}
+                </div>
 
+                <div class="exercise-meta">
 
-        card.innerHTML = `
+                  <span class="meta-pill">
+                    Sets/Rounds: ${sets}
+                  </span>
 
-          <div class="program-day-number">
-            ${String(index + 1).padStart(2, "0")}
-          </div>
+                  <span class="meta-pill">
+                    Reps: ${reps}
+                  </span>
 
+                  <span class="meta-pill">
+                    Time: ${duration}
+                  </span>
 
-          <div class="program-day-content">
+                  <span class="meta-pill">
+                    Rest: ${rest}
+                  </span>
 
-            <div class="program-day-top">
+                  <span class="meta-pill">
+                    RIR: ${rir}
+                  </span>
+
+                </div>
+
+              </div>
+            `;
+
+          }).join("");
+
+        return `
+          <article
+            class="session-card ${index === 0 ? "open" : ""}"
+            data-day-index="${index}">
+
+            <div
+              class="session-header"
+              onclick="toggleSession(this)">
 
               <div>
 
-                <span class="eyebrow">
-                  SESSION ${index + 1}
-                </span>
-
-                <h3>
-                  ${escapeText(
+                <h3 class="session-title">
+                  ${escapeHTML(
                     day.name ||
                     day.title ||
-                    `Fat Loss Session ${index + 1}`
+                    `Session ${index + 1}`
                   )}
                 </h3>
 
+                <p class="session-subtitle">
+                  ${exercises.length}
+                  ${
+                    exercises.length === 1
+                      ? "exercise"
+                      : "exercises"
+                  }
+                </p>
+
               </div>
 
-              <span class="day-arrow">
-                →
-              </span>
+              <div class="session-arrow">
+                ↓
+              </div>
 
             </div>
 
+            <div class="session-content">
+              ${exerciseHTML}
+            </div>
 
-            <p>
-              ${escapeText(
-                preview ||
-                "Strength, conditioning and cardio"
-              )}
-            </p>
-
-          </div>
-
+          </article>
         `;
 
+      }).join("");
+  }
 
-        card.addEventListener(
-          "click",
-          () => startFatLossDay(index + 1)
+  function toggleSession(header) {
+
+    const card =
+      header.closest(".session-card");
+
+    if (card) {
+      card.classList.toggle("open");
+    }
+  }
+
+  function startFatLossWorkout() {
+
+    const program = getProgram();
+
+    if (!program || !Array.isArray(program.days)) {
+
+      if (window.CoachBolbolUI) {
+        CoachBolbolUI.toast(
+          "Workout data is not available.",
+          "error"
+        );
+      }
+
+      return;
+    }
+
+    const todayIndex =
+      new Date().getDay();
+
+    const dayIndex =
+      todayIndex % program.days.length;
+
+    const selectedDay =
+      program.days[dayIndex];
+
+    if (
+      window.CoachBolbolWorkout &&
+      typeof CoachBolbolWorkout.startWorkout ===
+      "function"
+    ) {
+
+      try {
+
+        const workout =
+          CoachBolbolWorkout.startWorkout({
+            program: "fatloss",
+            level: selectedLevel,
+            day:
+              selectedDay?.name ||
+              `Session ${dayIndex + 1}`,
+            exercises:
+              selectedDay?.exercises || []
+          });
+
+        localStorage.setItem(
+          "coach_bolbol_active_workout",
+          JSON.stringify(workout)
         );
 
-
-        container.appendChild(card);
-
-      });
-
-    }
-
-
-    function startFatLossProgram() {
-
-      window.location.href =
-        `workout.html?program=fatloss&level=${encodeURIComponent(
-          selectedLevel
-        )}`;
-
-    }
-
-
-    function startFatLossDay(day) {
-
-      window.location.href =
-        `workout.html?program=fatloss&level=${encodeURIComponent(
-          selectedLevel
-        )}&day=${day}`;
-
-    }
-
-
-    function escapeText(value) {
-
-      return String(value ?? "")
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-
-    }
-
-
-    document.addEventListener(
-      "DOMContentLoaded",
-      () => {
-
-        renderFatLossProgram();
-
+      } catch (error) {
+        console.error(error);
       }
-    );
+    }
 
-  </script>
+    window.location.href = "workout.html";
+  }
+
+  function escapeHTML(value) {
+
+    if (
+      value === null ||
+      value === undefined
+    ) {
+      return "";
+    }
+
+    return String(value)
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+  }
+
+  document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+      if (
+        window.CoachBolbolUI &&
+        typeof CoachBolbolUI.setActiveNav ===
+        "function"
+      ) {
+        CoachBolbolUI.setActiveNav("programs");
+      }
+
+      renderProgram();
+
+    }
+  );
+
+</script>
 
 </body>
-  </html>
+</html>
