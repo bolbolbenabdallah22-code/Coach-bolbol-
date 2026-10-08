@@ -1,573 +1,324 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta charset="UTF-8">
+  <title>Coach Bolbol</title>
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-    <meta
-        name="theme-color"
-        content="#ffffff"
-    >
+    body {
+      font-family: Arial, sans-serif;
+      min-height: 100vh;
+      background: #f5f7fb;
+      color: #172033;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow-x: hidden;
+    }
 
-    <meta
-        name="description"
-        content="Coach Bolbol — Professional Fitness, Strength, Kickboxing and Nutrition"
-    >
+    .page {
+      width: 100%;
+      max-width: 700px;
+      min-height: 100vh;
+      padding: 30px 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
 
-    <title>Coach Bolbol</title>
+    .top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
-    <link
-        rel="stylesheet"
-        href="css/style.css"
-    >
+    .brand {
+      font-size: 15px;
+      font-weight: 900;
+      letter-spacing: 1px;
+    }
 
+    .brand span {
+      color: #7b8495;
+    }
+
+    .badge {
+      background: #ffffff;
+      border: 1px solid #e8ebf2;
+      padding: 8px 12px;
+      border-radius: 20px;
+      font-size: 10px;
+      font-weight: 800;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 35px 0;
+      animation: fadeUp 0.8s ease;
+    }
+
+    .logo {
+      width: 120px;
+      height: 120px;
+      margin: 0 auto 25px;
+      border-radius: 50%;
+      background: #111827;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 42px;
+      font-weight: 900;
+      box-shadow: 0 18px 45px rgba(17, 24, 39, 0.18);
+      animation: float 3s ease-in-out infinite;
+    }
+
+    .hero h1 {
+      font-size: 38px;
+      margin-bottom: 10px;
+      letter-spacing: -1px;
+    }
+
+    .hero h2 {
+      font-size: 17px;
+      color: #687285;
+      font-weight: 600;
+      margin-bottom: 18px;
+    }
+
+    .hero p {
+      max-width: 480px;
+      margin: auto;
+      color: #7b8495;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin: 25px 0;
+    }
+
+    .feature {
+      background: #ffffff;
+      border-radius: 18px;
+      padding: 17px 8px;
+      text-align: center;
+      box-shadow: 0 8px 25px rgba(20, 30, 50, 0.05);
+      animation: fadeUp 0.8s ease;
+    }
+
+    .feature-icon {
+      font-size: 22px;
+      margin-bottom: 8px;
+    }
+
+    .feature strong {
+      display: block;
+      font-size: 12px;
+      margin-bottom: 4px;
+    }
+
+    .feature span {
+      font-size: 9px;
+      color: #8a93a3;
+      line-height: 1.3;
+    }
+
+    .start-btn {
+      width: 100%;
+      max-width: 430px;
+      margin: 0 auto;
+      display: block;
+      border: none;
+      border-radius: 17px;
+      padding: 17px;
+      background: #111827;
+      color: #ffffff;
+      font-size: 16px;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 12px 30px rgba(17, 24, 39, 0.18);
+      transition: 0.2s;
+    }
+
+    .start-btn:active {
+      transform: scale(0.97);
+    }
+
+    .footer {
+      text-align: center;
+      color: #9aa2b0;
+      font-size: 10px;
+      padding-top: 20px;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes float {
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-8px);
+      }
+    }
+
+    @media (max-width: 430px) {
+
+      .hero h1 {
+        font-size: 32px;
+      }
+
+      .hero h2 {
+        font-size: 15px;
+      }
+
+      .logo {
+        width: 105px;
+        height: 105px;
+        font-size: 36px;
+      }
+
+      .features {
+        gap: 7px;
+      }
+
+      .feature {
+        padding: 14px 5px;
+      }
+    }
+  </style>
 </head>
-
 
 <body>
 
+  <main class="page">
 
-    <!-- ==========================================
-         APP LOADER
-    =========================================== -->
+    <header class="top">
 
-    <div
-        id="appLoader"
-        class="app-loader"
-    >
+      <div class="brand">
+        COACH <span>BOLBOL</span>
+      </div>
 
-        <div class="loader-logo">
-            B
+      <div class="badge">
+        FITNESS PLATFORM
+      </div>
+
+    </header>
+
+    <section class="hero">
+
+      <div class="logo">
+        CB
+      </div>
+
+      <h1>
+        Coach Bolbol
+      </h1>
+
+      <h2>
+        Train Smart. Build Strong. Stay Consistent.
+      </h2>
+
+      <p>
+        Your complete fitness platform for training,
+        nutrition, progress tracking and direct coaching.
+      </p>
+
+      <div class="features">
+
+        <div class="feature">
+
+          <div class="feature-icon">
+            🏋️
+          </div>
+
+          <strong>Training</strong>
+
+          <span>
+            Strength & performance
+          </span>
+
         </div>
 
-        <div class="loader-title">
-            COACH BOLBOL
+        <div class="feature">
+
+          <div class="feature-icon">
+            🥗
+          </div>
+
+          <strong>Nutrition</strong>
+
+          <span>
+            Calories & macros
+          </span>
+
         </div>
 
-        <div class="loader-line"></div>
+        <div class="feature">
 
-        <div class="loader-text">
-            YOUR PERFORMANCE STARTS HERE
+          <div class="feature-icon">
+            📈
+          </div>
+
+          <strong>Progress</strong>
+
+          <span>
+            Track your results
+          </span>
+
         </div>
 
-    </div>
+      </div>
 
+      <button
+        class="start-btn"
+        onclick="startApp()"
+      >
+        Start Your Journey →
+      </button>
 
+    </section>
 
-    <!-- ==========================================
-         MAIN APP
-    =========================================== -->
+    <footer class="footer">
+      © Coach Bolbol • Fitness & Performance
+    </footer>
 
-    <main
-        id="app"
-        class="landing-page"
-    >
+  </main>
 
+  <script>
 
-        <!-- ======================================
-             HERO
-        ======================================= -->
+    function startApp() {
 
-        <section class="hero">
+      window.location.href =
+        "dashboard.html";
 
+    }
 
-            <!-- Background glow -->
-
-            <div class="hero-glow glow-one"></div>
-
-            <div class="hero-glow glow-two"></div>
-
-
-            <!-- Coach image -->
-
-            <div class="coach-image-wrapper">
-
-                <div class="coach-image-ring">
-
-                    <div
-                        class="coach-image"
-                        id="coachImage"
-                    >
-
-                        <span>
-                            COACH<br>
-                            BOLBOL
-                        </span>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-
-            <!-- Brand -->
-
-            <div class="brand-label">
-                PERSONAL PERFORMANCE SYSTEM
-            </div>
-
-
-            <h1>
-                COACH
-                <span>BOLBOL</span>
-            </h1>
-
-
-            <p class="hero-description">
-                Train smarter.
-                Eat better.
-                Track everything.
-                Become stronger.
-            </p>
-
-
-
-            <!-- CTA -->
-
-            <button
-                class="primary-button"
-                id="startButton"
-                type="button"
-            >
-
-                START YOUR JOURNEY
-
-                <span class="button-arrow">
-                    →
-                </span>
-
-            </button>
-
-
-
-            <button
-                class="secondary-button"
-                id="loginButton"
-                type="button"
-            >
-
-                I ALREADY HAVE AN ACCOUNT
-
-            </button>
-
-
-        </section>
-
-
-
-        <!-- ======================================
-             FEATURES
-        ======================================= -->
-
-        <section class="features">
-
-
-            <div class="section-label">
-                ONE SYSTEM
-            </div>
-
-
-            <h2>
-                EVERYTHING
-                <span>YOU NEED</span>
-            </h2>
-
-
-            <div class="feature-grid">
-
-
-                <article class="feature-card">
-
-                    <div class="feature-icon">
-                        ⚡
-                    </div>
-
-                    <h3>
-                        SMART TRAINING
-                    </h3>
-
-                    <p>
-                        Professional strength,
-                        kickboxing and fat-loss
-                        programs.
-                    </p>
-
-                </article>
-
-
-
-                <article class="feature-card">
-
-                    <div class="feature-icon">
-                        🧮
-                    </div>
-
-                    <h3>
-                        SCIENTIFIC DATA
-                    </h3>
-
-                    <p>
-                        BMR, TDEE, calories,
-                        macros, BMI and
-                        performance calculations.
-                    </p>
-
-                </article>
-
-
-
-                <article class="feature-card">
-
-                    <div class="feature-icon">
-                        🍽️
-                    </div>
-
-                    <h3>
-                        SMART NUTRITION
-                    </h3>
-
-                    <p>
-                        Food database,
-                        calories, macros and
-                        personalized nutrition.
-                    </p>
-
-                </article>
-
-
-
-                <article class="feature-card">
-
-                    <div class="feature-icon">
-                        📈
-                    </div>
-
-                    <h3>
-                        TOTAL TRACKING
-                    </h3>
-
-                    <p>
-                        Weight, workouts,
-                        nutrition, progress
-                        and complete history.
-                    </p>
-
-                </article>
-
-
-            </div>
-
-        </section>
-
-
-
-        <!-- ======================================
-             COACH SYSTEM
-        ======================================= -->
-
-        <section class="coach-system">
-
-
-            <div class="system-card">
-
-                <div class="system-number">
-                    01
-                </div>
-
-                <div>
-
-                    <h3>
-                        YOUR DATA
-                    </h3>
-
-                    <p>
-                        Your profile,
-                        measurements,
-                        goals and performance
-                        stay organized.
-                    </p>
-
-                </div>
-
-            </div>
-
-
-
-            <div class="system-card">
-
-                <div class="system-number">
-                    02
-                </div>
-
-                <div>
-
-                    <h3>
-                        YOUR PLAN
-                    </h3>
-
-                    <p>
-                        Training and nutrition
-                        are built around your
-                        goals.
-                    </p>
-
-                </div>
-
-            </div>
-
-
-
-            <div class="system-card">
-
-                <div class="system-number">
-                    03
-                </div>
-
-                <div>
-
-                    <h3>
-                        YOUR PROGRESS
-                    </h3>
-
-                    <p>
-                        Every workout,
-                        measurement and
-                        achievement is tracked.
-                    </p>
-
-                </div>
-
-            </div>
-
-
-
-            <div class="system-card">
-
-                <div class="system-number">
-                    04
-                </div>
-
-                <div>
-
-                    <h3>
-                        YOUR COACH
-                    </h3>
-
-                    <p>
-                        Connect with Coach
-                        Bolbol and receive
-                        professional follow-up.
-                    </p>
-
-                </div>
-
-            </div>
-
-
-        </section>
-
-
-
-        <!-- ======================================
-             FOOTER
-        ======================================= -->
-
-        <footer>
-
-            <div class="footer-logo">
-                COACH BOLBOL
-            </div>
-
-            <p>
-                Professional Fitness &
-                Performance System
-            </p>
-
-            <small>
-                Version 1.0
-            </small>
-
-        </footer>
-
-
-    </main>
-
-
-
-    <!-- ==========================================
-         JAVASCRIPT
-    =========================================== -->
-
-    <script>
-
-        // ========================================
-        // APP START
-        // ========================================
-
-        window.addEventListener(
-            "load",
-            function () {
-
-                const loader =
-                    document.getElementById(
-                        "appLoader"
-                    );
-
-
-                setTimeout(
-                    function () {
-
-                        loader.classList.add(
-                            "hidden"
-                        );
-
-                    },
-                    900
-                );
-
-            }
-        );
-
-
-
-        // ========================================
-        // START JOURNEY
-        // ========================================
-
-        document
-            .getElementById("startButton")
-            .addEventListener(
-                "click",
-                function () {
-
-                    /*
-                     * Dashboard will be created
-                     * in the next steps.
-                     *
-                     * For now we create the
-                     * onboarding route.
-                     */
-
-                    window.location.href =
-                        "profile.html";
-
-                }
-            );
-
-
-
-        // ========================================
-        // EXISTING ACCOUNT
-        // ========================================
-
-        document
-            .getElementById("loginButton")
-            .addEventListener(
-                "click",
-                function () {
-
-                    /*
-                     * Authentication system
-                     * will be connected later.
-                     */
-
-                    const hasProfile =
-                        localStorage.getItem(
-                            "coach_bolbol_profile"
-                        );
-
-
-                    if (hasProfile) {
-
-                        window.location.href =
-                            "dashboard.html";
-
-                    } else {
-
-                        window.location.href =
-                            "profile.html";
-
-                    }
-
-                }
-            );
-
-
-
-        // ========================================
-        // PARALLAX EFFECT
-        // ========================================
-
-        document.addEventListener(
-            "mousemove",
-            function (event) {
-
-                const x =
-                    (
-                        event.clientX /
-                        window.innerWidth
-                    ) - 0.5;
-
-
-                const y =
-                    (
-                        event.clientY /
-                        window.innerHeight
-                    ) - 0.5;
-
-
-                const glowOne =
-                    document.querySelector(
-                        ".glow-one"
-                    );
-
-
-                const glowTwo =
-                    document.querySelector(
-                        ".glow-two"
-                    );
-
-
-                if (glowOne) {
-
-                    glowOne.style.transform =
-                        `
-                        translate(
-                            ${x * 25}px,
-                            ${y * 25}px
-                        )
-                        `;
-
-                }
-
-
-                if (glowTwo) {
-
-                    glowTwo.style.transform =
-                        `
-                        translate(
-                            ${x * -20}px,
-                            ${y * -20}px
-                        )
-                        `;
-
-                }
-
-            }
-        );
-
-
-    </script>
-
+  </script>
 
 </body>
-
-  </html>
+          </html>
