@@ -1,0 +1,1262 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="theme-color"
+        content="#f7f8fc"
+    >
+
+    <title>Coach Bolbol — Dashboard</title>
+
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
+
+
+    <style>
+
+        /* =====================================================
+           DASHBOARD
+        ===================================================== */
+
+        .dashboard-page {
+
+            min-height: 100vh;
+
+            padding:
+                20px
+                18px
+                100px;
+
+            background:
+                radial-gradient(
+                    circle at 100% 0%,
+                    rgba(255, 90, 31, 0.07),
+                    transparent 30%
+                ),
+                #f7f8fc;
+
+        }
+
+
+        .dashboard-container {
+
+            width: min(100%, 1050px);
+
+            margin: 0 auto;
+
+        }
+
+
+        /* =====================================================
+           HEADER
+        ===================================================== */
+
+        .dashboard-header {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 15px;
+
+            margin-bottom: 24px;
+
+        }
+
+
+        .welcome-label {
+
+            margin-bottom: 5px;
+
+            color: #ff5a1f;
+
+            font-size: 9px;
+
+            font-weight: 900;
+
+            letter-spacing: 2px;
+
+        }
+
+
+        .welcome-name {
+
+            max-width: 240px;
+
+            overflow: hidden;
+
+            text-overflow: ellipsis;
+
+            white-space: nowrap;
+
+            color: #111111;
+
+            font-size:
+                clamp(25px, 7vw, 38px);
+
+            line-height: 1;
+
+            font-weight: 950;
+
+            letter-spacing: -1.4px;
+
+        }
+
+
+        .header-actions {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+        }
+
+
+        .header-button {
+
+            width: 44px;
+
+            height: 44px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border:
+                1px solid #e5e7ec;
+
+            border-radius: 14px;
+
+            background: #ffffff;
+
+            color: #111111;
+
+            font-size: 18px;
+
+            box-shadow:
+                var(--shadow-small);
+
+            transition:
+                0.25s ease;
+
+        }
+
+
+        .header-button:hover {
+
+            transform:
+                translateY(-2px);
+
+        }
+
+
+        /* =====================================================
+           CLIENT ID
+        ===================================================== */
+
+        .client-id-card {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 10px;
+
+            margin-bottom: 18px;
+
+            padding:
+                13px
+                15px;
+
+            border:
+                1px solid #e7e9ee;
+
+            border-radius: 15px;
+
+            background:
+                rgba(255,255,255,0.8);
+
+        }
+
+
+        .client-id-label {
+
+            color: #8c939f;
+
+            font-size: 9px;
+
+            font-weight: 800;
+
+            letter-spacing: 1px;
+
+        }
+
+
+        .client-id {
+
+            color: #111111;
+
+            font-size: 11px;
+
+            font-weight: 950;
+
+            letter-spacing: 1px;
+
+        }
+
+
+        /* =====================================================
+           HERO PERFORMANCE CARD
+        ===================================================== */
+
+        .performance-card {
+
+            position: relative;
+
+            min-height: 210px;
+
+            margin-bottom: 15px;
+
+            padding: 25px;
+
+            overflow: hidden;
+
+            border-radius:
+                25px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #111111 0%,
+                    #202020 100%
+                );
+
+            color: #ffffff;
+
+            box-shadow:
+                0 20px 45px
+                rgba(17,17,17,0.17);
+
+        }
+
+
+        .performance-card::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 230px;
+
+            height: 230px;
+
+            top: -110px;
+
+            right: -70px;
+
+            border-radius: 50%;
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(255,90,31,0.45),
+                    transparent 68%
+                );
+
+        }
+
+
+        .performance-card::after {
+
+            content: "";
+
+            position: absolute;
+
+            width: 150px;
+
+            height: 150px;
+
+            bottom: -90px;
+
+            left: 40%;
+
+            border-radius: 50%;
+
+            background:
+                rgba(255,255,255,0.03);
+
+        }
+
+
+        .performance-content {
+
+            position: relative;
+
+            z-index: 2;
+
+        }
+
+
+        .performance-label {
+
+            color:
+                rgba(255,255,255,0.6);
+
+            font-size: 9px;
+
+            font-weight: 900;
+
+            letter-spacing: 2px;
+
+        }
+
+
+        .performance-title {
+
+            margin-top: 10px;
+
+            font-size:
+                clamp(25px, 7vw, 38px);
+
+            line-height: 1;
+
+            font-weight: 950;
+
+            letter-spacing: -1px;
+
+        }
+
+
+        .performance-subtitle {
+
+            max-width: 420px;
+
+            margin-top: 12px;
+
+            color:
+                rgba(255,255,255,0.62);
+
+            font-size: 11px;
+
+            line-height: 1.6;
+
+        }
+
+
+        .performance-action {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            margin-top: 20px;
+
+            padding:
+                11px
+                15px;
+
+            border-radius: 12px;
+
+            background:
+                #ff5a1f;
+
+            color: #ffffff;
+
+            font-size: 9px;
+
+            font-weight: 900;
+
+            letter-spacing: 0.8px;
+
+        }
+
+
+        /* =====================================================
+           STATS
+        ===================================================== */
+
+        .stats-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 10px;
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .stat-card {
+
+            min-height: 125px;
+
+            padding: 17px;
+
+            border:
+                1px solid #e7e9ee;
+
+            border-radius: 18px;
+
+            background: #ffffff;
+
+            box-shadow:
+                var(--shadow-small);
+
+        }
+
+
+        .stat-label {
+
+            color: #8c939f;
+
+            font-size: 9px;
+
+            font-weight: 800;
+
+            letter-spacing: 0.7px;
+
+        }
+
+
+        .stat-value {
+
+            margin-top: 12px;
+
+            color: #111111;
+
+            font-size: 26px;
+
+            line-height: 1;
+
+            font-weight: 950;
+
+        }
+
+
+        .stat-unit {
+
+            margin-left: 3px;
+
+            color: #8c939f;
+
+            font-size: 10px;
+
+            font-weight: 800;
+
+        }
+
+
+        .stat-extra {
+
+            margin-top: 8px;
+
+            color: #ff5a1f;
+
+            font-size: 9px;
+
+            font-weight: 800;
+
+        }
+
+
+        /* =====================================================
+           SECTION HEADER
+        ===================================================== */
+
+        .section-header {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            margin:
+                28px
+                0
+                12px;
+
+        }
+
+
+        .section-title {
+
+            color: #111111;
+
+            font-size: 14px;
+
+            font-weight: 950;
+
+        }
+
+
+        .section-link {
+
+            color: #ff5a1f;
+
+            font-size: 9px;
+
+            font-weight: 900;
+
+        }
+
+
+        /* =====================================================
+           QUICK ACTIONS
+        ===================================================== */
+
+        .action-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 10px;
+
+        }
+
+
+        .action-card {
+
+            position: relative;
+
+            min-height: 135px;
+
+            padding: 18px;
+
+            overflow: hidden;
+
+            border:
+                1px solid #e7e9ee;
+
+            border-radius: 18px;
+
+            background: #ffffff;
+
+            box-shadow:
+                var(--shadow-small);
+
+            cursor: pointer;
+
+            transition:
+                transform 0.25s ease,
+                box-shadow 0.25s ease;
+
+        }
+
+
+        .action-card:hover {
+
+            transform:
+                translateY(-4px);
+
+            box-shadow:
+                var(--shadow-medium);
+
+        }
+
+
+        .action-icon {
+
+            width: 40px;
+
+            height: 40px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            margin-bottom: 16px;
+
+            border-radius: 12px;
+
+            background: #fff1eb;
+
+            font-size: 18px;
+
+        }
+
+
+        .action-card h3 {
+
+            color: #111111;
+
+            font-size: 11px;
+
+            font-weight: 900;
+
+        }
+
+
+        .action-card p {
+
+            margin-top: 5px;
+
+            color: #8c939f;
+
+            font-size: 9px;
+
+            line-height: 1.5;
+
+        }
+
+
+        .action-arrow {
+
+            position: absolute;
+
+            right: 14px;
+
+            bottom: 13px;
+
+            color: #c0c4cb;
+
+            font-size: 14px;
+
+        }
+
+
+        /* =====================================================
+           PROGRESS CARD
+        ===================================================== */
+
+        .progress-card {
+
+            padding: 20px;
+
+            border:
+                1px solid #e7e9ee;
+
+            border-radius: 20px;
+
+            background: #ffffff;
+
+            box-shadow:
+                var(--shadow-small);
+
+        }
+
+
+        .progress-top {
+
+            display: flex;
+
+            align-items: flex-end;
+
+            justify-content: space-between;
+
+            gap: 15px;
+
+        }
+
+
+        .progress-current {
+
+            color: #111111;
+
+            font-size: 30px;
+
+            font-weight: 950;
+
+        }
+
+
+        .progress-goal {
+
+            color: #8c939f;
+
+            font-size: 9px;
+
+            font-weight: 800;
+
+        }
+
+
+        .progress-percent {
+
+            color: #ff5a1f;
+
+            font-size: 13px;
+
+            font-weight: 950;
+
+        }
+
+
+        .progress-track {
+
+            height: 9px;
+
+            margin-top: 18px;
+
+            overflow: hidden;
+
+            border-radius: 20px;
+
+            background: #eceef2;
+
+        }
+
+
+        .progress-fill {
+
+            width: 0%;
+
+            height: 100%;
+
+            border-radius: inherit;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #111111,
+                    #ff5a1f
+                );
+
+            transition:
+                width 0.8s ease;
+
+        }
+
+
+        .progress-message {
+
+            margin-top: 12px;
+
+            color: #626975;
+
+            font-size: 9px;
+
+            line-height: 1.5;
+
+        }
+
+
+        /* =====================================================
+           BOTTOM NAV
+        ===================================================== */
+
+        .bottom-nav {
+
+            position: fixed;
+
+            z-index: 1000;
+
+            right: 10px;
+
+            bottom: 10px;
+
+            left: 10px;
+
+            max-width: 650px;
+
+            margin: auto;
+
+            padding:
+                8px;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(5, 1fr);
+
+            gap: 3px;
+
+            border:
+                1px solid rgba(231,233,238,0.9);
+
+            border-radius: 20px;
+
+            background:
+                rgba(255,255,255,0.93);
+
+            backdrop-filter:
+                blur(18px);
+
+            -webkit-backdrop-filter:
+                blur(18px);
+
+            box-shadow:
+                0 15px 40px
+                rgba(17,17,17,0.12);
+
+        }
+
+
+        .nav-item {
+
+            min-height: 54px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 4px;
+
+            border-radius: 14px;
+
+            background: transparent;
+
+            color: #8c939f;
+
+            transition:
+                0.25s ease;
+
+        }
+
+
+        .nav-item.active {
+
+            background:
+                #111111;
+
+            color: #ffffff;
+
+        }
+
+
+        .nav-icon {
+
+            font-size: 16px;
+
+            line-height: 1;
+
+        }
+
+
+        .nav-label {
+
+            font-size: 7px;
+
+            font-weight: 900;
+
+            letter-spacing: 0.2px;
+
+        }
+
+
+        /* =====================================================
+           PAGE ANIMATION
+        ===================================================== */
+
+        .dashboard-container {
+
+            animation:
+                dashboardIn
+                0.55s
+                ease
+                both;
+
+        }
+
+
+        @keyframes dashboardIn {
+
+            from {
+
+                opacity: 0;
+
+                transform:
+                    translateY(15px);
+
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform:
+                    translateY(0);
+
+            }
+
+        }
+
+
+        /* =====================================================
+           TABLET / DESKTOP
+        ===================================================== */
+
+        @media (min-width: 700px) {
+
+            .dashboard-page {
+
+                padding:
+                    35px
+                    25px
+                    110px;
+
+            }
+
+
+            .stats-grid {
+
+                grid-template-columns:
+                    repeat(4, 1fr);
+
+            }
+
+
+            .action-grid {
+
+                grid-template-columns:
+                    repeat(4, 1fr);
+
+            }
+
+
+            .performance-card {
+
+                min-height: 250px;
+
+                padding: 32px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<main class="dashboard-page">
+
+
+<div class="dashboard-container">
+
+
+    <!-- =================================================
+         HEADER
+    ================================================== -->
+
+    <header class="dashboard-header">
+
+
+        <div>
+
+            <div class="welcome-label">
+                WELCOME BACK
+            </div>
+
+            <h1
+                class="welcome-name"
+                id="welcomeName"
+            >
+                Athlete
+            </h1>
+
+        </div>
+
+
+        <div class="header-actions">
+
+
+            <button
+                class="header-button"
+                id="profileButton"
+                type="button"
+                aria-label="Profile"
+            >
+                👤
+            </button>
+
+
+            <button
+                class="header-button"
+                id="settingsButton"
+                type="button"
+                aria-label="Settings"
+            >
+                ⚙️
+            </button>
+
+
+        </div>
+
+
+    </header>
+
+
+
+    <!-- =================================================
+         CLIENT ID
+    ================================================== -->
+
+    <div class="client-id-card">
+
+        <span class="client-id-label">
+            CLIENT ID
+        </span>
+
+        <span
+            class="client-id"
+            id="clientId"
+        >
+            CB-------
+        </span>
+
+    </div>
+
+
+
+    <!-- =================================================
+         PERFORMANCE HERO
+    ================================================== -->
+
+    <section class="performance-card">
+
+
+        <div class="performance-content">
+
+            <div class="performance-label">
+                COACH BOLBOL PERFORMANCE SYSTEM
+            </div>
+
+
+            <h2 class="performance-title">
+                BUILD.
+                PERFORM.
+                EVOLVE.
+            </h2>
+
+
+            <p class="performance-subtitle">
+                Your training, nutrition and
+                progress — organized in one
+                professional system.
+            </p>
+
+
+            <a
+                href="programs.html"
+                class="performance-action"
+            >
+                VIEW YOUR PROGRAM
+                →
+            </a>
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- =================================================
+         STATS
+    ================================================== -->
+
+    <section class="stats-grid">
+
+
+        <article class="stat-card">
+
+            <div class="stat-label">
+                CURRENT WEIGHT
+            </div>
+
+            <div class="stat-value">
+
+                <span id="currentWeight">
+                    --
+                </span>
+
+                <span class="stat-unit">
+                    kg
+                </span>
+
+            </div>
+
+            <div
+                class="stat-extra"
+                id="weightChange"
+            >
+                Starting point
+            </div>
+
+        </article>
+
+
+
+        <article class="stat-card">
+
+            <div class="stat-label">
+                GOAL WEIGHT
+            </div>
+
+            <div class="stat-value">
+
+                <span id="goalWeight">
+                    --
+                </span>
+
+                <span class="stat-unit">
+                    kg
+                </span>
+
+            </div>
+
+            <div class="stat-extra">
+                Your target
+            </div>
+
+        </article>
+
+
+
+        <article class="stat-card">
+
+            <div class="stat-label">
+                BMI
+            </div>
+
+            <div class="stat-value">
+                <span id="bmiValue">
+                    --
+                </span>
+            </div>
+
+            <div
+                class="stat-extra"
+                id="bmiStatus"
+            >
+                Estimated
+            </div>
+
+        </article>
+
+
+
+        <article class="stat-card">
+
+            <div class="stat-label">
+                WORKOUTS
+            </div>
+
+            <div class="stat-value">
+
+                <span id="workoutCount">
+                    0
+                </span>
+
+            </div>
+
+            <div class="stat-extra">
+                Completed sessions
+            </div>
+
+        </article>
+
+
+    </section>
+
+
+
+    <!-- =================================================
+         QUICK ACTIONS
+    ================================================== -->
+
+    <div class="section-header">
+
+        <h2 class="section-title">
+            QUICK ACTIONS
+        </h2>
+
+        <span class="section-link">
+            YOUR SYSTEM
+        </span>
+
+    </div>
+
+
+
+    <section class="action-grid">
+
+
+        <article
+            class="action-card"
+            data-page="workout.html"
+        >
+
+            <div class="action-icon">
+                🏋️
+            </div>
+
+            <h3>
+                WORKOUT
+            </h3>
+
+            <p>
+                Train and log your session.
+            </p>
+
+            <span class="action-arrow">
+                →
+            </span>
+
+        </article>
+
+
+
+        <article
+            class="action-card"
+            data-page="nutrition.html"
+        >
+
+            <div class="action-icon">
+                🍽️
+            </div>
+
+            <h3>
+                NUTRITION
+            </h3>
+
+            <p>
+                Calories and daily nutrition.
+            </p>
+
+            <span class="action-arrow">
+                →
+            </span>
+
+        </article>
+
+
+
+        <article
+  
