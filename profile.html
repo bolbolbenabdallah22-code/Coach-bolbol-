@@ -1,849 +1,627 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>My Profile | Coach Bolbol</title>
-
   <meta name="theme-color" content="#f7f8fa">
-
+  <title>My Profile | Coach Bolbol</title>
   <link rel="stylesheet" href="css/style.css">
+
+  <style>
+    .profile-avatar {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #111827;
+      color: white;
+      font-size: 24px;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+
+    .profile-header {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 28px;
+    }
+
+    .profile-header h2 {
+      margin: 0 0 6px;
+    }
+
+    .profile-header p {
+      margin: 0;
+      color: #6b7280;
+    }
+
+    .form-section {
+      margin-bottom: 30px;
+    }
+
+    .form-section-title {
+      margin-bottom: 18px;
+    }
+
+    .form-section-title h3,
+    .summary-header h3 {
+      margin: 6px 0 0;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .form-group {
+      min-width: 0;
+      margin-bottom: 16px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 700;
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 13px;
+      border: 1px solid #dfe3ea;
+      border-radius: 12px;
+      background: #fff;
+      font: inherit;
+    }
+
+    .input-with-unit {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .input-with-unit input {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .input-with-unit span {
+      color: #6b7280;
+    }
+
+    .form-group-full {
+      grid-column: 1 / -1;
+    }
+
+    .profile-summary {
+      margin-top: 26px;
+      padding: 20px;
+      border-radius: 18px;
+      background: #f7f9fc;
+    }
+
+    .summary-header {
+      margin-bottom: 18px;
+    }
+
+    .form-actions {
+      display: flex;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .profile-notice {
+      display: none;
+      padding: 13px 15px;
+      margin: 18px 0;
+      border-radius: 12px;
+      font-size: 14px;
+    }
+
+    .profile-notice.show {
+      display: block;
+    }
+
+    .profile-notice.success {
+      background: #ecfdf5;
+      color: #047857;
+    }
+
+    .profile-notice.error {
+      background: #fff1f2;
+      color: #be123c;
+    }
+
+    .account-card {
+      margin-top: 24px;
+    }
+
+    .settings-links {
+      display: grid;
+      gap: 12px;
+    }
+
+    .settings-link {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 15px;
+      border-radius: 14px;
+      text-decoration: none;
+    }
+
+    .settings-link > div {
+      flex: 1;
+    }
+
+    .settings-link strong,
+    .settings-link div span {
+      display: block;
+    }
+
+    .settings-link div span {
+      margin-top: 4px;
+      color: #6b7280;
+      font-size: 13px;
+    }
+
+    .settings-icon {
+      font-size: 23px;
+    }
+
+    @media (max-width: 600px) {
+      .form-grid {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+
+      .form-group-full {
+        grid-column: auto;
+      }
+
+      .profile-summary {
+        padding: 14px;
+      }
+
+      .form-actions > * {
+        flex: 1;
+        text-align: center;
+      }
+    }
+  </style>
 </head>
 
 <body>
-
-  <!-- HEADER -->
   <header class="app-header">
     <div class="container header-inner">
-
       <a href="dashboard.html" class="brand">
         <div class="brand-mark">CB</div>
-
         <div class="brand-text">
           <strong>Coach Bolbol</strong>
           <span>My Profile</span>
         </div>
       </a>
 
-      <a href="dashboard.html" class="back-link">
-        ← Dashboard
-      </a>
-
+      <a href="dashboard.html" class="back-link">← Dashboard</a>
     </div>
   </header>
 
-
-  <!-- MAIN -->
   <main>
-
     <section class="page-section">
-
       <div class="container">
 
-        <!-- PAGE TITLE -->
         <div class="page-heading">
-
-          <span class="eyebrow">
-            PERSONAL PROFILE
-          </span>
-
-          <h1>
-            Your Profile
-          </h1>
-
-          <p>
-            Keep your information updated for accurate
-            fitness and nutrition calculations.
-          </p>
-
+          <span class="eyebrow">PERSONAL PROFILE</span>
+          <h1>Your Profile</h1>
+          <p>Keep your information updated for fitness and nutrition calculations.</p>
         </div>
 
-
-        <!-- PROFILE CARD -->
         <section class="dashboard-card profile-card">
-
           <div class="profile-header">
-
             <div class="profile-avatar">
               <span id="avatarInitials">CB</span>
             </div>
-
             <div>
-
-              <h2 id="profileDisplayName">
-                Champion
-              </h2>
-
-              <p>
-                Your personal fitness profile
-              </p>
-
+              <h2 id="profileDisplayName">Champion</h2>
+              <p>Your personal fitness profile</p>
             </div>
-
           </div>
 
+          <div id="profileNotice" class="profile-notice" role="status" aria-live="polite"></div>
 
-          <!-- FORM -->
           <form id="profileForm">
-
-            <!-- BASIC INFORMATION -->
             <div class="form-section">
-
               <div class="form-section-title">
-
-                <span class="eyebrow">
-                  BASIC INFORMATION
-                </span>
-
-                <h3>
-                  About You
-                </h3>
-
+                <span class="eyebrow">BASIC INFORMATION</span>
+                <h3>About You</h3>
               </div>
-
 
               <div class="form-grid">
-
                 <div class="form-group">
-
-                  <label for="name">
-                    Full Name
-                  </label>
-
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    placeholder="Your full name"
-                    autocomplete="name"
-                    required
-                  >
-
+                  <label for="name">Full Name</label>
+                  <input id="name" name="name" type="text" autocomplete="name" maxlength="100" required placeholder="Your full name">
                 </div>
 
-
                 <div class="form-group">
-
-                  <label for="age">
-                    Age
-                  </label>
-
-                  <input
-                    type="number"
-                    id="age"
-                    name="age"
-                    min="13"
-                    max="100"
-                    placeholder="e.g. 23"
-                    required
-                  >
-
+                  <label for="age">Age</label>
+                  <input id="age" name="age" type="number" min="13" max="100" step="1" required placeholder="e.g. 23">
                 </div>
 
-
                 <div class="form-group">
-
-                  <label for="gender">
-                    Gender
-                  </label>
-
+                  <label for="gender">Gender</label>
                   <select id="gender" name="gender">
-
-                    <option value="male">
-                      Male
-                    </option>
-
-                    <option value="female">
-                      Female
-                    </option>
-
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
                   </select>
-
                 </div>
-
 
                 <div class="form-group">
-
-                  <label for="height">
-                    Height
-                  </label>
-
+                  <label for="height">Height</label>
                   <div class="input-with-unit">
-
-                    <input
-                      type="number"
-                      id="height"
-                      name="height"
-                      min="100"
-                      max="250"
-                      step="0.1"
-                      placeholder="e.g. 183"
-                      required
-                    >
-
+                    <input id="height" name="height" type="number" min="100" max="250" step="0.1" required placeholder="e.g. 183">
                     <span>cm</span>
-
                   </div>
-
                 </div>
-
               </div>
-
             </div>
 
-
-            <!-- BODY & GOALS -->
             <div class="form-section">
-
               <div class="form-section-title">
-
-                <span class="eyebrow">
-                  BODY & GOALS
-                </span>
-
-                <h3>
-                  Your Targets
-                </h3>
-
+                <span class="eyebrow">BODY & GOALS</span>
+                <h3>Your Targets</h3>
               </div>
 
-
               <div class="form-grid">
-
                 <div class="form-group">
-
-                  <label for="currentWeight">
-                    Current Weight
-                  </label>
-
+                  <label for="currentWeight">Current Weight</label>
                   <div class="input-with-unit">
-
-                    <input
-                      type="number"
-                      id="currentWeight"
-                      name="currentWeight"
-                      min="30"
-                      max="300"
-                      step="0.1"
-                      placeholder="e.g. 90"
-                      required
-                    >
-
+                    <input id="currentWeight" name="currentWeight" type="number" min="30" max="300" step="0.1" required placeholder="e.g. 90">
                     <span>kg</span>
-
                   </div>
-
                 </div>
 
-
                 <div class="form-group">
-
-                  <label for="goalWeight">
-                    Goal Weight
-                  </label>
-
+                  <label for="goalWeight">Goal Weight</label>
                   <div class="input-with-unit">
-
-                    <input
-                      type="number"
-                      id="goalWeight"
-                      name="goalWeight"
-                      min="30"
-                      max="300"
-                      step="0.1"
-                      placeholder="e.g. 85"
-                      required
-                    >
-
+                    <input id="goalWeight" name="goalWeight" type="number" min="30" max="300" step="0.1" required placeholder="e.g. 85">
                     <span>kg</span>
-
                   </div>
-
                 </div>
-
 
                 <div class="form-group form-group-full">
-
-                  <label for="goal">
-                    Main Goal
-                  </label>
-
+                  <label for="goal">Main Goal</label>
                   <select id="goal" name="goal">
-
-                    <option value="loss">
-                      Fat Loss
-                    </option>
-
-                    <option value="maintenance">
-                      Maintenance
-                    </option>
-
-                    <option value="gain">
-                      Muscle Gain
-                    </option>
-
+                    <option value="loss">Fat Loss</option>
+                    <option value="maintenance">Maintenance</option>
+                    <option value="gain">Muscle Gain</option>
                   </select>
-
                 </div>
-
               </div>
-
             </div>
 
-
-            <!-- ACTIVITY -->
             <div class="form-section">
-
               <div class="form-section-title">
-
-                <span class="eyebrow">
-                  ACTIVITY
-                </span>
-
-                <h3>
-                  Lifestyle & Training
-                </h3>
-
+                <span class="eyebrow">ACTIVITY</span>
+                <h3>Lifestyle & Training</h3>
               </div>
-
 
               <div class="form-group">
-
-                <label for="activity">
-                  Activity Level
-                </label>
-
+                <label for="activity">Activity Level</label>
                 <select id="activity" name="activity">
-
-                  <option value="1.2">
-                    Sedentary — little or no exercise
-                  </option>
-
-                  <option value="1.375">
-                    Lightly Active — 1–3 days/week
-                  </option>
-
-                  <option value="1.55">
-                    Moderately Active — 3–5 days/week
-                  </option>
-
-                  <option value="1.725">
-                    Very Active — 6–7 days/week
-                  </option>
-
-                  <option value="1.9">
-                    Extremely Active — hard training / physical job
-                  </option>
-
+                  <option value="1.2">Sedentary — little or no exercise</option>
+                  <option value="1.375">Lightly Active — 1–3 days/week</option>
+                  <option value="1.55">Moderately Active — 3–5 days/week</option>
+                  <option value="1.725">Very Active — 6–7 days/week</option>
+                  <option value="1.9">Extremely Active — hard training / physical job</option>
                 </select>
-
               </div>
-
             </div>
 
-
-            <!-- CALCULATION PREVIEW -->
-            <div class="profile-summary">
-
+            <section class="profile-summary">
               <div class="summary-header">
-
-                <span class="eyebrow">
-                  ESTIMATED METRICS
-                </span>
-
-                <h3>
-                  Your Current Numbers
-                </h3>
-
+                <span class="eyebrow">ESTIMATED METRICS</span>
+                <h3>Your Current Numbers</h3>
               </div>
-
 
               <div class="stats-grid">
-
                 <div class="stat-card">
-
-                  <span class="stat-label">
-                    BMI
-                  </span>
-
-                  <strong
-                    class="stat-value"
-                    id="previewBMI"
-                  >
-                    —
-                  </strong>
-
+                  <span class="stat-label">BMI</span>
+                  <strong class="stat-value" id="previewBMI">—</strong>
                 </div>
-
-
                 <div class="stat-card">
-
-                  <span class="stat-label">
-                    BMR
-                  </span>
-
-                  <strong
-                    class="stat-value"
-                    id="previewBMR"
-                  >
-                    —
-                  </strong>
-
-                  <small>
-                    kcal/day
-                  </small>
-
+                  <span class="stat-label">BMR</span>
+                  <strong class="stat-value" id="previewBMR">—</strong>
+                  <small>kcal/day</small>
                 </div>
-
-
                 <div class="stat-card">
-
-                  <span class="stat-label">
-                    TDEE
-                  </span>
-
-                  <strong
-                    class="stat-value"
-                    id="previewTDEE"
-                  >
-                    —
-                  </strong>
-
-                  <small>
-                    kcal/day
-                  </small>
-
+                  <span class="stat-label">TDEE</span>
+                  <strong class="stat-value" id="previewTDEE">—</strong>
+                  <small>kcal/day</small>
                 </div>
-
-
                 <div class="stat-card">
-
-                  <span class="stat-label">
-                    Goal Calories
-                  </span>
-
-                  <strong
-                    class="stat-value"
-                    id="previewCalories"
-                  >
-                    —
-                  </strong>
-
-                  <small>
-                    kcal/day
-                  </small>
-
+                  <span class="stat-label">Goal Calories</span>
+                  <strong class="stat-value" id="previewCalories">—</strong>
+                  <small>kcal/day</small>
                 </div>
-
               </div>
+            </section>
 
-            </div>
-
-
-            <!-- ACTIONS -->
             <div class="form-actions">
-
-              <a
-                href="dashboard.html"
-                class="btn btn-secondary"
-              >
-                Cancel
-              </a>
-
-              <button
-                type="submit"
-                class="btn btn-primary"
-              >
-                Save Profile
-              </button>
-
+              <a href="dashboard.html" class="btn btn-secondary">Cancel</a>
+              <button type="submit" class="btn btn-primary" id="saveProfileButton">Save Profile</button>
             </div>
-
           </form>
-
         </section>
 
-
-        <!-- ACCOUNT -->
         <section class="dashboard-card account-card">
-
           <div class="card-header">
-
             <div>
-
-              <span class="eyebrow">
-                ACCOUNT
-              </span>
-
-              <h2>
-                Account & Settings
-              </h2>
-
+              <span class="eyebrow">ACCOUNT</span>
+              <h2>Account & Settings</h2>
             </div>
-
           </div>
-
 
           <div class="settings-links">
-
             <a href="settings.html" class="settings-link">
-
-              <span class="settings-icon">
-                ⚙️
-              </span>
-
+              <span class="settings-icon">⚙️</span>
               <div>
-
-                <strong>
-                  App Settings
-                </strong>
-
-                <span>
-                  Preferences, units and notifications
-                </span>
-
+                <strong>App Settings</strong>
+                <span>Preferences, units and notifications</span>
               </div>
-
-              <span class="arrow">
-                →
-              </span>
-
+              <span class="arrow">→</span>
             </a>
-
 
             <a href="history.html" class="settings-link">
-
-              <span class="settings-icon">
-                🕒
-              </span>
-
+              <span class="settings-icon">🕒</span>
               <div>
-
-                <strong>
-                  Activity History
-                </strong>
-
-                <span>
-                  View your previous activity
-                </span>
-
+                <strong>Activity History</strong>
+                <span>View your previous activity</span>
               </div>
-
-              <span class="arrow">
-                →
-              </span>
-
+              <span class="arrow">→</span>
             </a>
-
           </div>
-
         </section>
 
       </div>
-
     </section>
-
   </main>
 
-
-  <!-- BOTTOM NAV -->
   <nav class="bottom-nav">
-
-    <a
-      href="dashboard.html"
-      class="bottom-nav-item"
-    >
-      <span>⌂</span>
-      <small>Home</small>
-    </a>
-
-    <a
-      href="programs.html"
-      class="bottom-nav-item"
-    >
-      <span>🏋️</span>
-      <small>Training</small>
-    </a>
-
-    <a
-      href="nutrition.html"
-      class="bottom-nav-item"
-    >
-      <span>🥗</span>
-      <small>Nutrition</small>
-    </a>
-
-    <a
-      href="progress.html"
-      class="bottom-nav-item"
-    >
-      <span>📊</span>
-      <small>Progress</small>
-    </a>
-
-    <a
-      href="profile.html"
-      class="bottom-nav-item active"
-    >
-      <span>👤</span>
-      <small>Profile</small>
-    </a>
-
+    <a href="dashboard.html" class="bottom-nav-item"><span>⌂</span><small>Home</small></a>
+    <a href="programs.html" class="bottom-nav-item"><span>🏋️</span><small>Training</small></a>
+    <a href="nutrition.html" class="bottom-nav-item"><span>🥗</span><small>Nutrition</small></a>
+    <a href="progress.html" class="bottom-nav-item"><span>📊</span><small>Progress</small></a>
+    <a href="profile.html" class="bottom-nav-item active"><span>👤</span><small>Profile</small></a>
   </nav>
 
-
-  <!-- JAVASCRIPT -->
   <script src="app.js"></script>
   <script src="storage.js"></script>
-  <script src="calculator.js"></script>
-  <script src="profile-cloud.js"></script>
 
   <script>
+    (function () {
+      "use strict";
 
-    document.addEventListener(
-      "DOMContentLoaded",
-      function () {
+      const form = document.getElementById("profileForm");
+      const notice = document.getElementById("profileNotice");
+      const saveButton = document.getElementById("saveProfileButton");
 
-        const form =
-          document.getElementById("profileForm");
+      const fields = {
+        name: document.getElementById("name"),
+        age: document.getElementById("age"),
+        gender: document.getElementById("gender"),
+        height: document.getElementById("height"),
+        currentWeight: document.getElementById("currentWeight"),
+        goalWeight: document.getElementById("goalWeight"),
+        goal: document.getElementById("goal"),
+        activity: document.getElementById("activity")
+      };
 
-        const nameInput =
-          document.getElementById("name");
+      function storage() {
+        return window.CoachBolbolStorage || null;
+      }
 
-        const ageInput =
-          document.getElementById("age");
+      function readProfile() {
+        const store = storage();
 
-        const genderInput =
-          document.getElementById("gender");
-
-        const heightInput =
-          document.getElementById("height");
-
-        const currentWeightInput =
-          document.getElementById("currentWeight");
-
-        const goalWeightInput =
-          document.getElementById("goalWeight");
-
-        const goalInput =
-          document.getElementById("goal");
-
-        const activityInput =
-          document.getElementById("activity");
-
-
-        function getProfile() {
-
-          if (
-            window.CoachBolbolStorage &&
-            typeof window.CoachBolbolStorage.getProfile ===
-              "function"
-          ) {
-
-            return (
-              window.CoachBolbolStorage.getProfile() ||
-              {}
-            );
-
-          }
-
-
-          if (
-            typeof window.getProfile === "function"
-          ) {
-
-            return window.getProfile() || {};
-
-          }
-
-
-          return {};
-
+        if (store && typeof store.getProfile === "function") {
+          return store.getProfile() || {};
         }
 
+        if (typeof window.getProfile === "function") {
+          return window.getProfile() || {};
+        }
 
-        function loadProfile() {
+        return {};
+      }
 
-          const profile =
-            getProfile();
+      function showNotice(text, type) {
+        notice.textContent = text;
+        notice.className = "profile-notice show " + type;
+      }
 
+      function updateHeader() {
+        const name = fields.name.value.trim() || "Champion";
+        document.getElementById("profileDisplayName").textContent = name;
 
-          nameInput.value =
-            profile.name ||
-            profile.fullName ||
-            "";
+        const initials = name
+          .split(/\s+/)
+          .filter(Boolean)
+          .slice(0, 2)
+          .map(part => part.charAt(0).toUpperCase())
+          .join("");
 
+        document.getElementById("avatarInitials").textContent = initials || "CB";
+      }
 
-          ageInput.value =
-            profile.age ||
-            "";
+      function getMetrics() {
+        const age = Number(fields.age.value);
+        const height = Number(fields.height.value);
+        const weight = Number(fields.currentWeight.value);
+        const activity = Number(fields.activity.value);
+        const gender = fields.gender.value;
+        const goal = fields.goal.value;
 
+        if (
+          !age || age < 13 || age > 100 ||
+          !height || height < 100 || height > 250 ||
+          !weight || weight < 30 || weight > 300
+        ) {
+          return null;
+        }
 
-          genderInput.value =
-            profile.gender ||
-            "male";
+        const bmi = weight / Math.pow(height / 100, 2);
+        const bmr = gender === "female"
+          ? 10 * weight + 6.25 * height - 5 * age - 161
+          : 10 * weight + 6.25 * height - 5 * age + 5;
 
+        const tdee = bmr * activity;
+        let calories = tdee;
 
-          heightInput.value =
-            profile.height ||
-            "";
+        if (goal === "loss") calories = tdee * 0.85;
+        if (goal === "gain") calories = tdee * 1.075;
 
+        return {
+          bmi: Math.round(bmi * 10) / 10,
+          bmr: Math.round(bmr),
+          tdee: Math.round(tdee),
+          calories: Math.round(calories)
+        };
+      }
 
-          currentWeightInput.value =
-            profile.currentWeight ||
-            profile.weight ||
-            "";
+      function updateCalculations() {
+        const metrics = getMetrics();
 
+        if (!metrics) {
+          document.getElementById("previewBMI").textContent = "—";
+          document.getElementById("previewBMR").textContent = "—";
+          document.getElementById("previewTDEE").textContent = "—";
+          document.getElementById("previewCalories").textContent = "—";
+          return;
+        }
 
-          goalWeightInput.value =
-            profile.goalWeight ||
-            "";
+        document.getElementById("previewBMI").textContent = metrics.bmi;
+        document.getElementById("previewBMR").textContent = metrics.bmr;
+        document.getElementById("previewTDEE").textContent = metrics.tdee;
+        document.getElementById("previewCalories").textContent = metrics.calories;
+      }
 
+      function loadProfile() {
+        const profile = readProfile();
 
-          goalInput.value =
-            profile.goal ||
-            "loss";
+        fields.name.value = profile.name || profile.fullName || "";
+        fields.age.value = profile.age ?? "";
+        fields.gender.value = profile.gender || "male";
+        fields.height.value = profile.height ?? "";
+        fields.currentWeight.value = profile.currentWeight ?? profile.weight ?? "";
+        fields.goalWeight.value = profile.goalWeight ?? profile.goal ?? "";
+        fields.goal.value = ["loss", "maintenance", "gain"].includes(profile.goal)
+          ? profile.goal
+          : "loss";
+        fields.activity.value = String(profile.activity ?? profile.activityLevel ?? 1.2);
 
+        updateHeader();
+        updateCalculations();
+      }
 
-          activityInput.value =
-            String(
-              profile.activity ||
-              profile.activityLevel ||
-              "1.2"
-            );
-
-
-          updateProfileHeader();
-
+      Object.values(fields).forEach(field => {
+        field.addEventListener("input", function () {
+          updateHeader();
           updateCalculations();
+          notice.className = "profile-notice";
+        });
 
+        field.addEventListener("change", updateCalculations);
+      });
+
+      form.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        if (!form.reportValidity()) return;
+
+        const name = fields.name.value.trim();
+        const age = Number(fields.age.value);
+        const height = Number(fields.height.value);
+        const currentWeight = Number(fields.currentWeight.value);
+        const goalWeight = Number(fields.goalWeight.value);
+        const activity = Number(fields.activity.value);
+
+        if (!name) {
+          showNotice("Please enter your full name.", "error");
+          fields.name.focus();
+          return;
         }
 
-
-        function updateProfileHeader() {
-
-          const name =
-            nameInput.value.trim() ||
-            "Champion";
-
-
-          const displayName =
-            document.getElementById(
-              "profileDisplayName"
-            );
-
-
-          if (displayName) {
-
-            displayName.textContent =
-              name;
-
-          }
-
-
-          const initials =
-            name
-              .split(" ")
-              .filter(Boolean)
-              .slice(0, 2)
-              .map(
-                word =>
-                  word.charAt(0).toUpperCase()
-              )
-              .join("");
-
-
-          const avatar =
-            document.getElementById(
-              "avatarInitials"
-            );
-
-
-          if (avatar) {
-
-            avatar.textContent =
-              initials || "CB";
-
-          }
-
+        if (
+          !Number.isFinite(goalWeight) ||
+          goalWeight < 30 ||
+          goalWeight > 300
+        ) {
+          showNotice("Please enter a valid goal weight.", "error");
+          fields.goalWeight.focus();
+          return;
         }
 
+        const store = storage();
 
-        function updateCalculations() {
+        if (!store || typeof store.saveProfile !== "function") {
+          showNotice("Storage is unavailable. Please reload the app and try again.", "error");
+          return;
+        }
 
-          const age =
-            Number(ageInput.value);
+        const oldProfile = readProfile();
 
-          const height =
-            Number(heightInput.value);
+        const profile = {
+          ...oldProfile,
+          name,
+          fullName: name,
+          age,
+          gender: fields.gender.value,
+          height,
+          weight: currentWeight,
+          currentWeight,
+          startingWeight: Number(oldProfile.startingWeight) > 0
+            ? Number(oldProfile.startingWeight)
+            : currentWeight,
+          goalWeight,
+          goal: fields.goal.value,
+          activity,
+          updatedAt: new Date().toISOString()
+        };
 
-          const weight =
-            Number(currentWeightInput.value);
+        saveButton.disabled = true;
+        saveButton.textContent = "Saving...";
 
-          const gender =
-            genderInput.value;
+        try {
+          const saved = store.saveProfile(profile);
 
-          const activity =
-            Number(activityInput.value);
-
-
-          if (
-            !age ||
-            !height ||
-            !weight
-          ) {
-
-            document.getElementById(
-              "previewBMI"
-            ).textContent = "—";
-
-            document.getElementById(
-              "previewBMR"
-            ).textContent = "—";
-
-            document.getElementById(
-              "previewTDEE"
-            ).textContent = "—";
-
-            document.getElementById(
-              "previewCalories"
-            ).textContent = "—";
-
+          if (!saved) {
+            showNotice("Could not save your profile. Check your device storage and try again.", "error");
             return;
-
           }
 
+          updateHeader();
+          showNotice("Profile saved successfully!", "success");
+        } catch (error) {
+          console.error("Profile save error:", error);
+          showNotice("An error occurred while saving your profile.", "error");
+        } finally {
+          saveButton.disabled = false;
+          saveButton.textContent = "Save Profile";
+        }
+      });
 
-          const heightM =
-            height / 100;
-
-
-          const bmi =
-            weight /
-            (heightM * heightM);
-
-
-          let bmr;
-
-
-          if (gender === "female") {
-
-            bmr =
-              (10 * weight) +
-              (6.25 * height) -
-              (5 * age) -
-              161;
-
-          } else {
-
-            bmr =
-              (10 * weight) +
-              (6.25 * height) -
-              (5 * age) +
-              5;
-
-          }
-
-
-          const
+      document.addEventListener("DOMContentLoaded", loadProfile);
+      loadProfile();
+    })();
+  </script>
+</body>
+  </html>
+  
