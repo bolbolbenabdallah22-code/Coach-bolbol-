@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Notifications | Coach Bolbol</title>
+
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<header class="app-header">
+  <div class="header-inner">
+
+    <button class="icon-button" onclick="goBack()">←</button>
+
+    <div class="header-title">
+      Notifications
+    </div>
+
+    <button
+      class="icon-button"
+      id="markAllBtn"
+      title="Mark all as read"
+    >
+      ✓
+    </button>
+
+  </div>
+</header>
+
+
+<main class="page-container">
+
+  <section class="page-section">
+
+    <div class="page-heading">
+
+      <div>
+        <h1>Notifications</h1>
+        <p id="notificationSubtitle">
+          Your latest updates
+        </p>
+      </div>
+
+    </div>
+
+
+    <div id="notificationsList">
+
+      <div class="empty-state">
+        <div class="empty-state-icon">🔔</div>
+        <h3>No notifications</h3>
+        <p>You don't have any notifications yet.</p>
+      </div>
+
+    </div>
+
+  </section>
+
+</main>
+
+
+<nav class="bottom-nav">
+
+  <a href="dashboard.html">
+    <span>⌂</span>
+    <small>Home</small>
+  </a>
+
+  <a href="programs.html">
+    <span>🏋️</span>
+    <small>Programs</small>
+  </a>
+
+  <a href="nutrition.html">
+    <span>🥗</span>
+    <small>Nutrition</small>
+  </a>
+
+  <a href="progress.html">
+    <span>📈</span>
+    <small>Progress</small>
+  </a>
+
+  <a href="profile.html">
+    <span>👤</span>
+    <small>Profile</small>
+  </a>
+
+</nav>
+
+
+<script src="app.js"></script>
+<script src="storage.js"></script>
+<script src="config.js"></script>
+<script src="supabase.js"></script>
+<script src="auth.js"></script>
+<script src="notifications.js"></script>
+<script src="ui.js"></script>
+
+
+<script>
+
+document.addEventListener("DOMContentLoaded", async function () {
+
+  const list =
+    document.getElementById("notificationsList");
+
+  const subtitle =
+    document.getElementById("notificationSubtitle");
+
+  const markAllBtn =
+    document.getElementById("markAllBtn");
+
+
+  function escapeHTML(value) {
+
+    if (
+      window.CoachBolbolUI &&
+      typeof CoachBolbolUI.escapeHTML === "function"
+    ) {
+      return CoachBolbolUI.escapeHTML(
+        String(value || "")
+      );
+    }
+
+    return String(value || "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
+
+
+  function formatDate(date) {
+
+    if (
+      window.CoachBolbolNotifications &&
+      typeof CoachBolbolNotifications.formatNotificationDate === "function"
+    ) {
+
+      return CoachBolbolNotifications
+        .formatNotificationDate(date);
+    }
+
+    const d = new Date(date);
+
+    if (Number.isNaN(d.getTime())) {
+      return "";
+    }
+
+    return d.toLocaleString();
+  }
+
+
+  function showEmpty() {
+
+    list.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-state-icon">🔔</div>
+
+        <h3>No notifications</h3>
+
+        <p>
+          You don't have any notifications yet.
+        </p>
+      </div>
+    `;
+
+    subtitle.textContent =
+      "You're all caught up";
+  }
+
+
+  function renderNotifications(items) {
+
+    if (!items || !items.length) {
+      showEmpty();
+      return;
+    }
+
+
+    const unreadCount =
+      items.filter(
+        item => !item.read && !item.is_read
+      ).length;
+
+
+    subtitle.textContent =
+      unreadCount > 0
+        ? `${unreadCount} unread notification${unreadCount > 1 ? "s" : ""}`
+        : "You're all caught up";
+
+
+    list.innerHTML =
+      items.map(function (item) {
+
+        const isUnread =
+          !item.read &&
+          !item.is_read;
+
+
+        const title =
+          item.title ||
+          "Coach Bolbol";
+
+
+        const message =
+          item.message ||
+          item.body ||
+          "";
+
+
+        const type =
+          item.type ||
+          "general";
+
+
+        const icon =
+          type === "workout"
+            ? "🏋️"
+            : type === "nutrition"
+              ? "🥗"
+              : type === "progress"
+                ? "📈"
+                : type === "message"
+                  ? "💬"
+                  : "🔔";
+
+
+        const id =
+          item.id ||
+          "";
+
+
+        return `
+          <article
+            class="settings-card"
+            style="
+              margin-bottom:12px;
+              padding:16px;
+              cursor:pointer;
+              ${isUnread
+                ? "border-left:4px solid #111827;"
+                : ""}
+            "
+            data-notification-id="${escapeHTML(id)}"
+          >
+
+            <div
+              style="
+                display:flex;
+                align-items:flex-start;
+                gap:13px;
+              "
+            >
+
+              <div
+                style="
+                  width:42px;
+                  height:42px;
+                  min-width:42px;
+                  border-radius:13px;
+                  background:#f1f5f9;
+                  display:grid;
+                  place-items:center;
+                  font-size:19px;
+                "
+              >
+                ${icon}
+              </div>
+
+
+              <div style="flex:1;min-width:0;">
+
+                <div
+                  style="
+                    display:flex;
+                    justify-content:space-between;
+                    gap:10px;
+                    align-items:flex-start;
+                  "
+                >
+
+                  <strong
+                    style="
+                      font-size:15px;
+                      font-weight:800;
+                    "
+                  >
+                    ${escapeHTML(title)}
+                  </strong>
+
+
+                  ${
+                    isUnread
+                      ? `
+                        <span
+                          style="
+                            width:8px;
+                            height:8px;
+                            min-width:8px;
+                            margin-top:5px;
+                            border-radius:50%;
+                            background:#111827;
+                          "
+                        ></span>
+                      `
+                      : ""
+                  }
+
+                </div>
+
+
+                <p
+                  style="
+                    margin:5px 0 7px;
+                    font-size:13px;
+                    line-height:1.5;
+                    opacity:.72;
+                  "
+                >
+                  ${escapeHTML(message)}
+                </p>
+
+
+                <small
+                  style="
+                    font-size:11px;
+                    opacity:.5;
+                  "
+                >
+                  ${escapeHTML(
+                    formatDate(
+                      item.created_at ||
+                      item.createdAt ||
+                      item.date
+                    )
+                  )}
+                </small>
+
+              </div>
+
+            </div>
+
+          </article>
+        `;
+
+      }).join("");
+
+
+    document
+      .querySelectorAll("[data-notification-id]")
+      .forEach(function (element) {
+
+        element.addEventListener(
+          "click",
+          async function () {
+
+            const id =
+              element.dataset.notificationId;
+
+            if (!id) {
+              return;
+            }
+
+
+            try {
+
+              if (
+                window.CoachBolbolNotifications &&
+                typeof CoachBolbolNotifications.markAsRead === "function"
+              ) {
+
+                await CoachBolbolNotifications
+                  .markAsRead(id);
+
+                loadNotifications();
+              }
+
+            } catch (error) {
+
+              console.error(
+                "Notification read error:",
+                error
+              );
+
+            }
+
+          }
+        );
+
+      });
+
+  }
+
+
+  async function loadNotifications() {
+
+    try {
+
+      let items = [];
+
+
+      if (
+        window.CoachBolbolNotifications &&
+        typeof CoachBolbolNotifications.getNotifications === "function"
+      ) {
+
+        items =
+          await CoachBolbolNotifications
+            .getNotifications();
+
+      }
+
+
+      renderNotifications(
+        Array.isArray(items)
+          ? items
+          : []
+      );
+
+
+    } catch (error) {
+
+      console.error(
+        "Notifications error:",
+        error
+      );
+
+      showEmpty();
+
+    }
+
+  }
+
+
+  markAllBtn.addEventListener(
+    "click",
+    async function () {
+
+      try {
+
+        if (
+          window.CoachBolbolNotifications &&
+          typeof CoachBolbolNotifications.markAllAsRead === "function"
+        ) {
+
+          await CoachBolbolNotifications
+            .markAllAsRead();
+
+        }
+
+
+        if (
+          window.CoachBolbolUI &&
+          typeof CoachBolbolUI.toast === "function"
+        ) {
+
+          CoachBolbolUI.toast(
+            "All notifications marked as read"
+          );
+
+        } else if (
+          typeof showToast === "function"
+        ) {
+
+          showToast(
+            "All notifications marked as read"
+          );
+
+        }
+
+
+        loadNotifications();
+
+      } catch (error) {
+
+        console.error(
+          "Mark all error:",
+          error
+        );
+
+      }
+
+    }
+  );
+
+
+  await loadNotifications();
+
+});
+
+</script>
+
+</body>
+</html>
