@@ -1,1100 +1,902 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Progress | Coach Bolbol</title>
+  <title>Progress | Coach Bolbol</title>
 
-<style>
-:root{
-  --bg:#f5f7fb;
-  --card:#fff;
-  --text:#172033;
-  --muted:#6b7280;
-  --border:#e5e7eb;
-  --dark:#111827;
-  --green:#16a34a;
-  --green-light:#dcfce7;
-  --blue:#2563eb;
-  --shadow:0 12px 30px rgba(17,24,39,.08);
-  --radius:20px;
-}
+  <link rel="stylesheet" href="css/style.css">
 
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-}
+  <style>
+    .progress-hero {
+      padding: 28px 20px;
+      border-radius: 24px;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, #111827, #374151);
+      color: #fff;
+      overflow: hidden;
+      position: relative;
+    }
 
-body{
-  font-family:Arial,Helvetica,sans-serif;
-  background:var(--bg);
-  color:var(--text);
-  padding-bottom:90px;
-}
+    .progress-hero::after {
+      content: "";
+      position: absolute;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.07);
+      right: -50px;
+      top: -60px;
+    }
 
-.container{
-  width:min(100%,720px);
-  margin:auto;
-  padding:18px;
-}
+    .progress-hero h1 {
+      margin: 0 0 7px;
+      font-size: 28px;
+    }
 
-.hero{
-  background:linear-gradient(135deg,#111827,#1d4ed8);
-  color:white;
-  padding:23px 20px;
-  border-radius:27px;
-  margin-bottom:18px;
-  box-shadow:var(--shadow);
-}
+    .progress-hero p {
+      margin: 0;
+      opacity: .78;
+    }
 
-.back{
-  display:inline-block;
-  color:#dbeafe;
-  text-decoration:none;
-  font-size:14px;
-  margin-bottom:17px;
-}
+    .progress-main-card {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 22px;
+      padding: 22px;
+      margin-bottom: 18px;
+      box-shadow: 0 8px 25px rgba(15, 23, 42, .06);
+    }
 
-.hero h1{
-  font-size:29px;
-  margin-bottom:7px;
-}
+    .progress-main-card h2 {
+      margin: 0 0 18px;
+      font-size: 20px;
+    }
 
-.hero p{
-  color:#dbeafe;
-  font-size:14px;
-  line-height:1.5;
-}
+    .weight-display {
+      text-align: center;
+      padding: 12px 0 22px;
+    }
 
-.card{
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:var(--radius);
-  padding:18px;
-  margin-bottom:16px;
-  box-shadow:var(--shadow);
-}
+    .weight-display .weight-number {
+      font-size: 48px;
+      font-weight: 800;
+      line-height: 1;
+      color: #111827;
+    }
 
-.card h2{
-  font-size:19px;
-  margin-bottom:14px;
-}
+    .weight-display .weight-unit {
+      font-size: 17px;
+      color: #6b7280;
+      margin-left: 5px;
+    }
 
-.grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-}
+    .weight-display .weight-label {
+      display: block;
+      color: #6b7280;
+      margin-top: 8px;
+      font-size: 14px;
+    }
 
-.field{
-  margin-bottom:12px;
-}
+    .goal-progress-wrap {
+      margin-top: 8px;
+    }
 
-label{
-  display:block;
-  font-size:12px;
-  font-weight:bold;
-  color:#374151;
-  margin-bottom:7px;
-}
+    .goal-progress-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 9px;
+      font-size: 14px;
+      font-weight: 700;
+    }
 
-input,select{
-  width:100%;
-  border:1px solid var(--border);
-  border-radius:12px;
-  padding:12px;
-  background:white;
-  color:var(--text);
-  font-size:14px;
-  outline:none;
-}
+    .progress-track {
+      width: 100%;
+      height: 12px;
+      border-radius: 999px;
+      background: #e5e7eb;
+      overflow: hidden;
+    }
 
-input:focus,select:focus{
-  border-color:var(--blue);
-}
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #111827, #4b5563);
+      transition: width .8s ease;
+    }
 
-.btn{
-  width:100%;
-  border:0;
-  border-radius:12px;
-  padding:13px;
-  background:var(--dark);
-  color:white;
-  font-weight:bold;
-  cursor:pointer;
-}
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
 
-.stats{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:8px;
-}
+    .stat-card {
+      background: #f8fafc;
+      border: 1px solid #e5e7eb;
+      border-radius: 18px;
+      padding: 16px;
+    }
 
-.stat{
-  background:#f8fafc;
-  border-radius:14px;
-  padding:13px 6px;
-  text-align:center;
-}
+    .stat-card .stat-label {
+      display: block;
+      color: #6b7280;
+      font-size: 13px;
+      margin-bottom: 7px;
+    }
 
-.stat span{
-  display:block;
-  font-size:10px;
-  color:var(--muted);
-  margin-bottom:5px;
-}
+    .stat-card .stat-value {
+      font-size: 22px;
+      font-weight: 800;
+      color: #111827;
+    }
 
-.stat strong{
-  font-size:17px;
-}
+    .stat-card .stat-sub {
+      color: #6b7280;
+      font-size: 12px;
+      margin-top: 4px;
+    }
 
-.progress{
-  height:12px;
-  background:#e5e7eb;
-  border-radius:999px;
-  overflow:hidden;
-  margin:15px 0 8px;
-}
+    .checkin-form {
+      display: grid;
+      gap: 12px;
+    }
 
-.progress-bar{
-  height:100%;
-  width:0;
-  background:linear-gradient(90deg,#16a34a,#22c55e);
-  border-radius:999px;
-  transition:.5s;
-}
+    .checkin-input {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 14px 15px;
+      border-radius: 14px;
+      border: 1px solid #d1d5db;
+      background: #fff;
+      font-size: 16px;
+      outline: none;
+    }
 
-.progress-text{
-  text-align:center;
-  color:var(--muted);
-  font-size:12px;
-}
+    .checkin-input:focus {
+      border-color: #111827;
+      box-shadow: 0 0 0 3px rgba(17,24,39,.08);
+    }
 
-.metric{
-  display:flex;
-  justify-content:space-between;
-  gap:10px;
-  padding:12px 0;
-  border-bottom:1px solid var(--border);
-  font-size:13px;
-}
+    .history-list {
+      display: grid;
+      gap: 10px;
+    }
 
-.metric:last-child{
-  border-bottom:0;
-}
+    .history-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px;
+      background: #f8fafc;
+      border: 1px solid #e5e7eb;
+      border-radius: 16px;
+    }
 
-.metric span{
-  color:var(--muted);
-}
+    .history-date {
+      font-size: 13px;
+      color: #6b7280;
+    }
 
-.metric strong{
-  text-align:right;
-}
+    .history-weight {
+      font-size: 19px;
+      font-weight: 800;
+      color: #111827;
+    }
 
-.history-item{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:10px;
-  padding:13px 0;
-  border-bottom:1px solid var(--border);
-}
+    .history-change {
+      font-size: 12px;
+      color: #6b7280;
+      text-align: right;
+    }
 
-.history-item:last-child{
-  border-bottom:0;
-}
+    .positive-change {
+      color: #dc2626;
+    }
 
-.history-date{
-  font-size:11px;
-  color:var(--muted);
-  margin-top:4px;
-}
+    .negative-change {
+      color: #16a34a;
+    }
 
-.delete-btn{
-  border:0;
-  background:#fee2e2;
-  color:#b91c1c;
-  border-radius:9px;
-  padding:7px 9px;
-  cursor:pointer;
-}
+    .neutral-change {
+      color: #6b7280;
+    }
 
-.empty{
-  text-align:center;
-  color:var(--muted);
-  font-size:13px;
-  padding:10px 0;
-}
+    .empty-progress {
+      text-align: center;
+      padding: 25px 10px;
+      color: #6b7280;
+    }
 
-.note{
-  color:var(--muted);
-  font-size:12px;
-  line-height:1.5;
-  margin-top:10px;
-}
+    .summary-message {
+      padding: 15px;
+      border-radius: 16px;
+      background: #f3f4f6;
+      color: #374151;
+      line-height: 1.55;
+      font-size: 14px;
+    }
 
-.bottom-nav{
-  position:fixed;
-  left:0;
-  right:0;
-  bottom:0;
-  background:rgba(255,255,255,.96);
-  backdrop-filter:blur(12px);
-  border-top:1px solid var(--border);
-  z-index:20;
-}
+    @media (min-width: 700px) {
+      .stats-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
 
-.nav-inner{
-  width:min(100%,720px);
-  margin:auto;
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-}
-
-.nav-item{
-  text-decoration:none;
-  color:#6b7280;
-  text-align:center;
-  padding:10px 3px;
-  font-size:10px;
-}
-
-.nav-item span{
-  display:block;
-  font-size:20px;
-  margin-bottom:3px;
-}
-
-.nav-item.active{
-  color:#111827;
-  font-weight:bold;
-}
-
-@media(max-width:430px){
-  .stats{
-    gap:6px;
-  }
-
-  .stat{
-    padding:12px 4px;
-  }
-}
-</style>
+      .progress-page-container {
+        max-width: 850px;
+        margin: 0 auto;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<main class="container">
-
-<section class="hero">
-
-<a href="dashboard.html" class="back">
-← Back to Dashboard
-</a>
-
-<h1>📈 Your Progress</h1>
-
-<p>
-Track your bodyweight, targets and estimated energy needs over time.
-</p>
-
-</section>
-
-
-<section class="card">
-
-<h2>⚖️ Weight Progress</h2>
-
-<div class="stats">
-
-<div class="stat">
-<span>Starting</span>
-<strong id="startWeight">—</strong>
-</div>
-
-<div class="stat">
-<span>Current</span>
-<strong id="currentWeight">—</strong>
-</div>
-
-<div class="stat">
-<span>Goal</span>
-<strong id="goalWeight">—</strong>
-</div>
-
-</div>
-
-<div class="progress">
-
-<div
-class="progress-bar"
-id="weightProgress">
-</div>
-
-</div>
-
-<div
-class="progress-text"
-id="progressText">
-Complete your profile to calculate progress.
-</div>
-
-</section>
-
-
-<section class="card">
-
-<h2>➕ Add Weight Check-in</h2>
-
-<div class="grid">
-
-<div class="field">
-
-<label>Weight (kg)</label>
-
-<input
-id="weightInput"
-type="number"
-step="0.1"
-min="1"
-placeholder="e.g. 92.5"
->
-
-</div>
-
-<div class="field">
-
-<label>Date</label>
-
-<input
-id="weightDate"
-type="date"
->
-
-</div>
-
-</div>
-
-<button
-class="btn"
-onclick="addWeight()">
-
-Save Check-in
-
-</button>
-
-</section>
-
-
-<section class="card">
-
-<h2>🧮 Body Metrics</h2>
-
-<div class="metric">
-<span>BMI</span>
-<strong id="bmi">—</strong>
-</div>
-
-<div class="metric">
-<span>BMI Category</span>
-<strong id="bmiCategory">—</strong>
-</div>
-
-<div class="metric">
-<span>BMR</span>
-<strong id="bmr">—</strong>
-</div>
-
-<div class="metric">
-<span>Estimated TDEE</span>
-<strong id="tdee">—</strong>
-</div>
-
-<div class="metric">
-<span>Fat Loss Target</span>
-<strong id="fatLossCalories">—</strong>
-</div>
-
-<div class="metric">
-<span>Estimated Weekly Loss</span>
-<strong id="weeklyLoss">—</strong>
-</div>
-
-<div class="metric">
-<span>Estimated Weeks to Goal</span>
-<strong id="weeksGoal">—</strong>
-</div>
-
-<p class="note">
-These are estimates based on standard equations. Actual energy needs
-and weight change can differ between individuals.
-</p>
-
-</section>
-
-
-<section class="card">
-
-<h2>🎯 Healthy Weight Range</h2>
-
-<div class="metric">
-<span>Lower estimate</span>
-<strong id="healthyLow">—</strong>
-</div>
-
-<div class="metric">
-<span>Upper estimate</span>
-<strong id="healthyHigh">—</strong>
-</div>
-
-<p class="note">
-This range is based on BMI 18.5–24.9 and should not be treated as a
-personalized body-composition target.
-</p>
-
-</section>
-
-
-<section class="card">
-
-<h2>📊 Weight History</h2>
-
-<div id="historyContainer"></div>
-
-</section>
-
-
-<section class="card">
-
-<h2>👤 Profile Data</h2>
-
-<div class="metric">
-<span>Name</span>
-<strong id="profileName">—</strong>
-</div>
-
-<div class="metric">
-<span>Age</span>
-<strong id="profileAge">—</strong>
-</div>
-
-<div class="metric">
-<span>Height</span>
-<strong id="profileHeight">—</strong>
-</div>
-
-<div class="metric">
-<span>Activity</span>
-<strong id="profileActivity">—</strong>
-</div>
-
-<p class="note">
-If these values are missing, open your Profile page first.
-</p>
-
-</section>
-
-</main>
-
-
-<nav class="bottom-nav">
-
-<div class="nav-inner">
-
-<a href="dashboard.html" class="nav-item">
-<span>🏠</span>
-Home
-</a>
-
-<a href="programs.html" class="nav-item">
-<span>🏋️</span>
-Programs
-</a>
-
-<a href="nutrition.html" class="nav-item">
-<span>🥗</span>
-Nutrition
-</a>
-
-<a href="progress.html" class="nav-item active">
-<span>📈</span>
-Progress
-</a>
-
-</div>
-
-</nav>
-
-
-<script>
-
-const profileKey =
-"coach_bolbol_profile";
-
-
-const weightHistoryKey =
-"coach_bolbol_weight_history";
-
-
-const defaultProfile = {
-  name:"",
-  age:0,
-  height:0,
-  weight:0,
-  goalWeight:0,
-  gender:"male",
-  activity:"1.375"
-};
-
-
-let profile = {};
-
-let history = [];
-
-
-function loadData(){
-
-  try{
-
-    profile =
-    JSON.parse(
-      localStorage.getItem(profileKey)
-    ) || {};
-
-  }catch(e){
-
-    profile = {};
-
-  }
-
-
-  try{
-
-    history =
-    JSON.parse(
-      localStorage.getItem(weightHistoryKey)
-    ) || [];
-
-  }catch(e){
-
-    history = [];
-
-  }
-
-}
-
-
-function getNumber(value){
-
-  const n = Number(value);
-
-  return Number.isFinite(n) ? n : 0;
-
-}
-
-
-function calculate(){
-
-  const age =
-  getNumber(profile.age);
-
-  const height =
-  getNumber(profile.height);
-
-  let weight =
-  getNumber(profile.weight);
-
-  const goal =
-  getNumber(profile.goalWeight);
-
-  const activity =
-  getNumber(profile.activity) || 1.375;
-
-
-  if(history.length > 0){
-
-    weight =
-    getNumber(history[0].weight);
-
-  }
-
-
-  if(!weight || !height){
-
-    document.getElementById("bmi").textContent = "—";
-    document.getElementById("bmr").textContent = "—";
-    document.getElementById("tdee").textContent = "—";
-    document.getElementById("fatLossCalories").textContent = "—";
-
-    return;
-
-  }
-
-
-  const heightM =
-  height / 100;
-
-
-  const bmi =
-  weight / (heightM * heightM);
-
-
-  let category = "";
-
-
-  if(bmi < 18.5){
-    category = "Underweight";
-  }else if(bmi < 25){
-    category = "Healthy range";
-  }else if(bmi < 30){
-    category = "Overweight";
-  }else{
-    category = "Obesity range";
-  }
-
-
-  let bmr;
-
-
-  const gender =
-  String(profile.gender || "male")
-  .toLowerCase();
-
-
-  if(gender === "female"){
-
-    bmr =
-    10 * weight +
-    6.25 * height -
-    5 * age -
-    161;
-
-  }else{
-
-    bmr =
-    10 * weight +
-    6.25 * height -
-    5 * age +
-    5;
-
-  }
-
-
-  const tdee =
-  bmr * activity;
-
-
-  const fatLoss =
-  Math.max(
-    1200,
-    Math.round(tdee * 0.85)
-  );
-
-
-  const weeklyLoss =
-  weight * 0.005;
-
-
-  let weeks = "—";
-
-
-  if(goal > 0 && weight > goal){
-
-    weeks =
-    Math.ceil(
-      (weight - goal) /
-      weeklyLoss
-    );
-
-  }
-
-
-  document.getElementById("bmi")
-  .textContent =
-  bmi.toFixed(1);
-
-
-  document.getElementById("bmiCategory")
-  .textContent =
-  category;
-
-
-  document.getElementById("bmr")
-  .textContent =
-  Math.round(bmr) + " kcal";
-
-
-  document.getElementById("tdee")
-  .textContent =
-  Math.round(tdee) + " kcal";
-
-
-  document.getElementById("fatLossCalories")
-  .textContent =
-  fatLoss + " kcal";
-
-
-  document.getElementById("weeklyLoss")
-  .textContent =
-  weeklyLoss.toFixed(2) + " kg/week";
-
-
-  document.getElementById("weeksGoal")
-  .textContent =
-  weeks === "—"
-  ? "—"
-  : weeks + " weeks";
-
-
-  const healthyLow =
-  18.5 * heightM * heightM;
-
-
-  const healthyHigh =
-  24.9 * heightM * heightM;
-
-
-  document.getElementById("healthyLow")
-  .textContent =
-  healthyLow.toFixed(1) + " kg";
-
-
-  document.getElementById("healthyHigh")
-  .textContent =
-  healthyHigh.toFixed(1) + " kg";
-
-
-  updateWeightProgress(weight,goal);
-
-}
-
-
-function updateWeightProgress(weight,goal){
-
-  const starting =
-  getStartingWeight();
-
-
-  document.getElementById("startWeight")
-  .textContent =
-  starting > 0
-  ? starting.toFixed(1) + " kg"
-  : "—";
-
-
-  document.getElementById("currentWeight")
-  .textContent =
-  weight > 0
-  ? weight.toFixed(1) + " kg"
-  : "—";
-
-
-  document.getElementById("goalWeight")
-  .textContent =
-  goal > 0
-  ? goal.toFixed(1) + " kg"
-  : "—";
-
-
-  if(
-    starting > 0 &&
-    weight > 0 &&
-    goal > 0 &&
-    starting !== goal
-  ){
-
-    const total =
-    Math.abs(starting - goal);
-
-    const completed =
-    Math.abs(starting - weight);
-
-    let percentage =
-    completed / total * 100;
-
-
-    percentage =
-    Math.max(
-      0,
-      Math.min(100,percentage)
-    );
-
-
-    document.getElementById("weightProgress")
-    .style.width =
-    percentage + "%";
-
-
-    document.getElementById("progressText")
-    .textContent =
-    Math.round(percentage) +
-    "% toward your weight goal";
-
-  }else{
-
-    document.getElementById("weightProgress")
-    .style.width = "0%";
-
-    document.getElementById("progressText")
-    .textContent =
-    "Add starting and goal weight to calculate progress.";
-
-  }
-
-}
-
-
-function getStartingWeight(){
-
-  if(history.length > 0){
-
-    const reversed =
-    [...history].reverse();
-
-    const first =
-    reversed.find(
-      item => getNumber(item.weight) > 0
-    );
-
-    if(first){
-      return getNumber(first.weight);
-    }
-
-  }
-
-
-  return getNumber(profile.weight);
-
-}
-
-
-function addWeight(){
-
-  const weight =
-  getNumber(
-    document.getElementById("weightInput").value
-  );
-
-
-  const date =
-  document.getElementById("weightDate").value;
-
-
-  if(weight <= 0){
-
-    alert("Enter a valid bodyweight.");
-
-    return;
-
-  }
-
-
-  const checkDate =
-  date ||
-  new Date().toISOString().slice(0,10);
-
-
-  history.unshift({
-
-    weight:weight,
-
-    date:checkDate
-
-  });
-
-
-  history =
-  history.slice(0,100);
-
-
-  localStorage.setItem(
-    weightHistoryKey,
-    JSON.stringify(history)
-  );
-
-
-  /*
-    Keep profile current weight synchronized.
-  */
-
-  profile.weight = weight;
-
-
-  localStorage.setItem(
-    profileKey,
-    JSON.stringify(profile)
-  );
-
-
-  document.getElementById("weightInput")
-  .value = "";
-
-
-  renderHistory();
-
-  calculate();
-
-
-  alert("✅ Weight check-in saved!");
-
-}
-
-
-function renderHistory(){
-
-  const container =
-  document.getElementById("historyContainer");
-
-
-  if(history.length === 0){
-
-    container.innerHTML =
-    `<div class="empty">
-      No weight check-ins yet.
-    </div>`;
-
-    return;
-
-  }
-
-
-  container.innerHTML =
-  history.slice(0,20).map((item,index)=>{
-
-    const date =
-    new Date(item.date + "T12:00:00");
-
-
-    return `
-
-      <div class="history-item">
-
-        <div>
-
-          <strong>
-            ${Number(item.weight).toFixed(1)} kg
-          </strong>
-
-          <div class="history-date">
-            ${date.toLocaleDateString()}
-          </div>
-
+  <header class="app-header">
+    <div class="header-inner">
+      <button class="icon-button" onclick="goBack()" aria-label="Go back">
+        ←
+      </button>
+
+      <div class="header-title">
+        <strong>Progress</strong>
+      </div>
+
+      <a href="dashboard.html" class="header-action">
+        Home
+      </a>
+    </div>
+  </header>
+
+  <main class="page-container progress-page-container">
+
+    <section class="progress-hero">
+      <h1>Your Progress</h1>
+      <p>Track your body transformation and training consistency.</p>
+    </section>
+
+    <!-- Current weight -->
+    <section class="progress-main-card">
+
+      <h2>Current Weight</h2>
+
+      <div class="weight-display">
+        <span class="weight-number" id="currentWeight">--</span>
+        <span class="weight-unit">kg</span>
+        <span class="weight-label">Latest recorded weight</span>
+      </div>
+
+      <div class="goal-progress-wrap">
+
+        <div class="goal-progress-head">
+          <span id="progressStartLabel">Start: -- kg</span>
+          <span id="progressGoalLabel">Goal: -- kg</span>
         </div>
 
-        <button
-          class="delete-btn"
-          onclick="deleteWeight(${index})">
-
-          Delete
-
-        </button>
+        <div class="progress-track">
+          <div
+            class="progress-fill"
+            id="goalProgressBar">
+          </div>
+        </div>
 
       </div>
 
-    `;
+    </section>
 
-  }).join("");
+    <!-- Main statistics -->
+    <section class="progress-main-card">
 
-}
+      <h2>Body Progress</h2>
 
+      <div class="stats-grid">
 
-function deleteWeight(index){
+        <div class="stat-card">
+          <span class="stat-label">Goal</span>
+          <div class="stat-value" id="goalWeight">--</div>
+          <div class="stat-sub">kg</div>
+        </div>
 
-  if(
-    !confirm(
-      "Delete this weight check-in?"
-    )
-  ){
+        <div class="stat-card">
+          <span class="stat-label">Remaining</span>
+          <div class="stat-value" id="remainingWeight">--</div>
+          <div class="stat-sub">kg</div>
+        </div>
 
-    return;
+        <div class="stat-card">
+          <span class="stat-label">Total Change</span>
+          <div class="stat-value" id="totalChange">--</div>
+          <div class="stat-sub">kg</div>
+        </div>
 
-  }
+        <div class="stat-card">
+          <span class="stat-label">BMI</span>
+          <div class="stat-value" id="bmiValue">--</div>
+          <div class="stat-sub" id="bmiStatus">--</div>
+        </div>
 
+      </div>
 
-  history.splice(index,1);
+    </section>
 
+    <!-- Weekly activity -->
+    <section class="progress-main-card">
 
-  localStorage.setItem(
-    weightHistoryKey,
-    JSON.stringify(history)
-  );
+      <h2>Training Overview</h2>
 
+      <div class="stats-grid">
 
-  renderHistory();
+        <div class="stat-card">
+          <span class="stat-label">Total Workouts</span>
+          <div class="stat-value" id="totalWorkouts">0</div>
+          <div class="stat-sub">all time</div>
+        </div>
 
-  calculate();
+        <div class="stat-card">
+          <span class="stat-label">This Week</span>
+          <div class="stat-value" id="weeklyWorkouts">0</div>
+          <div class="stat-sub">workouts</div>
+        </div>
 
-}
+        <div class="stat-card">
+          <span class="stat-label">Weekly Change</span>
+          <div class="stat-value" id="weeklyWeightChange">--</div>
+          <div class="stat-sub">kg</div>
+        </div>
 
+        <div class="stat-card">
+          <span class="stat-label">Last Workout</span>
+          <div class="stat-value" id="lastWorkout">--</div>
+          <div class="stat-sub">status</div>
+        </div>
 
-function renderProfile(){
+      </div>
 
-  document.getElementById("profileName")
-  .textContent =
-  profile.name || "—";
+    </section>
 
+    <!-- Weight check-in -->
+    <section class="progress-main-card">
 
-  document.getElementById("profileAge")
-  .textContent =
-  profile.age
-  ? profile.age + " years"
-  : "—";
+      <h2>New Weight Check-in</h2>
 
+      <form id="weightCheckinForm" class="checkin-form">
 
-  document.getElementById("profileHeight")
-  .textContent =
-  profile.height
-  ? profile.height + " cm"
-  : "—";
+        <input
+          type="number"
+          id="newWeight"
+          class="checkin-input"
+          placeholder="Enter your weight in kg"
+          min="20"
+          max="400"
+          step="0.1"
+          required
+        >
 
+        <button type="submit" class="btn btn-primary btn-block">
+          Save Weight
+        </button>
 
-  const activityNames = {
+      </form>
 
-    "1.2":"Sedentary",
+    </section>
 
-    "1.375":"Lightly Active",
+    <!-- Weight history -->
+    <section class="progress-main-card">
 
-    "1.55":"Moderately Active",
+      <h2>Weight History</h2>
 
-    "1.725":"Very Active",
+      <div id="weightHistory" class="history-list"></div>
 
-    "1.9":"Extremely Active"
+    </section>
 
-  };
+    <!-- Coach report -->
+    <section class="progress-main-card">
 
+      <h2>Progress Summary</h2>
 
-  document.getElementById("profileActivity")
-  .textContent =
-  activityNames[String(profile.activity)]
-  || "—";
+      <div id="progressSummary" class="summary-message">
+        Loading your progress...
+      </div>
 
-}
+      <div style="margin-top:14px;">
+        <button
+          type="button"
+          class="btn btn-secondary btn-block"
+          onclick="sendProgressReport()">
+          Send Progress Report to Coach
+        </button>
+      </div>
 
+    </section>
 
-document
-.getElementById("weightDate")
-.value =
-new Date()
-.toISOString()
-.slice(0,10);
+  </main>
 
+  <nav class="bottom-nav">
 
-loadData();
+    <a href="dashboard.html" data-page="dashboard">
+      <span>⌂</span>
+      <small>Home</small>
+    </a>
 
-profile = {
-  ...defaultProfile,
-  ...profile
-};
+    <a href="programs.html" data-page="programs">
+      <span>▣</span>
+      <small>Programs</small>
+    </a>
 
-renderProfile();
+    <a href="nutrition.html" data-page="nutrition">
+      <span>◉</span>
+      <small>Nutrition</small>
+    </a>
 
-renderHistory();
+    <a href="progress.html" data-page="progress">
+      <span>↗</span>
+      <small>Progress</small>
+    </a>
 
-calculate();
+    <a href="profile.html" data-page="profile">
+      <span>●</span>
+      <small>Profile</small>
+    </a>
 
-</script>
+  </nav>
 
-</body>
-  </html>
+  <script src="app.js"></script>
+  <script src="storage.js"></script>
+  <script src="progress.js"></script>
+  <script src="calculator.js"></script>
+  <script src="reports.js"></script>
+  <script src="messages.js"></script>
+  <script src="ui.js"></script>
+
+  <script>
+
+    function getProgressData() {
+      try {
+        if (
+          window.CoachBolbolProgress &&
+          typeof CoachBolbolProgress.getSummary === "function"
+        ) {
+          return CoachBolbolProgress.getSummary();
+        }
+      } catch (error) {
+        console.error(error);
+      }
+
+      return {};
+    }
+
+    function formatNumber(value, decimals = 1) {
+      const number = Number(value);
+
+      if (!Number.isFinite(number)) {
+        return "--";
+      }
+
+      return number.toFixed(decimals);
+    }
+
+    function renderProgress() {
+
+      const data = getProgressData();
+
+      const currentWeight =
+        Number(data.currentWeight) ||
+        Number(data.weight) ||
+        0;
+
+      const startWeight =
+        Number(data.startWeight) ||
+        currentWeight ||
+        0;
+
+      const goalWeight =
+        Number(data.goalWeight) ||
+        0;
+
+      const remaining =
+        goalWeight > 0
+          ? Math.abs(currentWeight - goalWeight)
+          : 0;
+
+      document.getElementById("currentWeight").textContent =
+        currentWeight > 0
+          ? formatNumber(currentWeight)
+          : "--";
+
+      document.getElementById("progressStartLabel").textContent =
+        startWeight > 0
+          ? `Start: ${formatNumber(startWeight)} kg`
+          : "Start: -- kg";
+
+      document.getElementById("progressGoalLabel").textContent =
+        goalWeight > 0
+          ? `Goal: ${formatNumber(goalWeight)} kg`
+          : "Goal: -- kg";
+
+      document.getElementById("goalWeight").textContent =
+        goalWeight > 0
+          ? formatNumber(goalWeight)
+          : "--";
+
+      document.getElementById("remainingWeight").textContent =
+        goalWeight > 0 && currentWeight > 0
+          ? formatNumber(remaining)
+          : "--";
+
+      const change =
+        startWeight > 0 && currentWeight > 0
+          ? currentWeight - startWeight
+          : 0;
+
+      document.getElementById("totalChange").textContent =
+        startWeight > 0 && currentWeight > 0
+          ? `${change > 0 ? "+" : ""}${formatNumber(change)}`
+          : "--";
+
+      const bmi =
+        Number(data.bmi) ||
+        (
+          data.height &&
+          currentWeight
+            ? currentWeight / Math.pow(Number(data.height) / 100, 2)
+            : 0
+        );
+
+      document.getElementById("bmiValue").textContent =
+        bmi > 0
+          ? formatNumber(bmi, 1)
+          : "--";
+
+      document.getElementById("bmiStatus").textContent =
+        data.bmiStatus ||
+        getBMIStatus(bmi);
+
+      const progress =
+        Number(data.goalProgress);
+
+      let progressPercent = progress;
+
+      if (
+        !Number.isFinite(progressPercent) &&
+        startWeight > 0 &&
+        goalWeight > 0 &&
+        startWeight !== goalWeight
+      ) {
+
+        progressPercent =
+          ((startWeight - currentWeight) /
+          (startWeight - goalWeight)) * 100;
+      }
+
+      if (!Number.isFinite(progressPercent)) {
+        progressPercent = 0;
+      }
+
+      progressPercent =
+        Math.max(0, Math.min(100, progressPercent));
+
+      document.getElementById("goalProgressBar").style.width =
+        `${progressPercent}%`;
+
+      document.getElementById("totalWorkouts").textContent =
+        data.totalWorkouts ?? 0;
+
+      document.getElementById("weeklyWorkouts").textContent =
+        data.weeklyWorkouts ?? 0;
+
+      const weeklyChange =
+        Number(data.weeklyWeightChange);
+
+      document.getElementById("weeklyWeightChange").textContent =
+        Number.isFinite(weeklyChange)
+          ? `${weeklyChange > 0 ? "+" : ""}${formatNumber(weeklyChange)}`
+          : "--";
+
+      document.getElementById("lastWorkout").textContent =
+        data.lastWorkout
+          ? "Completed"
+          : "None";
+
+      renderHistory(data);
+
+      renderSummary(
+        data,
+        currentWeight,
+        goalWeight,
+        change,
+        progressPercent
+      );
+    }
+
+    function renderHistory(data) {
+
+      const container =
+        document.getElementById("weightHistory");
+
+      let history =
+        Array.isArray(data.weightHistory)
+          ? data.weightHistory
+          : [];
+
+      if (!history.length) {
+
+        container.innerHTML = `
+          <div class="empty-progress">
+            No weight check-ins yet.
+            <br>
+            Add your first weight above.
+          </div>
+        `;
+
+        return;
+      }
+
+      history = [...history]
+        .sort((a, b) => {
+          return new Date(b.date) - new Date(a.date);
+        })
+        .slice(0, 15);
+
+      container.innerHTML =
+        history.map((item, index) => {
+
+          const weight =
+            Number(item.weight) || 0;
+
+          const previous =
+            history[index + 1]
+              ? Number(history[index + 1].weight)
+              : null;
+
+          let changeText = "—";
+          let changeClass = "neutral-change";
+
+          if (
+            previous !== null &&
+            Number.isFinite(previous)
+          ) {
+
+            const difference =
+              weight - previous;
+
+            changeText =
+              `${difference > 0 ? "+" : ""}${difference.toFixed(1)} kg`;
+
+            if (difference < 0) {
+              changeClass = "negative-change";
+            } else if (difference > 0) {
+              changeClass = "positive-change";
+            }
+          }
+
+          const date =
+            item.date
+              ? new Date(item.date).toLocaleDateString(
+                  undefined,
+                  {
+                    day: "2-digit",
+                    month: "short",
+                    year: "numeric"
+                  }
+                )
+              : "Unknown date";
+
+          return `
+            <div class="history-item">
+
+              <div>
+                <div class="history-weight">
+                  ${weight.toFixed(1)} kg
+                </div>
+
+                <div class="history-date">
+                  ${date}
+                </div>
+              </div>
+
+              <div class="history-change ${changeClass}">
+                ${changeText}
+              </div>
+
+            </div>
+          `;
+
+        }).join("");
+    }
+
+    function renderSummary(
+      data,
+      currentWeight,
+      goalWeight,
+      change,
+      progressPercent
+    ) {
+
+      const summary =
+        document.getElementById("progressSummary");
+
+      if (!currentWeight) {
+
+        summary.innerHTML =
+          "Complete your profile and add a weight check-in to start tracking your transformation.";
+
+        return;
+      }
+
+      let message = "";
+
+      if (goalWeight > 0) {
+
+        const direction =
+          goalWeight < currentWeight
+            ? "lose"
+            : goalWeight > currentWeight
+              ? "gain"
+              : "reach";
+
+        if (direction === "reach") {
+
+          message =
+            "🔥 You reached your current weight goal. Excellent work!";
+
+        } else {
+
+          const remaining =
+            Math.abs(currentWeight - goalWeight);
+
+          message =
+            `You are working toward your goal of ${goalWeight.toFixed(1)} kg. ` +
+            `You have approximately ${remaining.toFixed(1)} kg remaining. ` +
+            `Your calculated goal progress is ${progressPercent.toFixed(0)}%.`;
+
+        }
+
+      } else {
+
+        message =
+          "Set a goal weight in your profile to unlock detailed goal tracking.";
+
+      }
+
+      if (change < 0) {
+
+        message +=
+          ` Your recorded starting-to-current change is ${Math.abs(change).toFixed(1)} kg down. Keep your consistency.`;
+
+      } else if (change > 0) {
+
+        message +=
+          ` Your recorded starting-to-current change is ${change.toFixed(1)} kg up.`;
+
+      }
+
+      summary.textContent = message;
+    }
+
+    async function saveWeightCheckin(event) {
+
+      event.preventDefault();
+
+      const input =
+        document.getElementById("newWeight");
+
+      const weight =
+        Number(input.value);
+
+      if (
+        !Number.isFinite(weight) ||
+        weight < 20 ||
+        weight > 400
+      ) {
+
+        if (window.CoachBolbolUI) {
+          CoachBolbolUI.toast(
+            "Please enter a valid weight.",
+            "error"
+          );
+        } else {
+          alert("Please enter a valid weight.");
+        }
+
+        return;
+      }
+
+      try {
+
+        if (
+          window.CoachBolbolProgress &&
+          typeof CoachBolbolProgress.addWeight === "function"
+        ) {
+
+          CoachBolbolProgress.addWeight(weight);
+
+        } else if (
+          window.CoachBolbolStorage &&
+          typeof CoachBolbolStorage.saveWeight === "function"
+        ) {
+
+          CoachBolbolStorage.saveWeight(weight);
+
+        } else if (
+          typeof saveWeight === "function"
+        ) {
+
+          saveWeight(weight);
+
+        } else {
+
+          throw new Error("Weight storage is unavailable.");
+
+        }
+
+        input.value = "";
+
+        if (window.CoachBolbolUI) {
+          CoachBolbolUI.toast(
+            "Weight saved successfully.",
+            "success"
+          );
+        }
+
+        renderProgress();
+
+      } catch (error) {
+
+        console.error(error);
+
+        if (window.CoachBolbolUI) {
+          CoachBolbolUI.toast(
+            "Could not save your weight.",
+            "error"
+          );
+        } else {
+          alert("Could not save your weight.");
+        }
+      }
+    }
+
+    async function sendProgressReport() {
+
+      try {
+
+        if (
+          window.CoachBolbolReports &&
+          typeof CoachBolbolReports.sendProgressReport === "function"
+        ) {
+
+          await CoachBolbolReports.sendProgressReport();
+
+        } else if (
+          window.CoachBolbolReports &&
+          typeof CoachBolbolReports.createProgressReport === "function"
+        ) {
+
+          const report =
+            CoachBolbolReports.createProgressReport();
+
+          if (
+            typeof CoachBolbolReports.sendReportToCoach ===
+            "function"
+          ) {
+
+            await CoachBolbolReports.sendReportToCoach(report);
+
+          } else {
+
+            throw new Error("Coach reporting is not configured.");
+
+          }
+
+        } else {
+
+          throw new Error("Coach reporting is not available.");
+
+        }
+
+        if (window.CoachBolbolUI) {
+          CoachBolbolUI.toast(
+            "Progress report sent to
