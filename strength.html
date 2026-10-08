@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Strength & Hypertrophy | Coach Bolbol</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f7fb;
+      color: #172033;
+      min-height: 100vh;
+      padding-bottom: 90px;
+    }
+
+    .topbar {
+      background: #fff;
+      padding: 17px 16px;
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      border-bottom: 1px solid #e8ebf2;
+      position: sticky;
+      top: 0;
+      z-index: 30;
+    }
+
+    .back-btn {
+      width: 42px;
+      height: 42px;
+      border: 0;
+      border-radius: 13px;
+      background: #f0f2f7;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    .title {
+      flex: 1;
+    }
+
+    .title h1 {
+      font-size: 20px;
+      font-weight: 900;
+    }
+
+    .title p {
+      color: #7b8496;
+      font-size: 11px;
+      margin-top: 3px;
+    }
+
+    .container {
+      width: min(720px, 100%);
+      margin: auto;
+      padding: 18px 15px;
+    }
+
+    .hero {
+      background: #111827;
+      color: #fff;
+      border-radius: 24px;
+      padding: 21px 18px;
+      margin-bottom: 18px;
+    }
+
+    .hero .badge {
+      display: inline-block;
+      background: rgba(255,255,255,.12);
+      padding: 7px 10px;
+      border-radius: 10px;
+      font-size: 10px;
+      font-weight: 800;
+    }
+
+    .hero h2 {
+      font-size: 24px;
+      margin-top: 12px;
+    }
+
+    .hero p {
+      color: #cbd5e1;
+      font-size: 12px;
+      line-height: 1.6;
+      margin-top: 7px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-top: 17px;
+    }
+
+    .stat {
+      background: rgba(255,255,255,.08);
+      border-radius: 13px;
+      padding: 11px 7px;
+      text-align: center;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 15px;
+    }
+
+    .stat span {
+      color: #cbd5e1;
+      font-size: 9px;
+      margin-top: 3px;
+      display: block;
+    }
+
+    .section-title {
+      font-size: 17px;
+      font-weight: 900;
+      margin: 22px 2px 11px;
+    }
+
+    .week-selector {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+      scrollbar-width: none;
+    }
+
+    .week-selector::-webkit-scrollbar {
+      display: none;
+    }
+
+    .week-btn {
+      flex: 0 0 auto;
+      min-width: 75px;
+      height: 42px;
+      border: 1px solid #e1e5ed;
+      background: #fff;
+      border-radius: 13px;
+      font-size: 11px;
+      font-weight: 800;
+      color: #697386;
+      cursor: pointer;
+    }
+
+    .week-btn.active {
+      background: #111827;
+      color: #fff;
+      border-color: #111827;
+    }
+
+    .day-card {
+      background: #fff;
+      border: 1px solid #edf0f5;
+      border-radius: 21px;
+      margin-bottom: 13px;
+      overflow: hidden;
+      box-shadow: 0 7px 25px rgba(25,35,55,.05);
+    }
+
+    .day-header {
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+    }
+
+    .day-number {
+      width: 43px;
+      height: 43px;
+      border-radius: 13px;
+      background: #f1f3f7;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 900;
+      flex-shrink: 0;
+    }
+
+    .day-info {
+      flex: 1;
+    }
+
+    .day-info h3 {
+      font-size: 15px;
+      font-weight: 900;
+    }
+
+    .day-info p {
+      color: #7b8496;
+      font-size: 10px;
+      margin-top: 4px;
+    }
+
+    .day-arrow {
+      font-size: 18px;
+      color: #8a93a3;
+    }
+
+    .exercise-list {
+      display: none;
+      border-top: 1px solid #edf0f5;
+      padding: 10px;
+    }
+
+    .day-card.open .exercise-list {
+      display: block;
+    }
+
+    .exercise {
+      background: #f8f9fb;
+      border-radius: 15px;
+      padding: 13px;
+      margin-bottom: 8px;
+    }
+
+    .exercise:last-child {
+      margin-bottom: 0;
+    }
+
+    .exercise-main {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .exercise-number {
+      width: 28px;
+      height: 28px;
+      border-radius: 9px;
+      background: #111827;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 900;
+      flex-shrink: 0;
+    }
+
+    .exercise-info {
+      flex: 1;
+    }
+
+    .exercise-info h4 {
+      font-size: 13px;
+      font-weight: 900;
+      line-height: 1.35;
+    }
+
+    .exercise-info p {
+      color: #7b8496;
+      font-size: 10px;
+      line-height: 1.45;
+      margin-top: 4px;
+    }
+
+    .exercise-data {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 5px;
+      margin-top: 10px;
+    }
+
+    .data-box {
+      background: #fff;
+      border-radius: 9px;
+      padding: 7px 3px;
+      text-align: center;
+    }
+
+    .data-box strong {
+      display: block;
+      font-size: 11px;
+    }
+
+    .data-box span {
+      display: block;
+      color: #8a93a3;
+      font-size: 8px;
+      margin-top: 2px;
+    }
+
+    .tip {
+      background: #fff;
+      border: 1px dashed #d9dee8;
+      border-radius: 12px;
+      padding: 10px;
+      margin-top: 9px;
+      color: #697386;
+      font-size: 9px;
+      line-height: 1.5;
+    }
+
+    .complete-btn {
+      width: 100%;
+      height: 48px;
+      border: 0;
+      border-radius: 13px;
+      background: #111827;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 900;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .complete-btn.done {
+      background: #e8f7ee;
+      color: #147a45;
+      border: 1px solid #bce8ce;
+    }
+
+    .principles {
+      background: #fff;
+      border-radius: 21px;
+      border: 1px solid #edf0f5;
+      padding: 17px;
+      margin-top: 20px;
+    }
+
+    .principles h3 {
+      font-size: 15px;
+      margin-bottom: 10px;
+    }
+
+    .principle {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 11px;
+    }
+
+    .principle:last-child {
+      margin-bottom: 0;
+    }
+
+    .principle-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      background: #f1f3f7;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .principle div:last-child {
+      font-size: 11px;
+      color: #697386;
+      line-height: 1.5;
+    }
+
+    .principle strong {
+      display: block;
+      color: #172033;
+      font-size: 11px;
+      margin-bottom: 2px;
+    }
+
+    .bottom-nav {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 72px;
+      background: rgba(255,255,255,.96);
+      backdrop-filter: blur(15px);
+      border-top: 1px solid #e8ebf2;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      z-index: 50;
+    }
+
+    .nav-item {
+      text-decoration: none;
+      color: #8a93a3;
+      font-size: 10px;
+      text-align: center;
+      font-weight: 700;
+    }
+
+    .nav-item span {
+      display: block;
+      font-size: 20px;
+      margin-bottom: 3px;
+    }
+
+    .nav-item.active {
+      color: #111827;
+    }
+
+    @media (max-width: 380px) {
+      .exercise-data {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header class="topbar">
+
+  <button class="back-btn" onclick="goBack()">
+    ←
+  </button>
+
+  <div class="title">
+    <h1>Strength & Hypertrophy</h1>
+    <p>Coach Bolbol Performance System</p>
+  </div>
+
+</header>
+
+
+<main class="container">
+
+  <section class="hero">
+
+    <span class="badge">
+      EVIDENCE-INFORMED PROGRAM
+    </span>
+
+    <h2>
+      Build strength.<br>
+      Build muscle.
+    </h2>
+
+    <p>
+      Structured resistance training using progressive
+      overload, appropriate volume, controlled effort and
+      recovery.
+    </p>
+
+    <div class="stats">
+
+      <div class="stat">
+        <strong>5</strong>
+        <span>Training Days</span>
+      </div>
+
+      <div class="stat">
+        <strong>60–75m</strong>
+        <span>Session</span>
+      </div>
+
+      <div class="stat">
+        <strong>RIR 1–3</strong>
+        <span>Effort</span>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <div class="section-title">
+    Training Block
+  </div>
+
+  <div class="week-selector">
+
+    <button
+      class="week-btn active"
+      onclick="selectWeek(this, 1)"
+    >
+      Week 1
+    </button>
+
+    <button
+      class="week-btn"
+      onclick="selectWeek(this, 2)"
+    >
+      Week 2
+    </button>
+
+    <button
+      class="week-btn"
+      onclick="selectWeek(this, 3)"
+    >
+      Week 3
+    </button>
+
+    <button
+      class="week-btn"
+      onclick="selectWeek(this, 4)"
+    >
+      Week 4
+    </button>
+
+  </div>
+
+
+  <div class="section-title">
+    Weekly Schedule
+  </div>
+
+
+  <!-- DAY 1 -->
+
+  <section class="day-card">
+
+    <div class="day-header" onclick="toggleDay(this)">
+
+      <div class="day-number">
+        D1
+      </div>
+
+      <div class="day-info">
+        <h3>Push — Chest, Shoulders & Triceps</h3>
+        <p>Strength + hypertrophy • 6 exercises</p>
+      </div>
+
+      <div class="day-arrow">
+        ↓
+      </div>
+
+    </div>
+
+    <div class="exercise-list">
+
+      <div class="exercise">
+        <div class="exercise-main">
+          <div class="exercise-number">1</div>
+          <div class="exercise-info">
+            <h4>Barbell Bench Press</h4>
+            <p>Controlled eccentric • stable setup • full comfortable ROM</p>
+          </div>
+        </div>
+
+        <div class="exercise-data">
+          <div class="data-box"><strong>4</strong><span>SETS</span></div>
+          <div class="data-box"><strong>6–8</strong><span>REPS</span></div>
+          <div class="data-box"><strong>2–3</strong><span>RIR</span></div>
+          <div class="data-box"><strong>2–3m</strong><span>REST</span></div>
+        </div>
+
+        <div class="tip">
+          Keep shoulder blades stable and avoid sacrificing technique to add load.
+        </div>
+      </div>
+
+
+      <div class="exercise">
+        <div class="exercise-main">
+          <div class="exercise-number">2</div>
+          <div class="exercise-info">
+            <h4>Incline Dumbbell Press</h4>
+            <p>Upper-chest emphasis with controlled lowering</p>
+          </div>
+        </div>
+
+        <div class="exercise-data">
+          <div class="data-box"><strong>3</strong><span>SETS</span></div>
+          <div class="data-box"><strong>8–12</strong><span>REPS</span></div>
+          <div class="data-box"><strong>2</strong><span>RIR</span></div>
+          <div class="data-box"><strong>2m</strong><span>REST</span></div>
+        </div>
+      </div>
+
+
+      <div class="exercise">
+        <div class="exercise-main">
+          <div class="exercise-number">3</div>
+          <div class="exercise-info">
+            <h4>Cable / Pec Deck Fly</h4>
+            <p>Controlled stretch and squeeze without forcing ROM</p>
+          </div>
+        </div>
+
+        <div class="exercise-data">
+          <div class="data-box"><strong>3</strong><span>SETS</span></div>
+          <div class="data-box"><strong>10–15</strong><span>REPS</span></div>
+          <div class="data-box"><strong>1–2</strong><span>RIR</span></div>
+          <div class="data-box"><strong>90s</strong><span>REST</span></div>
+        </div>
+      </div>
+
+
+      <div class="exercise">
+        <div class="exercise-main">
+          <div class="exercise-number">4</div>
+          <div class="exercise-info">
+            <h4>Seated Dumbbell Shoulder Press</h4>
+            <p>Press with controlled tempo and stable torso</p>
+          </div>
+        </div>
+
+        <div class="exercise-data">
+          <div class="data-box"><strong>3</strong><span>SETS</span></div>
+          <div class="data-box"><strong>8–12</strong><span>REPS</span></div>
+          <div class="data-box"><strong>2</strong><span>RIR</span></div>
+          <div class="data-box"><strong>2m</strong><span>REST</span></div>
+        </div>
+      </div>
+
+
+      <div class="exercise">
+        <div class="exercise-main">
+          <div class="exercise-number">5</div>
+          <div class="exercise-info">
+            <h4>Lateral Raise</h4>
+            <p>Strict movement with minimal momentum</p>
+          </div>
+        </div>
+
+        <div class="exercise-data">
+          <div class="data-box"><strong>3</strong><span>SETS</span></div>
+          <div class="data-box"><strong>12–20</strong><span>REPS</span></div>
+          <div class="data-box"><strong>1–2</strong><span>RIR</span></div>
+          <div class="data-box"><strong>60–90s</strong><span>REST</span></div>
+        </div>
+      </div>
+
+
+      <div class="exercise">
+        <div class="exercise-main">
+          <div class="exercise-number">6</div>
+          <div class="exercise-info">
+            <h4>Cable Triceps Pushdown</h4>
+            <p>Keep elbows controlled and finish each rep cleanly</p>
+          </div>
+        </div>
+
+        <div class="exercise-data">
+          <div class="data-box"><strong>3</strong><span>SETS</span></div>
+          <div class="data-box"><strong>10–15</strong><span>REPS</span></div>
+          <div class="data-box"><strong>1–2</strong><span>RIR</span></div>
+          <div class="data-box"><strong>60–90s</strong><span>REST</span></div>
+        </div>
+
+        <button
+          class="complete-btn"
+          onclick="completeDay(event, 1)"
+        >
+          ✓ Mark Day 1 Complete
+        </button>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- DAY 2 -->
+
+  <section class="day-card">
+
+    <div class="day-header" onclick="toggleDay(this)">
+
+      <div class="day-number">
+        D2
+      </div>
+
+      <div class="day-info">
+        <h3>Pull — Back & Biceps</h3>
+        <p>Back thickness + width • 6 exercises</p>
+      </div>
+
+      <div class="day-arrow">
+        ↓
+      </div>
+
+    </div>
+
+    <div class="exercise-list">
+
+      <div class="exercise">
+        <div class="exercise-main">
+          <div class="exercise-number">1</div>
+          <div class="exercise-info">
+            <h4>Lat Pulldown / Assisted Pull-Up</h4>
+            <p>Drive elbows down and control the return</p>
+          </div>
+        </div>
+
+        <div class="exercise-data">
+          <div class="data-box"><strong>4</strong><span>SETS</span></div>
+          <div class="data-box"><strong>6–10</strong><span>REPS</span></div>
+          <div class="data-box"><strong>2</strong><span>RIR</span></div>
+          <div class="data-box"><strong>2–3m</strong><span>REST</span></div>
+        </div>
+      </div>
+
+
+      <div class="exercise">
+        <div class="exercise-main">
+          <div class="exercise-number">2</div>
+          <div class="exercise-info">
+            <h4>Chest-Supported Row</h4>
+            <p>Reduce momentum and focus on upper-back contraction</p>
+          </div>
+        </div>
+
+        <div class="exercise-data">
+          <div class="data-box"><strong>4</strong><span>SETS</span></div>
+          <div class="data-box"><strong>8–12</strong><span>REPS</span></div>
+          <div class="data-box"><strong>2</strong><span>RIR</span></div>
+          <div class="data-box"><strong>2m</strong><span>REST</span></div>
+        </div>
+      </div>
+
+
+      <div class="exercise">
+        <div class="exercise-main">
+          <div class="exercise-number">3</div>
+          <div class="exercise-info">
+            <h4>Single-Arm Cable Row</h4>
+            <p>Controlled unilateral pulling pattern</p>
+          </div>
+        </div>
+
+        <div class="exercise-data">
+          <div class="data-box"><strong>3</strong><span>SETS</span></div>
+          <div class="data-box"><strong>10–12</strong><span>REPS</span></div>
+          <div class="data-box"><strong>1–2</strong><span>RIR</span></div>
+          <div class="data-box"><strong>90s</strong><span>REST</span></div>
+        </div>
+      </div>
+
+
+      <div class="exercise">
+        <div class="exercise-main">
+          <div class="exercise-number">4</div>
+          <div class="exercise-info">
+            <h4>Face Pull</h4>
+            <p>Upper-back and rear-delt accessory work</p>
+          </div>
+        </div>
+
+        <div class="exercise-data">
+          <div class="data-box"><strong>3</strong><span>SETS</span></div>
+          <div class="data-box"><strong>12–20</strong><span>REPS</span></div>
+          <div class="data-box"><strong>1–2</strong><span>RIR</span></div>
+          <div class="data-box"><strong>60–90s</strong><span>REST</span></div>
+        </div>
+      </div>
+
+
+      <div class="exercise">
+        <div class="exercise-main">
+          <div class="exercise-number">5</div>
+          <div class="exercise-info">
+            <h4>Dumbbell Curl</h4>
+            <p>Full controlled range without swinging</p>
+          </div>
+        </div>
+
+        <div class="exercise-data">
+          <div class="data-box"><strong>3</strong><span>SETS</span></div>
+          <div class="data-box"><strong>8–12</strong><span>REPS</span></div>
+          <div class="data-box"><strong>1–2</strong><span>RIR</span></div>
+          <div class="data-box"><strong>90s</strong><span>REST</span></div>
+        </div>
+      </div>
+
+
+      <div class="exercise">
+        <div class="exercise-main">
+          <div class="exercise-number">6</div>
+          <div class="exercise-info">
+            <h4>Hammer Curl</h4>
+            <p>Neutral grip for additional elbow-flexor work</p>
+          </div>
+        </div>
+
+        <div class="exercise-data">
+          <div class="data-box"><strong>3</strong><span>SETS</span></div>
+          <div class="data-box"><strong>10–15</strong><span>REPS</span></div>
+          <div class="data-box"><strong>1–2</strong><span>RIR</span></div>
+          <div class="data-box"><strong>60–90s</strong><span>REST</span></div>
+        </div>
+
+        <button
+          class="complete-btn"
+          onclick="completeDay(event, 2)"
+        >
+          ✓ Mark Day 2 Complete
+        </button>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- DAY 3 -->
+
+  <section class="day-card">
+
+    <div class="day-header" onclick="toggleDay(this)">
+
+      <div class="day-number">
+        D3
+      </div>
+
+      <div class="day-info">
+        <h3>Legs — Quads, Hamstrings & Glutes</h3>
+        <p>Lower-body strength • 6 exercises</p>
+      </div>
+
+      <div class="day-arrow">
+        ↓
+      </div>
+
+    </div>
+
+    <div class="exercise-list">
+
+      <div class="exercise">
+        <div class="exercise-main">
+          <div class="exercise-number">1</div>
+          <div class="exercise-info">
+            <h4>Squat / Hack Squat</h4>
+            <p>Choose the variation that fits your mobility and equipment</p>
+          </div>
+        </div>
+
+        <div class="exercise-data">
+          <div class="data-box"><strong>4</strong><span>SETS</span></div>
+          <div class="data-box"><strong>6–10</strong><span>REPS</span></div>
+          <div class="data-box"><strong>2–3</strong><span>RIR</span></div>
+          <div class="data-box"><strong>2–3m</strong><span>REST</span></div>
+        </div>
+      </div>
+
+
+      <div class="exercise">
+        <div class="exercise-main">
+          <div class="exercise-number">2</div>
+          <div class="exercise-info">
+            <h4>Romanian Deadlift</h4>
+            <p>Hip hinge with controlled eccentric and stable spine</p>
+          </div>
+        </div>
+
+        <div class="exercise-data">
+          <div class="data-box"><strong>3</strong><span>SETS</span></div>
+          <div class="data-box"><strong>8–12</strong><span>REPS</span></div>
+          <div class="data-box"><strong>2</strong><span>RIR</span></div>
+          <div class="data-box"><strong>2–3m</strong><span>REST</span></div>
+        </div>
+      </div>
+
+
+      <div class="exercise">
+        <div class="exercise-main">
+          <div class="exercise-number">3</div>
+          <div class="exercise-info">
+            <h4>Leg Press</h4>
+            <p>Controlled depth and consistent foot position</p>
+          </div>
+        </div>
+
+  
