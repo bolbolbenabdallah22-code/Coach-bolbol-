@@ -6,566 +6,520 @@
 
   <title>Programs | Coach Bolbol</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+  <meta name="theme-color" content="#f7f8fa">
 
-    body {
-      font-family: Arial, sans-serif;
-      background: #f5f7fb;
-      color: #172033;
-      min-height: 100vh;
-      padding-bottom: 90px;
-    }
-
-    .topbar {
-      background: #ffffff;
-      padding: 18px;
-      border-bottom: 1px solid #e8ebf2;
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      position: sticky;
-      top: 0;
-      z-index: 20;
-    }
-
-    .back-btn {
-      width: 42px;
-      height: 42px;
-      border: none;
-      border-radius: 13px;
-      background: #f0f2f7;
-      font-size: 20px;
-      cursor: pointer;
-    }
-
-    .title h1 {
-      font-size: 22px;
-      font-weight: 900;
-    }
-
-    .title p {
-      color: #7b8496;
-      font-size: 12px;
-      margin-top: 4px;
-    }
-
-    .container {
-      width: min(700px, 100%);
-      margin: auto;
-      padding: 20px 16px;
-    }
-
-    .hero {
-      background: #111827;
-      color: white;
-      border-radius: 25px;
-      padding: 25px 20px;
-      margin-bottom: 20px;
-      box-shadow: 0 12px 35px rgba(17, 24, 39, 0.15);
-      overflow: hidden;
-      position: relative;
-    }
-
-    .hero::after {
-      content: "";
-      position: absolute;
-      width: 130px;
-      height: 130px;
-      border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 50%;
-      right: -35px;
-      top: -35px;
-    }
-
-    .hero small {
-      color: #cbd5e1;
-      font-size: 12px;
-      font-weight: 700;
-    }
-
-    .hero h2 {
-      font-size: 25px;
-      margin-top: 8px;
-      line-height: 1.2;
-    }
-
-    .hero p {
-      color: #cbd5e1;
-      font-size: 13px;
-      line-height: 1.6;
-      margin-top: 9px;
-      max-width: 540px;
-    }
-
-    .section-title {
-      font-size: 17px;
-      font-weight: 900;
-      margin: 24px 2px 12px;
-    }
-
-    .program-card {
-      background: white;
-      border-radius: 23px;
-      padding: 18px;
-      margin-bottom: 14px;
-      box-shadow: 0 8px 28px rgba(25, 35, 55, 0.06);
-      border: 1px solid #edf0f5;
-      cursor: pointer;
-      transition: 0.2s;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .program-card:active {
-      transform: scale(0.985);
-    }
-
-    .program-top {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-
-    .program-icon {
-      width: 62px;
-      height: 62px;
-      border-radius: 18px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 31px;
-      background: #f2f4f8;
-      flex-shrink: 0;
-    }
-
-    .program-info {
-      flex: 1;
-    }
-
-    .program-info h3 {
-      font-size: 18px;
-      font-weight: 900;
-    }
-
-    .program-info p {
-      color: #7b8496;
-      font-size: 12px;
-      line-height: 1.5;
-      margin-top: 4px;
-    }
-
-    .arrow {
-      font-size: 22px;
-      color: #8a93a3;
-    }
-
-    .tags {
-      display: flex;
-      gap: 7px;
-      flex-wrap: wrap;
-      margin-top: 15px;
-    }
-
-    .tag {
-      background: #f5f7fb;
-      color: #596477;
-      padding: 7px 10px;
-      border-radius: 10px;
-      font-size: 10px;
-      font-weight: 800;
-    }
-
-    .program-footer {
-      margin-top: 15px;
-      padding-top: 13px;
-      border-top: 1px solid #edf0f5;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .level {
-      font-size: 11px;
-      font-weight: 800;
-      color: #687286;
-    }
-
-    .days {
-      font-size: 11px;
-      font-weight: 900;
-      color: #172033;
-    }
-
-    .science-card {
-      background: white;
-      border-radius: 22px;
-      padding: 19px;
-      margin-top: 20px;
-      border: 1px solid #edf0f5;
-    }
-
-    .science-card h3 {
-      font-size: 16px;
-      margin-bottom: 8px;
-    }
-
-    .science-card p {
-      color: #687286;
-      font-size: 12px;
-      line-height: 1.7;
-    }
-
-    .features {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-top: 15px;
-    }
-
-    .feature {
-      background: #f7f8fb;
-      border-radius: 14px;
-      padding: 13px;
-    }
-
-    .feature strong {
-      display: block;
-      font-size: 12px;
-      margin-bottom: 4px;
-    }
-
-    .feature span {
-      color: #7b8496;
-      font-size: 10px;
-      line-height: 1.4;
-    }
-
-    .bottom-nav {
-      position: fixed;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      height: 72px;
-      background: rgba(255,255,255,0.96);
-      backdrop-filter: blur(15px);
-      border-top: 1px solid #e8ebf2;
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      z-index: 50;
-    }
-
-    .nav-item {
-      text-decoration: none;
-      color: #8a93a3;
-      font-size: 10px;
-      text-align: center;
-      font-weight: 700;
-    }
-
-    .nav-item span {
-      display: block;
-      font-size: 20px;
-      margin-bottom: 3px;
-    }
-
-    .nav-item.active {
-      color: #111827;
-    }
-
-    @media (max-width: 380px) {
-      .features {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
 
-  <header class="topbar">
+  <!-- HEADER -->
+  <header class="app-header">
+    <div class="container header-inner">
 
-    <button class="back-btn" onclick="goBack()">
-      ←
-    </button>
+      <a href="dashboard.html" class="brand">
+        <div class="brand-mark">CB</div>
 
-    <div class="title">
-      <h1>Training Programs</h1>
-      <p>Coach Bolbol • Evidence-informed training</p>
+        <div class="brand-text">
+          <strong>Coach Bolbol</strong>
+          <span>Training Programs</span>
+        </div>
+      </a>
+
+      <a href="dashboard.html" class="back-link">
+        ← Dashboard
+      </a>
+
     </div>
-
   </header>
 
-  <main class="container">
 
-    <section class="hero">
+  <!-- MAIN -->
+  <main>
 
-      <small>COACH BOLBOL PERFORMANCE SYSTEM</small>
+    <section class="page-section">
 
-      <h2>
-        Train with a plan.<br>
-        Progress with purpose.
-      </h2>
+      <div class="container">
 
-      <p>
-        Choose your training goal and follow a structured
-        program with progression, exercise selection,
-        sets, reps, rest and performance tracking.
-      </p>
+        <!-- PAGE TITLE -->
+        <div class="page-heading">
 
-    </section>
+          <span class="eyebrow">
+            COACH BOLBOL PROGRAMS
+          </span>
 
-
-    <div class="section-title">
-      Choose Your Program
-    </div>
-
-
-    <!-- STRENGTH -->
-
-    <section
-      class="program-card"
-      onclick="openProgram('strength.html')"
-    >
-
-      <div class="program-top">
-
-        <div class="program-icon">
-          🏋️
-        </div>
-
-        <div class="program-info">
-
-          <h3>Strength & Hypertrophy</h3>
+          <h1>
+            Choose Your Program
+          </h1>
 
           <p>
-            Build strength, muscle and athletic performance
-            with structured resistance training.
+            Structured training systems designed around
+            your goal, experience and performance.
           </p>
 
         </div>
 
-        <div class="arrow">
-          →
+
+        <!-- PROGRAMS -->
+        <div class="program-grid">
+
+
+          <!-- STRENGTH -->
+          <article class="program-card program-strength">
+
+            <div class="program-card-top">
+
+              <div class="program-icon">
+                🏋️
+              </div>
+
+              <span class="badge">
+                STRENGTH
+              </span>
+
+            </div>
+
+
+            <div class="program-card-content">
+
+              <h2>
+                Strength & Hypertrophy
+              </h2>
+
+              <p>
+                Build strength, muscle and better movement
+                with progressive resistance training.
+              </p>
+
+
+              <div class="program-meta">
+
+                <span>
+                  📅 5 Days
+                </span>
+
+                <span>
+                  ⏱ 45–75 min
+                </span>
+
+                <span>
+                  📈 Progressive
+                </span>
+
+              </div>
+
+
+              <ul class="program-features">
+
+                <li>
+                  Progressive overload
+                </li>
+
+                <li>
+                  RIR-based intensity
+                </li>
+
+                <li>
+                  Volume tracking
+                </li>
+
+                <li>
+                  Beginner & Intermediate levels
+                </li>
+
+              </ul>
+
+
+              <a
+                href="strength.html"
+                class="btn btn-primary full-width"
+              >
+                Explore Strength
+              </a>
+
+            </div>
+
+          </article>
+
+
+          <!-- KICKBOXING -->
+          <article class="program-card program-kickboxing">
+
+            <div class="program-card-top">
+
+              <div class="program-icon">
+                🥊
+              </div>
+
+              <span class="badge">
+                KICKBOXING
+              </span>
+
+            </div>
+
+
+            <div class="program-card-content">
+
+              <h2>
+                Kickboxing Performance
+              </h2>
+
+              <p>
+                Develop technique, combinations, conditioning,
+                speed and combat fitness.
+              </p>
+
+
+              <div class="program-meta">
+
+                <span>
+                  📅 3 Days
+                </span>
+
+                <span>
+                  ⏱ 45–60 min
+                </span>
+
+                <span>
+                  ⚡ Conditioning
+                </span>
+
+              </div>
+
+
+              <ul class="program-features">
+
+                <li>
+                  Technical combinations
+                </li>
+
+                <li>
+                  Footwork & movement
+                </li>
+
+                <li>
+                  Bag & conditioning work
+                </li>
+
+                <li>
+                  Beginner & Intermediate levels
+                </li>
+
+              </ul>
+
+
+              <a
+                href="kickboxing.html"
+                class="btn btn-primary full-width"
+              >
+                Explore Kickboxing
+              </a>
+
+            </div>
+
+          </article>
+
+
+          <!-- FAT LOSS -->
+          <article class="program-card program-fatloss">
+
+            <div class="program-card-top">
+
+              <div class="program-icon">
+                🔥
+              </div>
+
+              <span class="badge">
+                FAT LOSS
+              </span>
+
+            </div>
+
+
+            <div class="program-card-content">
+
+              <h2>
+                Fat Loss & Conditioning
+              </h2>
+
+              <p>
+                Combine resistance training and conditioning
+                to support fat loss while preserving muscle.
+              </p>
+
+
+              <div class="program-meta">
+
+                <span>
+                  📅 3 Days
+                </span>
+
+                <span>
+                  ⏱ 40–60 min
+                </span>
+
+                <span>
+                  ❤️ Conditioning
+                </span>
+
+              </div>
+
+
+              <ul class="program-features">
+
+                <li>
+                  Full-body resistance training
+                </li>
+
+                <li>
+                  HIIT & conditioning
+                </li>
+
+                <li>
+                  Cardio options
+                </li>
+
+                <li>
+                  Beginner & Intermediate levels
+                </li>
+
+              </ul>
+
+
+              <a
+                href="fatloss.html"
+                class="btn btn-primary full-width"
+              >
+                Explore Fat Loss
+              </a>
+
+            </div>
+
+          </article>
+
+
         </div>
 
-      </div>
 
-      <div class="tags">
+        <!-- PROGRAM PRINCIPLES -->
+        <section class="dashboard-card">
 
-        <span class="tag">
-          Strength
-        </span>
+          <div class="card-header">
 
-        <span class="tag">
-          Hypertrophy
-        </span>
+            <div>
 
-        <span class="tag">
-          Progressive Overload
-        </span>
+              <span class="eyebrow">
+                COACHING PRINCIPLES
+              </span>
 
-      </div>
+              <h2>
+                Train With Purpose
+              </h2>
 
-      <div class="program-footer">
+            </div>
 
-        <span class="level">
-          Beginner → Advanced
-        </span>
+          </div>
 
-        <span class="days">
-          MULTI-DAY
-        </span>
 
-      </div>
+          <div class="feature-grid">
 
-    </section>
 
+            <div class="feature-card">
 
-    <!-- KICKBOXING -->
+              <div class="feature-icon">
+                📈
+              </div>
 
-    <section
-      class="program-card"
-      onclick="openProgram('kickboxing.html')"
-    >
+              <h3>
+                Progressive Overload
+              </h3>
 
-      <div class="program-top">
+              <p>
+                Gradually increase training stimulus through
+                load, repetitions, volume or better execution.
+              </p>
 
-        <div class="program-icon">
-          🥊
-        </div>
+            </div>
 
-        <div class="program-info">
 
-          <h3>Kickboxing Performance</h3>
+            <div class="feature-card">
 
-          <p>
-            Develop striking technique, conditioning,
-            speed, coordination and fight-specific fitness.
-          </p>
+              <div class="feature-icon">
+                🎯
+              </div>
 
-        </div>
+              <h3>
+                Goal-Based Training
+              </h3>
 
-        <div class="arrow">
-          →
-        </div>
+              <p>
+                Your program should match your primary objective,
+                experience and available recovery.
+              </p>
 
-      </div>
+            </div>
 
-      <div class="tags">
 
-        <span class="tag">
-          Technique
-        </span>
+            <div class="feature-card">
 
-        <span class="tag">
-          Conditioning
-        </span>
+              <div class="feature-icon">
+                🧠
+              </div>
 
-        <span class="tag">
-          Speed
-        </span>
+              <h3>
+                Quality Reps
+              </h3>
 
-      </div>
+              <p>
+                Technique, controlled execution and appropriate
+                intensity come before simply adding more weight.
+              </p>
 
-      <div class="program-footer">
+            </div>
 
-        <span class="level">
-          Beginner → Advanced
-        </span>
 
-        <span class="days">
-          MULTI-DAY
-        </span>
+            <div class="feature-card">
 
-      </div>
+              <div class="feature-icon">
+                😴
+              </div>
 
-    </section>
+              <h3>
+                Recovery
+              </h3>
 
+              <p>
+                Training works together with sleep, nutrition
+                and recovery to create adaptation.
+              </p>
 
-    <!-- FAT LOSS -->
+            </div>
 
-    <section
-      class="program-card"
-      onclick="openProgram('fatloss.html')"
-    >
 
-      <div class="program-top">
+          </div>
 
-        <div class="program-icon">
-          🔥
-        </div>
+        </section>
 
-        <div class="program-info">
 
-          <h3>Fat Loss & Conditioning</h3>
+        <!-- LEVEL SELECTOR -->
+        <section class="dashboard-card">
 
-          <p>
-            Combine resistance training, conditioning and
-            cardio to support sustainable fat loss.
-          </p>
+          <div class="card-header">
 
-        </div>
+            <div>
 
-        <div class="arrow">
-          →
-        </div>
+              <span class="eyebrow">
+                TRAINING LEVEL
+              </span>
 
-      </div>
+              <h2>
+                Find Your Starting Point
+              </h2>
 
-      <div class="tags">
+              <p>
+                Choose the level that best matches your current
+                training experience.
+              </p>
 
-        <span class="tag">
-          Fat Loss
-        </span>
+            </div>
 
-        <span class="tag">
-          HIIT
-        </span>
+          </div>
 
-        <span class="tag">
-          Conditioning
-        </span>
 
-      </div>
+          <div class="level-grid">
 
-      <div class="program-footer">
+            <button
+              type="button"
+              class="level-card"
+              data-level="beginner"
+            >
 
-        <span class="level">
-          Beginner → Advanced
-        </span>
+              <span class="level-icon">
+                🌱
+              </span>
 
-        <span class="days">
-          MULTI-DAY
-        </span>
+              <strong>
+                Beginner
+              </strong>
 
-      </div>
+              <small>
+                New to structured training
+              </small>
 
-    </section>
+            </button>
 
 
-    <!-- SCIENCE -->
+            <button
+              type="button"
+              class="level-card"
+              data-level="intermediate"
+            >
 
-    <section class="science-card">
+              <span class="level-icon">
+                💪
+              </span>
 
-      <h3>
-        🧠 Why Coach Bolbol Programs?
-      </h3>
+              <strong>
+                Intermediate
+              </strong>
 
-      <p>
-        Training is organized around progressive overload,
-        appropriate training volume, recovery and
-        individual progression rather than random workouts.
-      </p>
+              <small>
+                Consistent training experience
+              </small>
 
-      <div class="features">
+            </button>
 
-        <div class="feature">
+          </div>
 
-          <strong>📈 Progression</strong>
 
-          <span>
-            Track performance and gradually increase training
-            demand.
-          </span>
+          <div
+            class="info-alert"
+            id="levelInfo"
+            hidden
+          >
 
-        </div>
+            <strong id="levelTitle">
+              —
+            </strong>
 
-        <div class="feature">
+            <p id="levelDescription">
+              —
+            </p>
 
-          <strong>🎯 Goal Based</strong>
+          </div>
 
-          <span>
-            Training structure changes according to your goal.
-          </span>
+        </section>
 
-        </div>
 
-        <div class="feature">
+        <!-- CTA -->
+        <section class="cta-card">
 
-          <strong>⏱️ Rest Control</strong>
+          <div>
 
-          <span>
-            Recommended rest periods for different training
-            objectives.
-          </span>
+            <span class="eyebrow">
+              READY TO START?
+            </span>
 
-        </div>
+            <h2>
+              Choose your path.
+            </h2>
 
-        <div class="feature">
+            <p>
+              Start training, track your performance and
+              build consistency one session at a time.
+            </p>
 
-          <strong>📊 Tracking</strong>
+          </div>
 
-          <span>
-            Record sets, reps, weight and workout history.
-          </span>
 
-        </div>
+          <a
+            href="workout.html"
+            class="btn btn-primary btn-lg"
+          >
+            Start Workout
+          </a>
+
+        </section>
 
       </div>
 
@@ -574,58 +528,147 @@
   </main>
 
 
+  <!-- BOTTOM NAV -->
   <nav class="bottom-nav">
 
-    <a class="nav-item" href="dashboard.html">
-      <span>🏠</span>
-      Home
+    <a
+      href="dashboard.html"
+      class="bottom-nav-item"
+    >
+      <span>⌂</span>
+      <small>Home</small>
     </a>
 
-    <a class="nav-item active" href="programs.html">
+    <a
+      href="programs.html"
+      class="bottom-nav-item active"
+    >
       <span>🏋️</span>
-      Programs
+      <small>Training</small>
     </a>
 
-    <a class="nav-item" href="nutrition.html">
+    <a
+      href="nutrition.html"
+      class="bottom-nav-item"
+    >
       <span>🥗</span>
-      Nutrition
+      <small>Nutrition</small>
     </a>
 
-    <a class="nav-item" href="progress.html">
-      <span>📈</span>
-      Progress
+    <a
+      href="progress.html"
+      class="bottom-nav-item"
+    >
+      <span>📊</span>
+      <small>Progress</small>
     </a>
 
-    <a class="nav-item" href="profile.html">
+    <a
+      href="profile.html"
+      class="bottom-nav-item"
+    >
       <span>👤</span>
-      Profile
+      <small>Profile</small>
     </a>
 
   </nav>
 
 
+  <!-- JAVASCRIPT -->
+  <script src="app.js"></script>
+  <script src="programs.js"></script>
+
   <script>
 
-    function openProgram(page) {
-      window.location.href = page;
-    }
+    document.addEventListener(
+      "DOMContentLoaded",
+      function () {
 
-    function goBack() {
+        const levelCards =
+          document.querySelectorAll(
+            "[data-level]"
+          );
 
-      if (document.referrer) {
+        const levelInfo =
+          document.getElementById(
+            "levelInfo"
+          );
 
-        history.back();
+        const levelTitle =
+          document.getElementById(
+            "levelTitle"
+          );
 
-      } else {
+        const levelDescription =
+          document.getElementById(
+            "levelDescription"
+          );
 
-        window.location.href =
-          "dashboard.html";
+
+        levelCards.forEach(
+          function (card) {
+
+            card.addEventListener(
+              "click",
+              function () {
+
+                levelCards.forEach(
+                  function (item) {
+
+                    item.classList.remove(
+                      "selected"
+                    );
+
+                  }
+                );
+
+
+                card.classList.add(
+                  "selected"
+                );
+
+
+                const level =
+                  card.dataset.level;
+
+
+                if (level === "beginner") {
+
+                  levelTitle.textContent =
+                    "Beginner Level";
+
+                  levelDescription.textContent =
+                    "Focus on technique, movement quality, " +
+                    "controlled intensity and building a " +
+                    "consistent training habit.";
+
+                } else {
+
+                  levelTitle.textContent =
+                    "Intermediate Level";
+
+                  levelDescription.textContent =
+                    "Use progressive overload, higher training " +
+                    "volume and more advanced intensity methods " +
+                    "while managing recovery.";
+
+                }
+
+
+                levelInfo.hidden =
+                  false;
+
+              }
+            );
+
+          }
+        );
 
       }
 
-    }
+    );
 
   </script>
 
 </body>
-</html>
+  </html>
