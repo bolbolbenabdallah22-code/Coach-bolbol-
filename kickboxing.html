@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Kickboxing | Coach Bolbol</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f7fb;
+      color: #172033;
+      min-height: 100vh;
+      padding-bottom: 90px;
+    }
+
+    .topbar {
+      background: #fff;
+      padding: 17px 16px;
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      border-bottom: 1px solid #e8ebf2;
+      position: sticky;
+      top: 0;
+      z-index: 30;
+    }
+
+    .back-btn {
+      width: 42px;
+      height: 42px;
+      border: 0;
+      border-radius: 13px;
+      background: #f0f2f7;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    .title {
+      flex: 1;
+    }
+
+    .title h1 {
+      font-size: 20px;
+      font-weight: 900;
+    }
+
+    .title p {
+      color: #7b8496;
+      font-size: 11px;
+      margin-top: 3px;
+    }
+
+    .container {
+      width: min(720px, 100%);
+      margin: auto;
+      padding: 18px 15px;
+    }
+
+    .hero {
+      background: #111827;
+      color: white;
+      border-radius: 24px;
+      padding: 21px 18px;
+      margin-bottom: 18px;
+      box-shadow: 0 12px 35px rgba(17,24,39,.15);
+    }
+
+    .badge {
+      display: inline-block;
+      background: rgba(255,255,255,.11);
+      padding: 7px 10px;
+      border-radius: 10px;
+      font-size: 9px;
+      font-weight: 900;
+      letter-spacing: .4px;
+    }
+
+    .hero h2 {
+      font-size: 25px;
+      margin-top: 12px;
+      line-height: 1.2;
+    }
+
+    .hero p {
+      color: #cbd5e1;
+      font-size: 12px;
+      line-height: 1.6;
+      margin-top: 8px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 8px;
+      margin-top: 17px;
+    }
+
+    .stat {
+      background: rgba(255,255,255,.08);
+      border-radius: 13px;
+      padding: 11px 6px;
+      text-align: center;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 14px;
+    }
+
+    .stat span {
+      display: block;
+      color: #cbd5e1;
+      font-size: 8px;
+      margin-top: 3px;
+    }
+
+    .section-title {
+      font-size: 17px;
+      font-weight: 900;
+      margin: 22px 2px 11px;
+    }
+
+    .week-selector {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .week-selector::-webkit-scrollbar {
+      display: none;
+    }
+
+    .week-btn {
+      flex: 0 0 auto;
+      min-width: 75px;
+      height: 42px;
+      border: 1px solid #e1e5ed;
+      background: white;
+      color: #697386;
+      border-radius: 13px;
+      font-size: 11px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .week-btn.active {
+      background: #111827;
+      border-color: #111827;
+      color: white;
+    }
+
+    .day-card {
+      background: white;
+      border: 1px solid #edf0f5;
+      border-radius: 21px;
+      margin-bottom: 13px;
+      overflow: hidden;
+      box-shadow: 0 7px 25px rgba(25,35,55,.05);
+    }
+
+    .day-header {
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+    }
+
+    .day-number {
+      width: 43px;
+      height: 43px;
+      border-radius: 13px;
+      background: #f1f3f7;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 900;
+      flex-shrink: 0;
+    }
+
+    .day-info {
+      flex: 1;
+    }
+
+    .day-info h3 {
+      font-size: 15px;
+      font-weight: 900;
+    }
+
+    .day-info p {
+      color: #7b8496;
+      font-size: 10px;
+      line-height: 1.4;
+      margin-top: 4px;
+    }
+
+    .day-arrow {
+      color: #8a93a3;
+      font-size: 18px;
+    }
+
+    .session-content {
+      display: none;
+      border-top: 1px solid #edf0f5;
+      padding: 11px;
+    }
+
+    .day-card.open .session-content {
+      display: block;
+    }
+
+    .block {
+      background: #f8f9fb;
+      border-radius: 15px;
+      padding: 13px;
+      margin-bottom: 8px;
+    }
+
+    .block:last-child {
+      margin-bottom: 0;
+    }
+
+    .block-head {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+    }
+
+    .block-icon {
+      width: 31px;
+      height: 31px;
+      border-radius: 10px;
+      background: #111827;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+
+    .block-head h4 {
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .block-head p {
+      color: #7b8496;
+      font-size: 9px;
+      margin-top: 2px;
+    }
+
+    .drill-list {
+      margin-top: 10px;
+      display: grid;
+      gap: 6px;
+    }
+
+    .drill {
+      background: white;
+      border-radius: 10px;
+      padding: 9px;
+      font-size: 10px;
+      color: #566175;
+      line-height: 1.45;
+    }
+
+    .drill strong {
+      color: #172033;
+    }
+
+    .work-data {
+      display: grid;
+      grid-template-columns: repeat(4,1fr);
+      gap: 5px;
+      margin-top: 9px;
+    }
+
+    .data-box {
+      background: white;
+      border-radius: 9px;
+      padding: 7px 3px;
+      text-align: center;
+    }
+
+    .data-box strong {
+      display: block;
+      font-size: 10px;
+    }
+
+    .data-box span {
+      display: block;
+      color: #8a93a3;
+      font-size: 8px;
+      margin-top: 2px;
+    }
+
+    .coach-tip {
+      background: white;
+      border: 1px dashed #d9dee8;
+      border-radius: 11px;
+      padding: 9px;
+      margin-top: 8px;
+      color: #697386;
+      font-size: 9px;
+      line-height: 1.5;
+    }
+
+    .complete-btn {
+      width: 100%;
+      height: 48px;
+      border: 0;
+      border-radius: 13px;
+      background: #111827;
+      color: white;
+      font-size: 12px;
+      font-weight: 900;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .complete-btn.done {
+      background: #e8f7ee;
+      color: #147a45;
+      border: 1px solid #bce8ce;
+    }
+
+    .principles {
+      background: white;
+      border: 1px solid #edf0f5;
+      border-radius: 21px;
+      padding: 17px;
+      margin-top: 20px;
+    }
+
+    .principles h3 {
+      font-size: 15px;
+      margin-bottom: 11px;
+    }
+
+    .principle {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 11px;
+    }
+
+    .principle:last-child {
+      margin-bottom: 0;
+    }
+
+    .principle-icon {
+      width: 32px;
+      height: 32px;
+      background: #f1f3f7;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .principle-text {
+      color: #697386;
+      font-size: 10px;
+      line-height: 1.5;
+    }
+
+    .principle-text strong {
+      color: #172033;
+      display: block;
+      font-size: 11px;
+      margin-bottom: 2px;
+    }
+
+    .bottom-nav {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 72px;
+      background: rgba(255,255,255,.96);
+      backdrop-filter: blur(15px);
+      border-top: 1px solid #e8ebf2;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      z-index: 50;
+    }
+
+    .nav-item {
+      text-decoration: none;
+      color: #8a93a3;
+      font-size: 10px;
+      text-align: center;
+      font-weight: 700;
+    }
+
+    .nav-item span {
+      display: block;
+      font-size: 20px;
+      margin-bottom: 3px;
+    }
+
+    .nav-item.active {
+      color: #111827;
+    }
+
+    @media(max-width:380px) {
+      .work-data {
+        grid-template-columns: repeat(2,1fr);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header class="topbar">
+
+  <button class="back-btn" onclick="goBack()">
+    ←
+  </button>
+
+  <div class="title">
+    <h1>Kickboxing Performance</h1>
+    <p>Coach Bolbol Combat System</p>
+  </div>
+
+</header>
+
+
+<main class="container">
+
+  <section class="hero">
+
+    <span class="badge">
+      TECHNIQUE • CONDITIONING • PERFORMANCE
+    </span>
+
+    <h2>
+      Move better.<br>
+      Strike better.
+    </h2>
+
+    <p>
+      A structured kickboxing system combining technical
+      practice, footwork, combinations, defense, conditioning
+      and progressive workload.
+    </p>
+
+    <div class="stats">
+
+      <div class="stat">
+        <strong>5</strong>
+        <span>Training Days</span>
+      </div>
+
+      <div class="stat">
+        <strong>45–75m</strong>
+        <span>Session</span>
+      </div>
+
+      <div class="stat">
+        <strong>RPE 6–9</strong>
+        <span>Effort</span>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <div class="section-title">
+    Training Block
+  </div>
+
+  <div class="week-selector">
+
+    <button
+      class="week-btn active"
+      onclick="selectWeek(this,1)"
+    >
+      Week 1
+    </button>
+
+    <button
+      class="week-btn"
+      onclick="selectWeek(this,2)"
+    >
+      Week 2
+    </button>
+
+    <button
+      class="week-btn"
+      onclick="selectWeek(this,3)"
+    >
+      Week 3
+    </button>
+
+    <button
+      class="week-btn"
+      onclick="selectWeek(this,4)"
+    >
+      Week 4
+    </button>
+
+  </div>
+
+
+  <div class="section-title">
+    Weekly Schedule
+  </div>
+
+
+  <!-- DAY 1 -->
+
+  <section class="day-card">
+
+    <div class="day-header" onclick="toggleDay(this)">
+
+      <div class="day-number">D1</div>
+
+      <div class="day-info">
+        <h3>Technique & Footwork</h3>
+        <p>Stance • movement • basic striking mechanics</p>
+      </div>
+
+      <div class="day-arrow">↓</div>
+
+    </div>
+
+    <div class="session-content">
+
+      <div class="block">
+
+        <div class="block-head">
+
+          <div class="block-icon">🔥</div>
+
+          <div>
+            <h4>Warm-Up</h4>
+            <p>Prepare joints, coordination and temperature</p>
+          </div>
+
+        </div>
+
+        <div class="drill-list">
+
+          <div class="drill">
+            <strong>3 min</strong> easy shadow boxing
+          </div>
+
+          <div class="drill">
+            <strong>2 × 30 sec</strong> lateral movement
+          </div>
+
+          <div class="drill">
+            <strong>2 × 30 sec</strong> hip/ankle mobility
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="block">
+
+        <div class="block-head">
+
+          <div class="block-icon">🥊</div>
+
+          <div>
+            <h4>Technical Drills</h4>
+            <p>Quality before speed</p>
+          </div>
+
+        </div>
+
+        <div class="drill-list">
+
+          <div class="drill">
+            <strong>3 × 2 min:</strong> stance + guard + movement
+          </div>
+
+          <div class="drill">
+            <strong>3 × 2 min:</strong> jab + cross mechanics
+          </div>
+
+          <div class="drill">
+            <strong>3 × 2 min:</strong> lead hook + rear round kick
+          </div>
+
+          <div class="drill">
+            <strong>3 × 2 min:</strong> angle exits after combinations
+          </div>
+
+        </div>
+
+        <div class="work-data">
+          <div class="data-box"><strong>4–5</strong><span>SETS</span></div>
+          <div class="data-box"><strong>2m</strong><span>ROUND</span></div>
+          <div class="data-box"><strong>60s</strong><span>REST</span></div>
+          <div class="data-box"><strong>6–7</strong><span>RPE</span></div>
+        </div>
+
+      </div>
+
+
+      <div class="block">
+
+        <div class="block-head">
+
+          <div class="block-icon">⚡</div>
+
+          <div>
+            <h4>Speed Finisher</h4>
+            <p>Short high-quality bursts</p>
+          </div>
+
+        </div>
+
+        <div class="drill-list">
+
+          <div class="drill">
+            <strong>6 × 15 sec:</strong> fast straight punches
+          </div>
+
+          <div class="drill">
+            <strong>45 sec:</strong> easy movement between efforts
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="coach-tip">
+        Coach tip: technical accuracy comes first. Increase
+        speed only when your stance, balance and guard remain
+        controlled.
+      </div>
+
+
+      <button
+        class="complete-btn"
+        onclick="completeDay(event,1)"
+      >
+        ✓ Mark Day 1 Complete
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <!-- DAY 2 -->
+
+  <section class="day-card">
+
+    <div class="day-header" onclick="toggleDay(this)">
+
+      <div class="day-number">D2</div>
+
+      <div class="day-info">
+        <h3>Combinations & Pads / Bag</h3>
+        <p>Combination building • rhythm • accuracy</p>
+      </div>
+
+      <div class="day-arrow">↓</div>
+
+    </div>
+
+    <div class="session-content">
+
+      <div class="block">
+
+        <div class="block-head">
+          <div class="block-icon">🥊</div>
+          <div>
+            <h4>Combination Rounds</h4>
+            <p>Progress from simple to complex</p>
+          </div>
+        </div>
+
+        <div class="drill-list">
+
+          <div class="drill">
+            <strong>Round 1:</strong> jab → cross → exit
+          </div>
+
+          <div class="drill">
+            <strong>Round 2:</strong> jab → cross → lead hook
+          </div>
+
+          <div class="drill">
+            <strong>Round 3:</strong> jab → cross → rear kick
+          </div>
+
+          <div class="drill">
+            <strong>Round 4:</strong> jab → cross → hook → low kick
+          </div>
+
+          <div class="drill">
+            <strong>Round 5:</strong> free technical combinations
+          </div>
+
+        </div>
+
+        <div class="work-data">
+          <div class="data-box"><strong>5</strong><span>ROUNDS</span></div>
+          <div class="data-box"><strong>3m</strong><span>ROUND</span></div>
+          <div class="data-box"><strong>60s</strong><span>REST</span></div>
+          <div class="data-box"><strong>7–8</strong><span>RPE</span></div>
+        </div>
+
+      </div>
+
+
+      <div class="block">
+
+        <div class="block-head">
+          <div class="block-icon">🛡️</div>
+          <div>
+            <h4>Defense</h4>
+            <p>Defend and immediately reposition</p>
+          </div>
+        </div>
+
+        <div class="drill-list">
+
+          <div class="drill">
+            <strong>3 × 2 min:</strong> parry → counter
+          </div>
+
+          <div class="drill">
+            <strong>3 × 2 min:</strong> check → return
+          </div>
+
+          <div class="drill">
+            <strong>3 × 2 min:</strong> block → angle out
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="coach-tip">
+        Coach tip: keep combinations technically clean instead
+        of chasing maximum volume.
+      </div>
+
+
+      <button
+        class="complete-btn"
+        onclick="completeDay(event,2)"
+      >
+        ✓ Mark Day 2 Complete
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <!-- DAY 3 -->
+
+  <section class="day-card">
+
+    <div class="day-header" onclick="toggleDay(this)">
+
+      <div class="day-number">D3</div>
+
+      <div class="day-info">
+        <h3>Conditioning & Fight Fitness</h3>
+        <p>Intervals • repeat efforts • aerobic recovery</p>
+      </div>
+
+      <div class="day-arrow">↓</div>
+
+    </div>
+
+    <div class="session-content">
+
+      <div class="block">
+
+        <div class="block-head">
+          <div class="block-icon">❤️</div>
+          <div>
+            <h4>Fight Conditioning</h4>
+            <p>Maintain quality under fatigue</p>
+          </div>
+        </div>
+
+        <div class="drill-list">
+
+          <div class="drill">
+            <strong>5 × 3 min:</strong> bag/shadow boxing
+          </div>
+
+          <div class="drill">
+            Work at <strong>RPE 7–8</strong>
+          </div>
+
+          <div class="drill">
+            <strong>60–90 sec</strong> easy recovery between rounds
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="block">
+
+        <div class="block-head">
+          <div class="block-icon">⚡</div>
+          <div>
+            <h4>Interval Finisher</h4>
+            <p>Short controlled high-intensity efforts</p>
+          </div>
+        </div>
+
+        <div class="drill-list">
+
+          <div class="drill">
+            <strong>8 rounds:</strong> 20 sec hard / 40 sec easy
+          </div>
+
+          <div class="drill">
+            Use bike, rower, shadow boxing or bag.
+          </div>
+
+        </div>
+
+        <div class="work-data">
+          <div class="data-box"><strong>8</strong><span>ROUNDS</span></div>
+          <div class="data-box"><strong>20s</strong><span>HARD</span></div>
+          <div class="data-box"><strong>40s</strong><span>EASY</span></div>
+          <div class="data-box"><strong>8–9</strong><span>RPE</span></div>
+        </div>
+
+      </div>
+
+
+      <div class="coach-tip">
+        Coach tip: high-intensity conditioning should be
+        limited and purposeful. Recovery quality matters.
+      </div>
+
+
+      <button
+        class="complete-btn"
+        onclick="completeDay(event,3)"
+      >
+        ✓ Mark Day 3 Complete
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <!-- DAY 4 -->
+
+  <section class="day-card">
+
+    <div class="day-header" onclick="toggleDay(this)">
+
+      <div class="day-number">D4</div>
+
+      <div class="day-info">
+        <h3>Power, Speed & Reaction</h3>
+        <p>Explosive movement without unnecessary fatigue</p>
+      </div>
+
+      <div class="day-arrow">↓</div>
+
+    </div>
+
+    <div class="session-content">
+
+      <div class="block">
+
+        <div class="block-head">
+          <div class="block-icon">⚡</div>
+          <div>
+            <h4>Explosive Drills</h4>
+            <p>Maximum quality, full recovery</p>
+          </div>
+        </div>
+
+        <div class="drill-list">
+
+          <div class="drill">
+            <strong>5 × 5:</strong> explosive straight punches
+          </div>
+
+          <div class="drill">
+            <strong>5 × 5:</strong> explosive round kicks
+          </div>
+
+          <div class="drill">
+            <strong>5 × 10 sec:</strong> rapid footwork
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="block">
+
+        <div class="block-head">
+          <div class="block-icon">🎯</div>
+          <div>
+            <h4>Reaction Work</h4>
+            <p>Visual or coach-led reactions</p>
+          </div>
+        </div>
+
+        <div class="drill-list">
+
+          <div class="drill">
+            <strong>6 × 30 sec:</strong> reaction drill
+          </div>
+
+          <div class="drill">
+            <strong>60 sec:</strong> easy movement between efforts
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="coach-tip">
+        Coach tip: speed decreases when fatigue becomes too
+        high. Stop explosive work when movement quality drops.
+      </div>
+
+
+      <button
+        class="complete-btn"
+        onclick="completeDay(event,4)"
+      >
+        ✓ Mark Day 4 Complete
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <!-- DAY 5 -->
+
+  <section class="day-card">
+
+    <div class="day-header" onclick="toggleDay(this)">
+
+      <div class="day-number">D5</div>
+
+      <div class="day-info">
+        <h3>Technical Fight Simulation</h3>
+        <p>Combine technique, tactics and conditioning</p>
+      </div>
+
+      <div class="day-arrow">↓</div>
+
+    </div>
+
+    <div class="session-content">
+
+      <div class="block">
+
+        <div class="block-head">
+          <div class="block-icon">🥊</div>
+          <div>
+            <h4>Technical Rounds</h4>
+            <p>Controlled fight simulation</p>
+          </div>
+        </div>
+
+        <div class="drill-list">
+
+          <div class="drill">
+            <strong>5 × 3 min:</strong> technical rounds
+          </div>
+
+          <div class="drill">
+            Focus: distance, angles, defense and counters.
+          </div>
+
+          <div class="drill">
+            Keep intensity appropriate to your training level.
+          </div>
+
+        </div>
+
+        <div class="work-data">
+          <div class="data-box"><strong>5</strong><span>ROUNDS</span></div>
+          <div class="data-box"><strong>3m</strong><span>ROUND</span></div>
+          <div class="data-box"><strong>60s</strong><span>REST</span></div>
+          <div class="data-box"><strong>7–8</strong><span>RPE</span></div>
+        </div>
+
+      </div>
+
+
+      <div class="block">
