@@ -4,713 +4,846 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Coach Bolbol | Profile</title>
+  <title>My Profile | Coach Bolbol</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+  <meta name="theme-color" content="#f7f8fa">
 
-    body {
-      font-family: Arial, sans-serif;
-      background: #f5f7fb;
-      color: #172033;
-      min-height: 100vh;
-    }
-
-    .topbar {
-      background: #ffffff;
-      padding: 18px;
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      border-bottom: 1px solid #e8ebf2;
-      position: sticky;
-      top: 0;
-      z-index: 10;
-    }
-
-    .back {
-      width: 42px;
-      height: 42px;
-      border: none;
-      border-radius: 13px;
-      background: #eef2f7;
-      font-size: 20px;
-      cursor: pointer;
-    }
-
-    .topbar h1 {
-      font-size: 21px;
-    }
-
-    .container {
-      width: 100%;
-      max-width: 650px;
-      margin: auto;
-      padding: 20px 16px 40px;
-    }
-
-    .profile-card {
-      background: #ffffff;
-      border-radius: 24px;
-      padding: 25px 20px;
-      box-shadow: 0 8px 30px rgba(20, 30, 50, 0.07);
-      margin-bottom: 18px;
-    }
-
-    .avatar {
-      width: 92px;
-      height: 92px;
-      border-radius: 50%;
-      margin: 0 auto 14px;
-      background: linear-gradient(135deg, #111827, #374151);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-size: 35px;
-      font-weight: 800;
-    }
-
-    .profile-title {
-      text-align: center;
-      margin-bottom: 24px;
-    }
-
-    .profile-title h2 {
-      font-size: 24px;
-      margin-bottom: 5px;
-    }
-
-    .profile-title p {
-      color: #7b8495;
-      font-size: 14px;
-    }
-
-    .section-title {
-      font-size: 17px;
-      font-weight: 800;
-      margin: 24px 0 13px;
-    }
-
-    .field {
-      margin-bottom: 15px;
-    }
-
-    .field label {
-      display: block;
-      font-size: 13px;
-      font-weight: 700;
-      margin-bottom: 7px;
-      color: #596274;
-    }
-
-    input,
-    select {
-      width: 100%;
-      padding: 14px 15px;
-      border: 1px solid #dfe4ec;
-      border-radius: 14px;
-      background: #fafbfd;
-      color: #172033;
-      font-size: 16px;
-      outline: none;
-      transition: 0.2s;
-    }
-
-    input:focus,
-    select:focus {
-      border-color: #111827;
-      background: #ffffff;
-      box-shadow: 0 0 0 3px rgba(17, 24, 39, 0.06);
-    }
-
-    .row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-
-    .save-btn {
-      width: 100%;
-      border: none;
-      padding: 16px;
-      border-radius: 16px;
-      background: #111827;
-      color: white;
-      font-size: 16px;
-      font-weight: 800;
-      cursor: pointer;
-      margin-top: 10px;
-    }
-
-    .save-btn:active {
-      transform: scale(0.98);
-    }
-
-    .message {
-      display: none;
-      padding: 13px;
-      border-radius: 13px;
-      margin-top: 14px;
-      text-align: center;
-      font-weight: 700;
-      font-size: 14px;
-    }
-
-    .success {
-      display: block;
-      background: #e9f9ef;
-      color: #187a3d;
-    }
-
-    .error {
-      display: block;
-      background: #fff0f0;
-      color: #b42318;
-    }
-
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      margin-top: 18px;
-    }
-
-    .stat {
-      background: #f7f8fb;
-      border-radius: 16px;
-      padding: 14px 8px;
-      text-align: center;
-    }
-
-    .stat strong {
-      display: block;
-      font-size: 18px;
-      margin-bottom: 4px;
-    }
-
-    .stat span {
-      font-size: 11px;
-      color: #7b8495;
-    }
-
-    .danger {
-      background: #ffffff;
-      border-radius: 24px;
-      padding: 20px;
-      box-shadow: 0 8px 30px rgba(20, 30, 50, 0.05);
-    }
-
-    .danger h3 {
-      margin-bottom: 7px;
-    }
-
-    .danger p {
-      color: #7b8495;
-      font-size: 13px;
-      line-height: 1.5;
-      margin-bottom: 15px;
-    }
-
-    .clear-btn {
-      width: 100%;
-      padding: 13px;
-      border-radius: 14px;
-      border: 1px solid #f0b7b7;
-      background: #fff7f7;
-      color: #b42318;
-      font-weight: 800;
-      cursor: pointer;
-    }
-
-    .note {
-      font-size: 12px;
-      color: #7b8495;
-      line-height: 1.5;
-      margin-top: 8px;
-    }
-
-    @media (max-width: 420px) {
-      .row {
-        grid-template-columns: 1fr;
-      }
-
-      .stats {
-        grid-template-columns: 1fr 1fr 1fr;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
 
-  <header class="topbar">
-    <button class="back" onclick="goBack()">←</button>
-    <h1>My Profile</h1>
+  <!-- HEADER -->
+  <header class="app-header">
+    <div class="container header-inner">
+
+      <a href="dashboard.html" class="brand">
+        <div class="brand-mark">CB</div>
+
+        <div class="brand-text">
+          <strong>Coach Bolbol</strong>
+          <span>My Profile</span>
+        </div>
+      </a>
+
+      <a href="dashboard.html" class="back-link">
+        ← Dashboard
+      </a>
+
+    </div>
   </header>
 
-  <main class="container">
 
-    <section class="profile-card">
+  <!-- MAIN -->
+  <main>
 
-      <div class="avatar" id="avatar">CB</div>
+    <section class="page-section">
 
-      <div class="profile-title">
-        <h2 id="profileName">Your Profile</h2>
-        <p>Coach Bolbol • Personal Fitness Profile</p>
-      </div>
+      <div class="container">
 
-      <div class="section-title">Personal Information</div>
+        <!-- PAGE TITLE -->
+        <div class="page-heading">
 
-      <div class="field">
-        <label for="name">Full Name</label>
-        <input
-          id="name"
-          type="text"
-          placeholder="Enter your name"
-        >
-      </div>
+          <span class="eyebrow">
+            PERSONAL PROFILE
+          </span>
 
-      <div class="row">
+          <h1>
+            Your Profile
+          </h1>
 
-        <div class="field">
-          <label for="age">Age</label>
-          <input
-            id="age"
-            type="number"
-            min="13"
-            max="100"
-            placeholder="Age"
-          >
+          <p>
+            Keep your information updated for accurate
+            fitness and nutrition calculations.
+          </p>
+
         </div>
 
-        <div class="field">
-          <label for="gender">Gender</label>
-          <select id="gender">
-            <option value="">Select</option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-          </select>
-        </div>
+
+        <!-- PROFILE CARD -->
+        <section class="dashboard-card profile-card">
+
+          <div class="profile-header">
+
+            <div class="profile-avatar">
+              <span id="avatarInitials">CB</span>
+            </div>
+
+            <div>
+
+              <h2 id="profileDisplayName">
+                Champion
+              </h2>
+
+              <p>
+                Your personal fitness profile
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <!-- FORM -->
+          <form id="profileForm">
+
+            <!-- BASIC INFORMATION -->
+            <div class="form-section">
+
+              <div class="form-section-title">
+
+                <span class="eyebrow">
+                  BASIC INFORMATION
+                </span>
+
+                <h3>
+                  About You
+                </h3>
+
+              </div>
+
+
+              <div class="form-grid">
+
+                <div class="form-group">
+
+                  <label for="name">
+                    Full Name
+                  </label>
+
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    placeholder="Your full name"
+                    autocomplete="name"
+                    required
+                  >
+
+                </div>
+
+
+                <div class="form-group">
+
+                  <label for="age">
+                    Age
+                  </label>
+
+                  <input
+                    type="number"
+                    id="age"
+                    name="age"
+                    min="13"
+                    max="100"
+                    placeholder="e.g. 23"
+                    required
+                  >
+
+                </div>
+
+
+                <div class="form-group">
+
+                  <label for="gender">
+                    Gender
+                  </label>
+
+                  <select id="gender" name="gender">
+
+                    <option value="male">
+                      Male
+                    </option>
+
+                    <option value="female">
+                      Female
+                    </option>
+
+                  </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                  <label for="height">
+                    Height
+                  </label>
+
+                  <div class="input-with-unit">
+
+                    <input
+                      type="number"
+                      id="height"
+                      name="height"
+                      min="100"
+                      max="250"
+                      step="0.1"
+                      placeholder="e.g. 183"
+                      required
+                    >
+
+                    <span>cm</span>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+
+
+            <!-- BODY & GOALS -->
+            <div class="form-section">
+
+              <div class="form-section-title">
+
+                <span class="eyebrow">
+                  BODY & GOALS
+                </span>
+
+                <h3>
+                  Your Targets
+                </h3>
+
+              </div>
+
+
+              <div class="form-grid">
+
+                <div class="form-group">
+
+                  <label for="currentWeight">
+                    Current Weight
+                  </label>
+
+                  <div class="input-with-unit">
+
+                    <input
+                      type="number"
+                      id="currentWeight"
+                      name="currentWeight"
+                      min="30"
+                      max="300"
+                      step="0.1"
+                      placeholder="e.g. 90"
+                      required
+                    >
+
+                    <span>kg</span>
+
+                  </div>
+
+                </div>
+
+
+                <div class="form-group">
+
+                  <label for="goalWeight">
+                    Goal Weight
+                  </label>
+
+                  <div class="input-with-unit">
+
+                    <input
+                      type="number"
+                      id="goalWeight"
+                      name="goalWeight"
+                      min="30"
+                      max="300"
+                      step="0.1"
+                      placeholder="e.g. 85"
+                      required
+                    >
+
+                    <span>kg</span>
+
+                  </div>
+
+                </div>
+
+
+                <div class="form-group form-group-full">
+
+                  <label for="goal">
+                    Main Goal
+                  </label>
+
+                  <select id="goal" name="goal">
+
+                    <option value="loss">
+                      Fat Loss
+                    </option>
+
+                    <option value="maintenance">
+                      Maintenance
+                    </option>
+
+                    <option value="gain">
+                      Muscle Gain
+                    </option>
+
+                  </select>
+
+                </div>
+
+              </div>
+
+            </div>
+
+
+            <!-- ACTIVITY -->
+            <div class="form-section">
+
+              <div class="form-section-title">
+
+                <span class="eyebrow">
+                  ACTIVITY
+                </span>
+
+                <h3>
+                  Lifestyle & Training
+                </h3>
+
+              </div>
+
+
+              <div class="form-group">
+
+                <label for="activity">
+                  Activity Level
+                </label>
+
+                <select id="activity" name="activity">
+
+                  <option value="1.2">
+                    Sedentary — little or no exercise
+                  </option>
+
+                  <option value="1.375">
+                    Lightly Active — 1–3 days/week
+                  </option>
+
+                  <option value="1.55">
+                    Moderately Active — 3–5 days/week
+                  </option>
+
+                  <option value="1.725">
+                    Very Active — 6–7 days/week
+                  </option>
+
+                  <option value="1.9">
+                    Extremely Active — hard training / physical job
+                  </option>
+
+                </select>
+
+              </div>
+
+            </div>
+
+
+            <!-- CALCULATION PREVIEW -->
+            <div class="profile-summary">
+
+              <div class="summary-header">
+
+                <span class="eyebrow">
+                  ESTIMATED METRICS
+                </span>
+
+                <h3>
+                  Your Current Numbers
+                </h3>
+
+              </div>
+
+
+              <div class="stats-grid">
+
+                <div class="stat-card">
+
+                  <span class="stat-label">
+                    BMI
+                  </span>
+
+                  <strong
+                    class="stat-value"
+                    id="previewBMI"
+                  >
+                    —
+                  </strong>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                  <span class="stat-label">
+                    BMR
+                  </span>
+
+                  <strong
+                    class="stat-value"
+                    id="previewBMR"
+                  >
+                    —
+                  </strong>
+
+                  <small>
+                    kcal/day
+                  </small>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                  <span class="stat-label">
+                    TDEE
+                  </span>
+
+                  <strong
+                    class="stat-value"
+                    id="previewTDEE"
+                  >
+                    —
+                  </strong>
+
+                  <small>
+                    kcal/day
+                  </small>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                  <span class="stat-label">
+                    Goal Calories
+                  </span>
+
+                  <strong
+                    class="stat-value"
+                    id="previewCalories"
+                  >
+                    —
+                  </strong>
+
+                  <small>
+                    kcal/day
+                  </small>
+
+                </div>
+
+              </div>
+
+            </div>
+
+
+            <!-- ACTIONS -->
+            <div class="form-actions">
+
+              <a
+                href="dashboard.html"
+                class="btn btn-secondary"
+              >
+                Cancel
+              </a>
+
+              <button
+                type="submit"
+                class="btn btn-primary"
+              >
+                Save Profile
+              </button>
+
+            </div>
+
+          </form>
+
+        </section>
+
+
+        <!-- ACCOUNT -->
+        <section class="dashboard-card account-card">
+
+          <div class="card-header">
+
+            <div>
+
+              <span class="eyebrow">
+                ACCOUNT
+              </span>
+
+              <h2>
+                Account & Settings
+              </h2>
+
+            </div>
+
+          </div>
+
+
+          <div class="settings-links">
+
+            <a href="settings.html" class="settings-link">
+
+              <span class="settings-icon">
+                ⚙️
+              </span>
+
+              <div>
+
+                <strong>
+                  App Settings
+                </strong>
+
+                <span>
+                  Preferences, units and notifications
+                </span>
+
+              </div>
+
+              <span class="arrow">
+                →
+              </span>
+
+            </a>
+
+
+            <a href="history.html" class="settings-link">
+
+              <span class="settings-icon">
+                🕒
+              </span>
+
+              <div>
+
+                <strong>
+                  Activity History
+                </strong>
+
+                <span>
+                  View your previous activity
+                </span>
+
+              </div>
+
+              <span class="arrow">
+                →
+              </span>
+
+            </a>
+
+          </div>
+
+        </section>
 
       </div>
-
-      <div class="section-title">Body Measurements</div>
-
-      <div class="row">
-
-        <div class="field">
-          <label for="height">Height (cm)</label>
-          <input
-            id="height"
-            type="number"
-            min="100"
-            max="250"
-            step="0.1"
-            placeholder="183"
-          >
-        </div>
-
-        <div class="field">
-          <label for="weight">Current Weight (kg)</label>
-          <input
-            id="weight"
-            type="number"
-            min="30"
-            max="300"
-            step="0.1"
-            placeholder="80"
-          >
-        </div>
-
-      </div>
-
-      <div class="field">
-        <label for="goalWeight">Goal Weight (kg)</label>
-        <input
-          id="goalWeight"
-          type="number"
-          min="30"
-          max="300"
-          step="0.1"
-          placeholder="75"
-        >
-      </div>
-
-      <div class="section-title">Lifestyle</div>
-
-      <div class="field">
-        <label for="activity">Activity Level</label>
-
-        <select id="activity">
-
-          <option value="">
-            Select activity level
-          </option>
-
-          <option value="1.2">
-            Sedentary — little or no exercise
-          </option>
-
-          <option value="1.375">
-            Light — exercise 1–3 days/week
-          </option>
-
-          <option value="1.55">
-            Moderate — exercise 3–5 days/week
-          </option>
-
-          <option value="1.725">
-            Very Active — exercise 6–7 days/week
-          </option>
-
-          <option value="1.9">
-            Extremely Active — hard training / physical job
-          </option>
-
-        </select>
-      </div>
-
-      <button class="save-btn" onclick="saveProfile()">
-        Save Profile
-      </button>
-
-      <div id="message" class="message"></div>
-
-      <div class="stats">
-
-        <div class="stat">
-          <strong id="statBMI">--</strong>
-          <span>BMI</span>
-        </div>
-
-        <div class="stat">
-          <strong id="statBMR">--</strong>
-          <span>BMR</span>
-        </div>
-
-        <div class="stat">
-          <strong id="statTDEE">--</strong>
-          <span>TDEE</span>
-        </div>
-
-      </div>
-
-      <p class="note">
-        Calculations are estimates based on your profile information.
-        They are intended for fitness planning, not medical diagnosis.
-      </p>
-
-    </section>
-
-    <section class="danger">
-
-      <h3>Reset Local Profile</h3>
-
-      <p>
-        This removes the locally saved Coach Bolbol profile and app data
-        from this device.
-      </p>
-
-      <button class="clear-btn" onclick="clearProfile()">
-        Reset My Data
-      </button>
 
     </section>
 
   </main>
 
+
+  <!-- BOTTOM NAV -->
+  <nav class="bottom-nav">
+
+    <a
+      href="dashboard.html"
+      class="bottom-nav-item"
+    >
+      <span>⌂</span>
+      <small>Home</small>
+    </a>
+
+    <a
+      href="programs.html"
+      class="bottom-nav-item"
+    >
+      <span>🏋️</span>
+      <small>Training</small>
+    </a>
+
+    <a
+      href="nutrition.html"
+      class="bottom-nav-item"
+    >
+      <span>🥗</span>
+      <small>Nutrition</small>
+    </a>
+
+    <a
+      href="progress.html"
+      class="bottom-nav-item"
+    >
+      <span>📊</span>
+      <small>Progress</small>
+    </a>
+
+    <a
+      href="profile.html"
+      class="bottom-nav-item active"
+    >
+      <span>👤</span>
+      <small>Profile</small>
+    </a>
+
+  </nav>
+
+
+  <!-- JAVASCRIPT -->
+  <script src="app.js"></script>
+  <script src="storage.js"></script>
+  <script src="calculator.js"></script>
+  <script src="profile-cloud.js"></script>
+
   <script>
-
-    const STORAGE_KEY = "coach_bolbol_profile";
-
-    function getProfile() {
-      try {
-        return JSON.parse(
-          localStorage.getItem(STORAGE_KEY)
-        ) || {};
-      } catch {
-        return {};
-      }
-    }
-
-    function saveProfile() {
-
-      const name =
-        document.getElementById("name").value.trim();
-
-      const age =
-        Number(document.getElementById("age").value);
-
-      const gender =
-        document.getElementById("gender").value;
-
-      const height =
-        Number(document.getElementById("height").value);
-
-      const weight =
-        Number(document.getElementById("weight").value);
-
-      const goalWeight =
-        Number(document.getElementById("goalWeight").value);
-
-      const activity =
-        Number(document.getElementById("activity").value);
-
-      if (!name) {
-        showMessage("Please enter your name.", "error");
-        return;
-      }
-
-      if (!age || age < 13 || age > 100) {
-        showMessage("Please enter a valid age.", "error");
-        return;
-      }
-
-      if (!gender) {
-        showMessage("Please select your gender.", "error");
-        return;
-      }
-
-      if (!height || height < 100 || height > 250) {
-        showMessage("Please enter a valid height.", "error");
-        return;
-      }
-
-      if (!weight || weight < 30 || weight > 300) {
-        showMessage("Please enter a valid weight.", "error");
-        return;
-      }
-
-      if (!goalWeight || goalWeight < 30 || goalWeight > 300) {
-        showMessage("Please enter a valid goal weight.", "error");
-        return;
-      }
-
-      if (!activity) {
-        showMessage("Please select your activity level.", "error");
-        return;
-      }
-
-      const oldProfile = getProfile();
-
-      const profile = {
-        name,
-        age,
-        gender,
-        height,
-        weight,
-        goalWeight,
-        activity,
-        startingWeight:
-          oldProfile.startingWeight || weight,
-        updatedAt: new Date().toISOString()
-      };
-
-      localStorage.setItem(
-        STORAGE_KEY,
-        JSON.stringify(profile)
-      );
-
-      updateUI(profile);
-
-      showMessage(
-        "Profile saved successfully ✓",
-        "success"
-      );
-    }
-
-    function calculateBMI(weight, height) {
-
-      if (!weight || !height) {
-        return null;
-      }
-
-      const heightM = height / 100;
-
-      return weight / (heightM * heightM);
-    }
-
-    function calculateBMR(
-      gender,
-      weight,
-      height,
-      age
-    ) {
-
-      if (
-        !gender ||
-        !weight ||
-        !height ||
-        !age
-      ) {
-        return null;
-      }
-
-      if (gender === "male") {
-        return (
-          10 * weight +
-          6.25 * height -
-          5 * age +
-          5
-        );
-      }
-
-      return (
-        10 * weight +
-        6.25 * height -
-        5 * age -
-        161
-      );
-    }
-
-    function calculateTDEE(
-      bmr,
-      activity
-    ) {
-
-      if (!bmr || !activity) {
-        return null;
-      }
-
-      return bmr * activity;
-    }
-
-    function updateUI(profile) {
-
-      document.getElementById("name").value =
-        profile.name || "";
-
-      document.getElementById("age").value =
-        profile.age || "";
-
-      document.getElementById("gender").value =
-        profile.gender || "";
-
-      document.getElementById("height").value =
-        profile.height || "";
-
-      document.getElementById("weight").value =
-        profile.weight || "";
-
-      document.getElementById("goalWeight").value =
-        profile.goalWeight || "";
-
-      document.getElementById("activity").value =
-        profile.activity || "";
-
-      const displayName =
-        profile.name || "Your Profile";
-
-      document.getElementById(
-        "profileName"
-      ).textContent = displayName;
-
-      const initials =
-        displayName
-          .split(" ")
-          .filter(Boolean)
-          .slice(0, 2)
-          .map(word => word[0])
-          .join("")
-          .toUpperCase();
-
-      document.getElementById("avatar").textContent =
-        initials || "CB";
-
-      const bmi =
-        calculateBMI(
-          Number(profile.weight),
-          Number(profile.height)
-        );
-
-      const bmr =
-        calculateBMR(
-          profile.gender,
-          Number(profile.weight),
-          Number(profile.height),
-          Number(profile.age)
-        );
-
-      const tdee =
-        calculateTDEE(
-          bmr,
-          Number(profile.activity)
-        );
-
-      document.getElementById("statBMI").textContent =
-        bmi ? bmi.toFixed(1) : "--";
-
-      document.getElementById("statBMR").textContent =
-        bmr ? Math.round(bmr) : "--";
-
-      document.getElementById("statTDEE").textContent =
-        tdee ? Math.round(tdee) : "--";
-    }
-
-    function showMessage(
-      message,
-      type
-    ) {
-
-      const box =
-        document.getElementById("message");
-
-      box.textContent = message;
-
-      box.className =
-        "message " + type;
-
-      setTimeout(() => {
-        box.className = "message";
-      }, 3000);
-    }
-
-    function clearProfile() {
-
-      const confirmReset =
-        confirm(
-          "Are you sure you want to reset your Coach Bolbol data?"
-        );
-
-      if (!confirmReset) {
-        return;
-      }
-
-      localStorage.removeItem(
-        STORAGE_KEY
-      );
-
-      location.reload();
-    }
-
-    function goBack() {
-
-      if (history.length > 1) {
-        history.back();
-      } else {
-        window.location.href =
-          "dashboard.html";
-      }
-    }
 
     document.addEventListener(
       "DOMContentLoaded",
-      () => {
+      function () {
 
-        const profile =
-          getProfile();
+        const form =
+          document.getElementById("profileForm");
 
-        updateUI(profile);
+        const nameInput =
+          document.getElementById("name");
 
-      }
-    );
+        const ageInput =
+          document.getElementById("age");
 
-  </script>
+        const genderInput =
+          document.getElementById("gender");
 
-</body>
-  </html>
+        const heightInput =
+          document.getElementById("height");
+
+        const currentWeightInput =
+          document.getElementById("currentWeight");
+
+        const goalWeightInput =
+          document.getElementById("goalWeight");
+
+        const goalInput =
+          document.getElementById("goal");
+
+        const activityInput =
+          document.getElementById("activity");
+
+
+        function getProfile() {
+
+          if (
+            window.CoachBolbolStorage &&
+            typeof window.CoachBolbolStorage.getProfile ===
+              "function"
+          ) {
+
+            return (
+              window.CoachBolbolStorage.getProfile() ||
+              {}
+            );
+
+          }
+
+
+          if (
+            typeof window.getProfile === "function"
+          ) {
+
+            return window.getProfile() || {};
+
+          }
+
+
+          return {};
+
+        }
+
+
+        function loadProfile() {
+
+          const profile =
+            getProfile();
+
+
+          nameInput.value =
+            profile.name ||
+            profile.fullName ||
+            "";
+
+
+          ageInput.value =
+            profile.age ||
+            "";
+
+
+          genderInput.value =
+            profile.gender ||
+            "male";
+
+
+          heightInput.value =
+            profile.height ||
+            "";
+
+
+          currentWeightInput.value =
+            profile.currentWeight ||
+            profile.weight ||
+            "";
+
+
+          goalWeightInput.value =
+            profile.goalWeight ||
+            "";
+
+
+          goalInput.value =
+            profile.goal ||
+            "loss";
+
+
+          activityInput.value =
+            String(
+              profile.activity ||
+              profile.activityLevel ||
+              "1.2"
+            );
+
+
+          updateProfileHeader();
+
+          updateCalculations();
+
+        }
+
+
+        function updateProfileHeader() {
+
+          const name =
+            nameInput.value.trim() ||
+            "Champion";
+
+
+          const displayName =
+            document.getElementById(
+              "profileDisplayName"
+            );
+
+
+          if (displayName) {
+
+            displayName.textContent =
+              name;
+
+          }
+
+
+          const initials =
+            name
+              .split(" ")
+              .filter(Boolean)
+              .slice(0, 2)
+              .map(
+                word =>
+                  word.charAt(0).toUpperCase()
+              )
+              .join("");
+
+
+          const avatar =
+            document.getElementById(
+              "avatarInitials"
+            );
+
+
+          if (avatar) {
+
+            avatar.textContent =
+              initials || "CB";
+
+          }
+
+        }
+
+
+        function updateCalculations() {
+
+          const age =
+            Number(ageInput.value);
+
+          const height =
+            Number(heightInput.value);
+
+          const weight =
+            Number(currentWeightInput.value);
+
+          const gender =
+            genderInput.value;
+
+          const activity =
+            Number(activityInput.value);
+
+
+          if (
+            !age ||
+            !height ||
+            !weight
+          ) {
+
+            document.getElementById(
+              "previewBMI"
+            ).textContent = "—";
+
+            document.getElementById(
+              "previewBMR"
+            ).textContent = "—";
+
+            document.getElementById(
+              "previewTDEE"
+            ).textContent = "—";
+
+            document.getElementById(
+              "previewCalories"
+            ).textContent = "—";
+
+            return;
+
+          }
+
+
+          const heightM =
+            height / 100;
+
+
+          const bmi =
+            weight /
+            (heightM * heightM);
+
+
+          let bmr;
+
+
+          if (gender === "female") {
+
+            bmr =
+              (10 * weight) +
+              (6.25 * height) -
+              (5 * age) -
+              161;
+
+          } else {
+
+            bmr =
+              (10 * weight) +
+              (6.25 * height) -
+              (5 * age) +
+              5;
+
+          }
+
+
+          const
