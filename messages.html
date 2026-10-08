@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Coach Bolbol | Messages</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f7fb;
+      color: #172033;
+      min-height: 100vh;
+    }
+
+    .topbar {
+      background: #fff;
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      border-bottom: 1px solid #e8ebf2;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .back {
+      width: 42px;
+      height: 42px;
+      border: none;
+      border-radius: 13px;
+      background: #eef2f7;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    .topbar h1 {
+      font-size: 21px;
+    }
+
+    .container {
+      max-width: 680px;
+      margin: auto;
+      padding: 20px 16px 35px;
+    }
+
+    .coach-card {
+      background: #fff;
+      border-radius: 22px;
+      padding: 18px;
+      margin-bottom: 18px;
+      box-shadow: 0 7px 25px rgba(20, 30, 50, 0.05);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .coach-avatar {
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      background: #111827;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 19px;
+      flex-shrink: 0;
+    }
+
+    .coach-info h2 {
+      font-size: 17px;
+      margin-bottom: 5px;
+    }
+
+    .coach-info p {
+      color: #7b8495;
+      font-size: 12px;
+    }
+
+    .online {
+      margin-left: auto;
+      font-size: 11px;
+      color: #16803c;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .chat {
+      background: #fff;
+      border-radius: 22px;
+      min-height: 430px;
+      padding: 18px;
+      box-shadow: 0 7px 25px rgba(20, 30, 50, 0.05);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .messages {
+      flex: 1;
+      min-height: 330px;
+      overflow-y: auto;
+      padding-bottom: 12px;
+    }
+
+    .empty {
+      min-height: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #7b8495;
+      font-size: 14px;
+      line-height: 1.6;
+      padding: 30px;
+    }
+
+    .message-row {
+      display: flex;
+      margin-bottom: 12px;
+    }
+
+    .message-row.me {
+      justify-content: flex-end;
+    }
+
+    .bubble {
+      max-width: 78%;
+      padding: 11px 14px;
+      border-radius: 17px;
+      background: #eef2f7;
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .message-row.me .bubble {
+      background: #111827;
+      color: #fff;
+      border-bottom-right-radius: 5px;
+    }
+
+    .message-row.coach .bubble {
+      border-bottom-left-radius: 5px;
+    }
+
+    .message-time {
+      display: block;
+      margin-top: 5px;
+      font-size: 9px;
+      opacity: 0.6;
+    }
+
+    .composer {
+      display: flex;
+      gap: 9px;
+      border-top: 1px solid #edf0f4;
+      padding-top: 14px;
+    }
+
+    .composer input {
+      flex: 1;
+      min-width: 0;
+      border: 1px solid #dfe4ec;
+      background: #fafbfd;
+      border-radius: 14px;
+      padding: 13px 14px;
+      outline: none;
+      font-size: 14px;
+    }
+
+    .composer input:focus {
+      border-color: #111827;
+      background: #fff;
+    }
+
+    .send {
+      width: 48px;
+      border: none;
+      border-radius: 14px;
+      background: #111827;
+      color: #fff;
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    .send:active {
+      transform: scale(0.95);
+    }
+
+    .report {
+      margin-top: 18px;
+      background: #fff;
+      border-radius: 22px;
+      padding: 20px;
+      box-shadow: 0 7px 25px rgba(20, 30, 50, 0.05);
+    }
+
+    .report h3 {
+      font-size: 17px;
+      margin-bottom: 7px;
+    }
+
+    .report p {
+      color: #7b8495;
+      font-size: 12px;
+      line-height: 1.5;
+      margin-bottom: 14px;
+    }
+
+    .report-btn {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 14px;
+      background: #eef2f7;
+      color: #172033;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .notice {
+      text-align: center;
+      color: #8a93a3;
+      font-size: 10px;
+      margin-top: 12px;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="topbar">
+    <button class="back" onclick="goBack()">←</button>
+    <h1>Messages</h1>
+  </header>
+
+  <main class="container">
+
+    <section class="coach-card">
+
+      <div class="coach-avatar">
+        CB
+      </div>
+
+      <div class="coach-info">
+        <h2>Coach Bolbol</h2>
+        <p>Your fitness coach</p>
+      </div>
+
+      <div class="online">
+        ● Coach
+      </div>
+
+    </section>
+
+    <section class="chat">
+
+      <div
+        id="messages"
+        class="messages"
+      ></div>
+
+      <div class="composer">
+
+        <input
+          id="messageInput"
+          type="text"
+          maxlength="500"
+          placeholder="Write a message..."
+          autocomplete="off"
+        >
+
+        <button
+          class="send"
+          onclick="sendMessage()"
+        >
+          ➤
+        </button>
+
+      </div>
+
+      <div class="notice">
+        Messages will be securely synchronized with your coach
+        when cloud connection is enabled.
+      </div>
+
+    </section>
+
+    <section class="report">
+
+      <h3>📋 Send Progress Report</h3>
+
+      <p>
+        Send your latest training and progress information
+        to Coach Bolbol.
+      </p>
+
+      <button
+        class="report-btn"
+        onclick="sendProgressReport()"
+      >
+        Prepare Progress Report
+      </button>
+
+    </section>
+
+  </main>
+
+  <script>
+
+    const MESSAGE_KEY =
+      "coach_bolbol_messages";
+
+    function readMessages() {
+
+      try {
+
+        return JSON.parse(
+          localStorage.getItem(MESSAGE_KEY)
+        ) || [];
+
+      } catch {
+
+        return [];
+
+      }
+
+    }
+
+    function saveMessages(messages) {
+
+      localStorage.setItem(
+        MESSAGE_KEY,
+        JSON.stringify(messages)
+      );
+
+    }
+
+    function formatTime(dateValue) {
+
+      const date =
+        new Date(dateValue);
+
+      if (isNaN(date.getTime())) {
+        return "";
+      }
+
+      return date.toLocaleTimeString(
+        undefined,
+        {
+          hour: "2-digit",
+          minute: "2-digit"
+        }
+      );
+
+    }
+
+    function escapeHTML(value) {
+
+      return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+    }
+
+    function renderMessages() {
+
+      const container =
+        document.getElementById(
+          "messages"
+        );
+
+      const messages =
+        readMessages();
+
+      if (!messages.length) {
+
+        container.innerHTML = `
+          <div class="empty">
+            <div>
+              <strong>Start your conversation with Coach Bolbol</strong>
+              <br><br>
+              Ask about your training, nutrition,
+              progress or fitness plan.
+            </div>
+          </div>
+        `;
+
+        return;
+
+      }
+
+      container.innerHTML =
+        messages
+          .map(message => {
+
+            const type =
+              message.sender === "me"
+                ? "me"
+                : "coach";
+
+            return `
+              <div class="message-row ${type}">
+
+                <div class="bubble">
+
+                  ${escapeHTML(
+                    message.text || ""
+                  )}
+
+                  <span class="message-time">
+                    ${formatTime(
+                      message.createdAt
+                    )}
+                  </span>
+
+                </div>
+
+              </div>
+            `;
+
+          })
+          .join("");
+
+      container.scrollTop =
+        container.scrollHeight;
+
+    }
+
+    function sendMessage() {
+
+      const input =
+        document.getElementById(
+          "messageInput"
+        );
+
+      const text =
+        input.value.trim();
+
+      if (!text) {
+        return;
+      }
+
+      const messages =
+        readMessages();
+
+      messages.push({
+
+        id:
+          Date.now(),
+
+        sender:
+          "me",
+
+        text:
+          text,
+
+        createdAt:
+          new Date().toISOString()
+
+      });
+
+      saveMessages(messages);
+
+      input.value = "";
+
+      renderMessages();
+
+    }
+
+    function sendProgressReport() {
+
+      const profile =
+        readJSON(
+          "coach_bolbol_profile",
+          {}
+        );
+
+      const workouts =
+        readJSON(
+          "coach_bolbol_workouts",
+          []
+        );
+
+      const weights =
+        readJSON(
+          "coach_bolbol_weight_history",
+          []
+        );
+
+      const currentWeight =
+        profile.weight || "--";
+
+      const goalWeight =
+        profile.goalWeight || "--";
+
+      const report =
+        `Progress Report
+
+Name: ${profile.name || "--"}
+Current weight: ${currentWeight} kg
+Goal weight: ${goalWeight} kg
+Workouts recorded: ${workouts.length}
+Weight check-ins: ${weights.length}`;
+
+      const messages =
+        readMessages();
+
+      messages.push({
+
+        id:
+          Date.now(),
+
+        sender:
+          "me",
+
+        text:
+          report,
+
+        createdAt:
+          new Date().toISOString()
+
+      });
+
+      saveMessages(messages);
+
+      renderMessages();
+
+      window.scrollTo({
+        top: document.body.scrollHeight,
+        behavior: "smooth"
+      });
+
+    }
+
+    function readJSON(
+      key,
+      fallback
+    ) {
+
+      try {
+
+        return JSON.parse(
+          localStorage.getItem(key)
+        ) || fallback;
+
+      } catch {
+
+        return fallback;
+
+      }
+
+    }
+
+    function goBack() {
+
+      if (history.length > 1) {
+
+        history.back();
+
+      } else {
+
+        window.location.href =
+          "dashboard.html";
+
+      }
+
+    }
+
+    document
+      .getElementById("messageInput")
+      .addEventListener(
+        "keydown",
+        function(event) {
+
+          if (event.key === "Enter") {
+
+            event.preventDefault();
+
+            sendMessage();
+
+          }
+
+        }
+      );
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      () => {
+
+        renderMessages();
+
+      }
+    );
+
+  </script>
+
+</body>
+  </html>
