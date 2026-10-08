@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="theme-color"
+        content="#f7f8fc"
+    >
+
+    <title>Coach Bolbol — Calculator</title>
+
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
+
+    <style>
+
+        /* =====================================================
+           CALCULATOR PAGE
+        ===================================================== */
+
+        .calculator-page {
+            min-height: 100vh;
+            padding: 20px 18px 105px;
+            background:
+                radial-gradient(
+                    circle at 100% 0%,
+                    rgba(255, 90, 31, 0.07),
+                    transparent 30%
+                ),
+                #f7f8fc;
+        }
+
+
+        .calculator-container {
+            width: min(100%, 1050px);
+            margin: 0 auto;
+        }
+
+
+        /* =====================================================
+           HEADER
+        ===================================================== */
+
+        .calculator-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 25px;
+        }
+
+
+        .back-button {
+            width: 44px;
+            height: 44px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #e5e7ec;
+            border-radius: 14px;
+            background: #ffffff;
+            color: #111111;
+            font-size: 20px;
+            box-shadow: var(--shadow-small);
+        }
+
+
+        .back-button:hover {
+            transform: translateX(-3px);
+        }
+
+
+        .header-label {
+            color: #ff5a1f;
+            font-size: 9px;
+            font-weight: 900;
+            letter-spacing: 2px;
+        }
+
+
+        .header-title {
+            margin-top: 4px;
+            color: #111111;
+            font-size: 25px;
+            font-weight: 950;
+            letter-spacing: -0.8px;
+        }
+
+
+        /* =====================================================
+           INFO CARD
+        ===================================================== */
+
+        .science-card {
+            margin-bottom: 15px;
+            padding: 19px;
+            border: 1px solid #e7e9ee;
+            border-radius: 20px;
+            background: #ffffff;
+            box-shadow: var(--shadow-small);
+        }
+
+
+        .science-card strong {
+            color: #111111;
+            font-size: 12px;
+        }
+
+
+        .science-card p {
+            margin-top: 7px;
+            color: #626975;
+            font-size: 10px;
+            line-height: 1.65;
+        }
+
+
+        /* =====================================================
+           FORM
+        ===================================================== */
+
+        .calculator-form {
+            padding: 20px;
+            border: 1px solid #e7e9ee;
+            border-radius: 22px;
+            background: #ffffff;
+            box-shadow: var(--shadow-medium);
+        }
+
+
+        .form-title {
+            margin-bottom: 18px;
+            color: #111111;
+            font-size: 14px;
+            font-weight: 950;
+        }
+
+
+        .input-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+
+        .input-group {
+            margin-bottom: 16px;
+        }
+
+
+        .input-group label {
+            display: block;
+            margin-bottom: 7px;
+            color: #333842;
+            font-size: 10px;
+            font-weight: 850;
+        }
+
+
+        .input-group input,
+        .input-group select {
+            width: 100%;
+            height: 50px;
+            padding: 0 13px;
+            border: 1px solid #e1e4e9;
+            border-radius: 13px;
+            outline: none;
+            background: #fafbfc;
+            color: #111111;
+            font-size: 13px;
+        }
+
+
+        .input-group input:focus,
+        .input-group select:focus {
+            border-color: #ff5a1f;
+            background: #ffffff;
+            box-shadow:
+                0 0 0 4px
+                rgba(255, 90, 31, 0.08);
+        }
+
+
+        .calculate-button {
+            width: 100%;
+            min-height: 54px;
+            margin-top: 3px;
+            border-radius: 15px;
+            background: #111111;
+            color: #ffffff;
+            font-size: 10px;
+            font-weight: 900;
+            letter-spacing: 1.2px;
+            box-shadow:
+                0 13px 27px
+                rgba(17,17,17,0.16);
+            transition: 0.25s ease;
+        }
+
+
+        .calculate-button:hover {
+            transform: translateY(-2px);
+        }
+
+
+        /* =====================================================
+           ERROR
+        ===================================================== */
+
+        .calculator-error {
+            display: none;
+            margin-bottom: 14px;
+            padding: 12px;
+            border-radius: 12px;
+            background: #fff0f0;
+            color: #d9363e;
+            font-size: 10px;
+            font-weight: 750;
+        }
+
+
+        .calculator-error.show {
+            display: block;
+        }
+
+
+        /* =====================================================
+           RESULTS
+        ===================================================== */
+
+        .results {
+            display: none;
+            margin-top: 20px;
+        }
+
+
+        .results.show {
+            display: block;
+            animation:
+                resultIn
+                0.45s
+                ease
+                both;
+        }
+
+
+        .result-section-title {
+            margin: 27px 0 11px;
+            color: #111111;
+            font-size: 14px;
+            font-weight: 950;
+        }
+
+
+        .result-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+
+        .result-card {
+            min-height: 125px;
+            padding: 17px;
+            border: 1px solid #e7e9ee;
+            border-radius: 18px;
+            background: #ffffff;
+            box-shadow: var(--shadow-small);
+        }
+
+
+        .result-label {
+            color: #8c939f;
+            font-size: 8px;
+            font-weight: 900;
+            letter-spacing: 0.7px;
+        }
+
+
+        .result-value {
+            margin-top: 12px;
+            color: #111111;
+            font-size: 26px;
+            line-height: 1;
+            font-weight: 950;
+        }
+
+
+        .result-unit {
+            margin-left: 2px;
+            color: #8c939f;
+            font-size: 9px;
+            font-weight: 800;
+        }
+
+
+        .result-description {
+            margin-top: 8px;
+            color: #626975;
+            font-size: 9px;
+            line-height: 1.45;
+        }
+
+
+        /* =====================================================
+           CALORIE TARGETS
+        ===================================================== */
+
+        .goal-grid {
+            display: grid;
+            gap: 10px;
+        }
+
+
+        .goal-card {
+            position: relative;
+            padding: 18px;
+            border: 1px solid #e7e9ee;
+            border-radius: 18px;
+            background: #ffffff;
+            box-shadow: var(--shadow-small);
+            overflow: hidden;
+        }
+
+
+        .goal-card::after {
+            content: "";
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            right: -50px;
+            bottom: -50px;
+            border-radius: 50%;
+            background: rgba(255, 90, 31, 0.06);
+        }
+
+
+        .goal-card.active {
+            border-color:
+                rgba(255,90,31,0.3);
+        }
+
+
+        .goal-name {
+            color: #111111;
+            font-size: 12px;
+            font-weight: 950;
+        }
+
+
+        .goal-calories {
+            margin-top: 10px;
+            color: #ff5a1f;
+            font-size: 29px;
+            line-height: 1;
+            font-weight: 950;
+        }
+
+
+        .goal-calories span {
+            color: #8c939f;
+            font-size: 9px;
+            font-weight: 800;
+        }
+
+
+        .goal-description {
+            margin-top: 8px;
+            color: #626975;
+            font-size: 9px;
+            line-height: 1.5;
+        }
+
+
+        /* =====================================================
+           MACROS
+        ===================================================== */
+
+        .macro-card {
+            padding: 20px;
+            border: 1px solid #e7e9ee;
+            border-radius: 20px;
+            background: #ffffff;
+            box-shadow: var(--shadow-small);
+        }
+
+
+        .macro-row {
+            margin-bottom: 17px;
+        }
+
+
+        .macro-row:last-child {
+            margin-bottom: 0;
+        }
+
+
+        .macro-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 7px;
+        }
+
+
+        .macro-name {
+            color: #111111;
+            font-size: 10px;
+            font-weight: 900;
+        }
+
+
+        .macro-value {
+            color: #626975;
+            font-size: 10px;
+            font-weight: 800;
+        }
+
+
+        .macro-track {
+            height: 8px;
+            overflow: hidden;
+            border-radius: 20px;
+            background: #eceef2;
+        }
+
+
+        .macro-fill {
+            height: 100%;
+            border-radius: inherit;
+            transition: width 0.7s ease;
+        }
+
+
+        .protein-fill {
+            width: 0%;
+            background: #111111;
+        }
+
+
+        .fat-fill {
+            width: 0%;
+            background: #ff5a1f;
+        }
+
+
+        .carbs-fill {
+            width: 0%;
+            background: #777d88;
+        }
+
+
+        /* =====================================================
+           TARGET WEIGHT
+        ===================================================== */
+
+        .target-card {
+            padding: 20px;
+            border-radius: 20px;
+            background:
+                linear-gradient(
+                    135deg,
+                    #111111,
+                    #222222
+                );
+            color: #ffffff;
+            box-shadow:
+                0 18px 38px
+                rgba(17,17,17,0.16);
+        }
+
+
+        .target-card .result-label {
+            color: rgba(255,255,255,0.55);
+        }
+
+
+        .target-main {
+            margin-top: 10px;
+            font-size: 30px;
+            font-weight: 950;
+        }
+
+
+        .target-main span {
+            color: #ff5a1f;
+            font-size: 11px;
+        }
+
+
+        .target-info {
+            margin-top: 8px;
+            color: rgba(255,255,255,0.62);
+            font-size: 9px;
+            line-height: 1.6;
+        }
+
+
+        /* =====================================================
+           1RM CALCULATOR
+        ===================================================== */
+
+        .one-rm-card {
+            padding: 20px;
+            border: 1px solid #e7e9ee;
+            border-radius: 20px;
+            background: #ffffff;
+            box-shadow: var(--shadow-small);
+        }
+
+
+        .one-rm-result {
+            margin-top: 15px;
+            padding: 18px;
+            border-radius: 15px;
+            background: #f7f8fc;
+            text-align: center;
+        }
+
+
+        .one-rm-result span {
+            display: block;
+            color: #ff5a1f;
+            font-size: 30px;
+            font-weight: 950;
+        }
+
+
+        .one-rm-result small {
+            color: #8c939f;
+            font-size: 9px;
+            font-weight: 800;
+        }
+
+
+        /* =====================================================
+           DISCLAIMER
+        ===================================================== */
+
+        .calculator-note {
+            margin-top: 20px;
+            padding: 14px;
+            border-radius: 14px;
+            background: #f1f3f7;
+            color: #737985;
+            font-size: 9px;
+            line-height: 1.65;
+        }
+
+
+        /* =====================================================
+           ANIMATION
+        ===================================================== */
+
+        @keyframes resultIn {
+
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+        }
+
+
+        /* =====================================================
+           DESKTOP
+        ===================================================== */
+
+        @media (min-width: 700px) {
+
+            .calculator-page {
+                padding:
+                    35px
+                    25px
+                    110px;
+            }
+
+
+            .calculator-form {
+                padding: 30px;
+            }
+
+
+            .goal-grid {
+                grid-template-columns:
+                    repeat(3, 1fr);
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<main class="calculator-page">
+
+
+<div class="calculator-container">
+
+
+    <!-- =================================================
+         HEADER
+    ================================================== -->
+
+    <header class="calculator-header">
+
+        <button
+            class="back-button"
+            id="backButton"
+            type="button"
+        >
+            ←
+        </button>
+
+        <div>
+
+            <div class="header-label">
+                COACH BOLBOL
+            </div>
+
+            <h1 class="header-title">
+                Scientific Calculator
+            </h1>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- =================================================
+         SCIENCE INFO
+    ================================================== -->
+
+    <section class="science-card">
+
+        <strong>
+            Evidence-informed estimates
+        </strong>
+
+        <p>
+            This calculator uses the
+            Mifflin–St Jeor equation for
+            estimated BMR, activity factors
+            for TDEE and body-weight-based
+            macro targets. Results are
+            estimates, not medical measurements.
+        </p>
+
+    </section>
+
+
+
+    <!-- =================================================
+         FORM
+    ================================================== -->
+
+    <form
+        class="calculator-form"
+        id="calculatorForm"
+        novalidate
+    >
+
+        <div class="form-title">
+            Your measurements
+        </div>
+
+
+        <div class="input-row">
+
+
+            <div class="input-group">
+
+                <label for="age">
+                    Age
+                </label>
+
+                <input
+                    id="age"
+                    type="number"
+                    min="13"
+                    max="100"
+                    step="1"
+                    inputmode="numeric"
+                    placeholder="23"
+                    required
+                >
+
+            </div>
+
+
+
+            <div class="input-group">
+
+                <label for="weight">
+                    Weight (kg)
+                </label>
+
+                <input
+                    id="weight"
+                    type="number"
+                    min="25"
+                    max="350"
+                    step="0.1"
+                    inputmode="decimal"
+                    placeholder="80"
+                    required
+                >
+
+            </div>
+
+
+        </div>
+
+
+
+        <div class="input-row">
+
+
+            <div class="input-group">
+
+                <label for="height">
+                    Height (cm)
+                </label>
+
+                <input
+                    id="height"
+                    type="number"
+                    min="100"
+                    max="250"
+                    step="0.1"
+                    inputmode="decimal"
+                    placeholder="183"
+                    required
+                >
+
+            </div>
+
+
+
+            <div class="input-group">
+
+                <label for="sex">
+                    Sex
+                </label>
+
+                <select
+                    id="sex"
+                    required
+                >
+
+                    <option value="male">
+                        Male
+                    </option>
+
+                    <option value="female">
+                        Female
+                    </option>
+
+                </select>
+
+            </div>
+
+
+        </div>
+
+
+
+        <div class="input-group">
+
+            <label for="activity">
+                Activity level
+            </label>
+
+            <select
+                id="activity"
+                required
+            >
+
+                <option value="1.2">
+                    Sedentary — little exercise
+                </option>
+
+                <option value="1.375">
+                    Light — 1–3 days/week
+                </option>
+
+                <option
+                    value="1.55"
+                    selected
+                >
+                    Moderate — 3–5 days/week
+                </option>
+
+                <option value="1.725">
+                    Very active — 6–7 days/week
+                </option>
+
+                <option value="1.9">
+                    Extremely active
+                </option>
+
+            </select>
+
+        </div>
+
+
+
+        <div class="input-group">
+
+            <label for="goal">
+                Main goal
+            </label>
+
+            <select
+                id="goal"
+                required
+            >
+
+                <option value="loss">
+                    Fat loss
+                </option>
+
+                <option value="maintain">
+                    Maintenance
+                </option>
+
+                <option value="gain">
+                    Muscle / weight gain
+                </option>
+
+            </select>
+
+        </div>
+
+
+
+        <div
+            class="calculator-error"
+            id="calculatorError"
+        >
+            Please enter valid values for all fields.
+        </div>
+
+
+
+        <button
+            class="calculate-button"
+            type="submit"
+        >
+            CALCULATE MY TARGETS →
+        </button>
+
+    </form>
+
+
+
+    <!-- =================================================
+         RESULTS
+    ================================================== -->
+
+    <section
+        class="results"
+        id="results"
+    >
+
+
+        <!-- BASIC METRICS -->
+
+        <h2 class="result-section-title">
+            METABOLIC PROFILE
+        </h2>
+
+
+        <div class="result-grid">
+
+
+            <article class="result-card">
+
+                <div class="result-label">
+                    BMR
+                </div>
+
+                <div class="result-value">
+
+                    <span id="bmr">
+                        --
+                    </span>
+
+                    <span class="result-unit">
+                        kcal
+                    </span>
+
+                </div>
+
+                <p class="result-description">
+                    Estimated energy your body
+                    uses at complete rest.
+                </p>
+
+            </article>
+
+
+
+            <article class="result-card">
+
+                <div class="result-label">
+                    TDEE
+                </div>
+
+                <div class="result-value">
+
+                    <span id="tdee">
+                        --
+                    </span>
+
+                    <span class="result-unit">
+                        kcal
+                    </span>
+
+                </div>
+
+                <p class="result-description">
+                    Estimated average daily
+                    energy expenditure.
+                </p>
+
+            </article>
+
+
+
+            <article class="result-card">
+
+                <div class="result-label">
+                    BMI
+                </div>
+
+                <div class="result-value">
+
+                    <span id="bmi">
+                        --
+        
