@@ -1496,3 +1496,285 @@ textarea:focus {
   display: flex;
 
   
+
+/* =========================================================
+   LANDING PAGE — MOBILE FIX
+   ========================================================= */
+
+@media (max-width: 699px) {
+
+  body.landing-page .app-header {
+    position: relative;
+  }
+
+  body.landing-page .header-inner {
+    min-height: 82px;
+
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+    align-items: center;
+  }
+
+  body.landing-page .brand {
+    gap: 9px;
+
+    min-width: 0;
+
+    flex: 1;
+  }
+
+  body.landing-page .brand-mark {
+    width: 42px;
+    height: 42px;
+
+    flex: 0 0 42px;
+
+    border-radius: 13px;
+
+    font-size: 16px;
+  }
+
+  body.landing-page .brand-text {
+    min-width: 0;
+  }
+
+  body.landing-page .brand-text strong {
+    font-size: 15px;
+
+    white-space: nowrap;
+  }
+
+  body.landing-page .brand-text span {
+    font-size: 9px;
+
+    white-space: nowrap;
+  }
+
+  body.landing-page .header-actions {
+    gap: 6px;
+  }
+
+  body.landing-page .header-actions .btn {
+    min-height: 38px;
+
+    padding-left: 10px;
+    padding-right: 10px;
+
+    border-radius: 10px;
+
+    font-size: 10px;
+  }
+
+
+  /* HERO */
+
+  body.landing-page .hero-section {
+    padding-top: 35px;
+    padding-bottom: 50px;
+  }
+
+  body.landing-page .hero-grid {
+    gap: 30px;
+  }
+
+  body.landing-page .hero-content h1 {
+    font-size: clamp(39px, 11vw, 54px);
+
+    line-height: .98;
+
+    letter-spacing: -.055em;
+  }
+
+  body.landing-page .hero-description {
+    margin-top: 17px;
+
+    font-size: 14px;
+
+    line-height: 1.55;
+  }
+
+  body.landing-page .hero-actions {
+    display: grid;
+
+    grid-template-columns: 1fr;
+
+    gap: 9px;
+
+    margin-top: 21px;
+  }
+
+  body.landing-page .hero-actions .btn {
+    width: 100%;
+  }
+
+  body.landing-page .hero-trust {
+    gap: 7px;
+
+    margin-top: 22px;
+  }
+
+  body.landing-page .trust-item {
+    padding: 11px 8px;
+
+    border-radius: 13px;
+
+    text-align: center;
+  }
+
+  body.landing-page .trust-item strong {
+    font-size: 16px;
+  }
+
+  body.landing-page .trust-item span {
+    font-size: 8px;
+  }
+
+
+  /* COACH VISUAL */
+
+  body.landing-page .hero-photo-card {
+    min-height: 410px;
+
+    border-radius: 26px;
+  }
+
+
+  /* SECTIONS */
+
+  body.landing-page .section {
+    padding: 52px 0;
+  }
+
+  body.landing-page .section-heading {
+    margin-bottom: 25px;
+  }
+
+  body.landing-page .section-heading h2 {
+    font-size: 31px;
+
+    line-height: 1.05;
+  }
+
+  body.landing-page .section-heading p {
+    font-size: 13px;
+  }
+
+
+  /* FEATURE CARDS */
+
+  body.landing-page .feature-grid {
+    display: grid;
+
+    grid-template-columns: 1fr;
+
+    gap: 12px;
+  }
+
+  body.landing-page .feature-card {
+    padding: 20px;
+
+    border-radius: 18px;
+  }
+
+  body.landing-page .feature-icon {
+    width: 48px;
+    height: 48px;
+
+    margin-bottom: 14px;
+
+    border-radius: 14px;
+
+    font-size: 22px;
+  }
+
+  body.landing-page .feature-card h3 {
+    font-size: 18px;
+  }
+
+  body.landing-page .feature-card p {
+    font-size: 12px;
+
+    line-height: 1.6;
+  }
+
+
+  /* STEPS */
+
+  body.landing-page .steps-grid {
+    gap: 10px;
+  }
+
+  body.landing-page .step-card {
+    padding: 19px;
+
+    border-radius: 17px;
+  }
+
+
+  /* CTA */
+
+  body.landing-page .cta-card {
+    padding: 25px 20px;
+
+    gap: 20px;
+
+    border-radius: 22px;
+  }
+
+  body.landing-page .cta-card h2 {
+    font-size: 30px;
+  }
+
+  body.landing-page .cta-card p {
+    font-size: 12px;
+  }
+
+  body.landing-page .cta-card .btn {
+    width: 100%;
+  }
+
+
+  /* FOOTER */
+
+  body.landing-page .footer-inner {
+    gap: 20px;
+  }
+
+  body.landing-page .footer-links {
+    gap: 12px;
+  }
+
+  body.landing-page .footer-bottom {
+    gap: 5px;
+  }
+}
+
+
+/* EXTRA SMALL PHONES */
+
+@media (max-width: 360px) {
+
+  body.landing-page .brand-text strong {
+    font-size: 13px;
+  }
+
+  body.landing-page .brand-text span {
+    font-size: 8px;
+  }
+
+  body.landing-page .header-actions .btn {
+    padding-left: 8px;
+    padding-right: 8px;
+
+    font-size: 9px;
+  }
+
+  body.landing-page .hero-content h1 {
+    font-size: 38px;
+  }
+
+  body.landing-page .hero-trust {
+    grid-template-columns: 1fr;
+  }
+     }
