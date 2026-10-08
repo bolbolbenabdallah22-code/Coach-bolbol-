@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Programs | Coach Bolbol</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f7fb;
+      color: #172033;
+      min-height: 100vh;
+      padding-bottom: 90px;
+    }
+
+    .topbar {
+      background: #ffffff;
+      padding: 18px;
+      border-bottom: 1px solid #e8ebf2;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+
+    .back-btn {
+      width: 42px;
+      height: 42px;
+      border: none;
+      border-radius: 13px;
+      background: #f0f2f7;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    .title h1 {
+      font-size: 22px;
+      font-weight: 900;
+    }
+
+    .title p {
+      color: #7b8496;
+      font-size: 12px;
+      margin-top: 4px;
+    }
+
+    .container {
+      width: min(700px, 100%);
+      margin: auto;
+      padding: 20px 16px;
+    }
+
+    .hero {
+      background: #111827;
+      color: white;
+      border-radius: 25px;
+      padding: 25px 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 12px 35px rgba(17, 24, 39, 0.15);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 130px;
+      height: 130px;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 50%;
+      right: -35px;
+      top: -35px;
+    }
+
+    .hero small {
+      color: #cbd5e1;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .hero h2 {
+      font-size: 25px;
+      margin-top: 8px;
+      line-height: 1.2;
+    }
+
+    .hero p {
+      color: #cbd5e1;
+      font-size: 13px;
+      line-height: 1.6;
+      margin-top: 9px;
+      max-width: 540px;
+    }
+
+    .section-title {
+      font-size: 17px;
+      font-weight: 900;
+      margin: 24px 2px 12px;
+    }
+
+    .program-card {
+      background: white;
+      border-radius: 23px;
+      padding: 18px;
+      margin-bottom: 14px;
+      box-shadow: 0 8px 28px rgba(25, 35, 55, 0.06);
+      border: 1px solid #edf0f5;
+      cursor: pointer;
+      transition: 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .program-card:active {
+      transform: scale(0.985);
+    }
+
+    .program-top {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .program-icon {
+      width: 62px;
+      height: 62px;
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 31px;
+      background: #f2f4f8;
+      flex-shrink: 0;
+    }
+
+    .program-info {
+      flex: 1;
+    }
+
+    .program-info h3 {
+      font-size: 18px;
+      font-weight: 900;
+    }
+
+    .program-info p {
+      color: #7b8496;
+      font-size: 12px;
+      line-height: 1.5;
+      margin-top: 4px;
+    }
+
+    .arrow {
+      font-size: 22px;
+      color: #8a93a3;
+    }
+
+    .tags {
+      display: flex;
+      gap: 7px;
+      flex-wrap: wrap;
+      margin-top: 15px;
+    }
+
+    .tag {
+      background: #f5f7fb;
+      color: #596477;
+      padding: 7px 10px;
+      border-radius: 10px;
+      font-size: 10px;
+      font-weight: 800;
+    }
+
+    .program-footer {
+      margin-top: 15px;
+      padding-top: 13px;
+      border-top: 1px solid #edf0f5;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .level {
+      font-size: 11px;
+      font-weight: 800;
+      color: #687286;
+    }
+
+    .days {
+      font-size: 11px;
+      font-weight: 900;
+      color: #172033;
+    }
+
+    .science-card {
+      background: white;
+      border-radius: 22px;
+      padding: 19px;
+      margin-top: 20px;
+      border: 1px solid #edf0f5;
+    }
+
+    .science-card h3 {
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+
+    .science-card p {
+      color: #687286;
+      font-size: 12px;
+      line-height: 1.7;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .feature {
+      background: #f7f8fb;
+      border-radius: 14px;
+      padding: 13px;
+    }
+
+    .feature strong {
+      display: block;
+      font-size: 12px;
+      margin-bottom: 4px;
+    }
+
+    .feature span {
+      color: #7b8496;
+      font-size: 10px;
+      line-height: 1.4;
+    }
+
+    .bottom-nav {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 72px;
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(15px);
+      border-top: 1px solid #e8ebf2;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      z-index: 50;
+    }
+
+    .nav-item {
+      text-decoration: none;
+      color: #8a93a3;
+      font-size: 10px;
+      text-align: center;
+      font-weight: 700;
+    }
+
+    .nav-item span {
+      display: block;
+      font-size: 20px;
+      margin-bottom: 3px;
+    }
+
+    .nav-item.active {
+      color: #111827;
+    }
+
+    @media (max-width: 380px) {
+      .features {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="topbar">
+
+    <button class="back-btn" onclick="goBack()">
+      ←
+    </button>
+
+    <div class="title">
+      <h1>Training Programs</h1>
+      <p>Coach Bolbol • Evidence-informed training</p>
+    </div>
+
+  </header>
+
+  <main class="container">
+
+    <section class="hero">
+
+      <small>COACH BOLBOL PERFORMANCE SYSTEM</small>
+
+      <h2>
+        Train with a plan.<br>
+        Progress with purpose.
+      </h2>
+
+      <p>
+        Choose your training goal and follow a structured
+        program with progression, exercise selection,
+        sets, reps, rest and performance tracking.
+      </p>
+
+    </section>
+
+
+    <div class="section-title">
+      Choose Your Program
+    </div>
+
+
+    <!-- STRENGTH -->
+
+    <section
+      class="program-card"
+      onclick="openProgram('strength.html')"
+    >
+
+      <div class="program-top">
+
+        <div class="program-icon">
+          🏋️
+        </div>
+
+        <div class="program-info">
+
+          <h3>Strength & Hypertrophy</h3>
+
+          <p>
+            Build strength, muscle and athletic performance
+            with structured resistance training.
+          </p>
+
+        </div>
+
+        <div class="arrow">
+          →
+        </div>
+
+      </div>
+
+      <div class="tags">
+
+        <span class="tag">
+          Strength
+        </span>
+
+        <span class="tag">
+          Hypertrophy
+        </span>
+
+        <span class="tag">
+          Progressive Overload
+        </span>
+
+      </div>
+
+      <div class="program-footer">
+
+        <span class="level">
+          Beginner → Advanced
+        </span>
+
+        <span class="days">
+          MULTI-DAY
+        </span>
+
+      </div>
+
+    </section>
+
+
+    <!-- KICKBOXING -->
+
+    <section
+      class="program-card"
+      onclick="openProgram('kickboxing.html')"
+    >
+
+      <div class="program-top">
+
+        <div class="program-icon">
+          🥊
+        </div>
+
+        <div class="program-info">
+
+          <h3>Kickboxing Performance</h3>
+
+          <p>
+            Develop striking technique, conditioning,
+            speed, coordination and fight-specific fitness.
+          </p>
+
+        </div>
+
+        <div class="arrow">
+          →
+        </div>
+
+      </div>
+
+      <div class="tags">
+
+        <span class="tag">
+          Technique
+        </span>
+
+        <span class="tag">
+          Conditioning
+        </span>
+
+        <span class="tag">
+          Speed
+        </span>
+
+      </div>
+
+      <div class="program-footer">
+
+        <span class="level">
+          Beginner → Advanced
+        </span>
+
+        <span class="days">
+          MULTI-DAY
+        </span>
+
+      </div>
+
+    </section>
+
+
+    <!-- FAT LOSS -->
+
+    <section
+      class="program-card"
+      onclick="openProgram('fatloss.html')"
+    >
+
+      <div class="program-top">
+
+        <div class="program-icon">
+          🔥
+        </div>
+
+        <div class="program-info">
+
+          <h3>Fat Loss & Conditioning</h3>
+
+          <p>
+            Combine resistance training, conditioning and
+            cardio to support sustainable fat loss.
+          </p>
+
+        </div>
+
+        <div class="arrow">
+          →
+        </div>
+
+      </div>
+
+      <div class="tags">
+
+        <span class="tag">
+          Fat Loss
+        </span>
+
+        <span class="tag">
+          HIIT
+        </span>
+
+        <span class="tag">
+          Conditioning
+        </span>
+
+      </div>
+
+      <div class="program-footer">
+
+        <span class="level">
+          Beginner → Advanced
+        </span>
+
+        <span class="days">
+          MULTI-DAY
+        </span>
+
+      </div>
+
+    </section>
+
+
+    <!-- SCIENCE -->
+
+    <section class="science-card">
+
+      <h3>
+        🧠 Why Coach Bolbol Programs?
+      </h3>
+
+      <p>
+        Training is organized around progressive overload,
+        appropriate training volume, recovery and
+        individual progression rather than random workouts.
+      </p>
+
+      <div class="features">
+
+        <div class="feature">
+
+          <strong>📈 Progression</strong>
+
+          <span>
+            Track performance and gradually increase training
+            demand.
+          </span>
+
+        </div>
+
+        <div class="feature">
+
+          <strong>🎯 Goal Based</strong>
+
+          <span>
+            Training structure changes according to your goal.
+          </span>
+
+        </div>
+
+        <div class="feature">
+
+          <strong>⏱️ Rest Control</strong>
+
+          <span>
+            Recommended rest periods for different training
+            objectives.
+          </span>
+
+        </div>
+
+        <div class="feature">
+
+          <strong>📊 Tracking</strong>
+
+          <span>
+            Record sets, reps, weight and workout history.
+          </span>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <nav class="bottom-nav">
+
+    <a class="nav-item" href="dashboard.html">
+      <span>🏠</span>
+      Home
+    </a>
+
+    <a class="nav-item active" href="programs.html">
+      <span>🏋️</span>
+      Programs
+    </a>
+
+    <a class="nav-item" href="nutrition.html">
+      <span>🥗</span>
+      Nutrition
+    </a>
+
+    <a class="nav-item" href="progress.html">
+      <span>📈</span>
+      Progress
+    </a>
+
+    <a class="nav-item" href="profile.html">
+      <span>👤</span>
+      Profile
+    </a>
+
+  </nav>
+
+
+  <script>
+
+    function openProgram(page) {
+      window.location.href = page;
+    }
+
+    function goBack() {
+
+      if (document.referrer) {
+
+        history.back();
+
+      } else {
+
+        window.location.href =
+          "dashboard.html";
+
+      }
+
+    }
+
+  </script>
+
+</body>
+</html>
